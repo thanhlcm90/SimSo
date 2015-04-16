@@ -1,0 +1,20 @@
+﻿<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+</a>
+<ul class="dropdown-menu dropdown-user" ng-hide="currentUser()">
+    <li>
+        <a href="#/signIn"><i class="fa fa-sign-in fa-fw"></i> Sign In</a>
+    </li>
+</ul>
+<ul class="dropdown-menu dropdown-user" ng-show="currentUser()">
+    <li>
+        <a href="#/profile" ng-click="userProfile()"><i class="fa fa-user fa-fw"></i> User Profile</a>
+    </li>
+    <li>
+        <a href="#/manageUser" ng-show="currentUser().IsAdmin"><i class="fa fa-users fa-fw"></i> Manage Users</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a href="javascript:void(0)" ng-click="signOut()"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a>
+    </li>
+</ul>
