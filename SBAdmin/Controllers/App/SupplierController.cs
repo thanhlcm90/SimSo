@@ -4,6 +4,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
+    [Authorize]
     public class SupplierController : Controller
     {
         GenericRepository<Supplier> context = null;
@@ -21,24 +22,30 @@ namespace SBAdmin.Controllers.App
             return Json(context.Get(id), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public ActionResult Create(Supplier model)
         {
+            model.CreateDate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
                 var data = context.Insert(model);
                 context.Save();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            return null;
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
-        public void Update(Supplier model)
+        [HttpPost]
+        public ActionResult Update(Supplier model)
         {
+            model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
                 context.Update(model);
                 context.Save();
+                return Json(model, JsonRequestBehavior.AllowGet);
             }
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
         public void Delete(int id)

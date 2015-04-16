@@ -1,11 +1,12 @@
-﻿angular.module("crud",[])
+﻿angular.module("crud", [])
 .service("crudService", function ($http) {
     this.getAll = function (url) {
         return $http.get(url);
     }
 
     this.get = function (url, id) {
-        return $http.get(url + '/' + id);
+        console.log(id);
+        return $http.get(url + id);
     }
 
     this.create = function (url, data) {

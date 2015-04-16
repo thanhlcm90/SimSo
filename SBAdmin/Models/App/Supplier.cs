@@ -29,8 +29,6 @@ namespace SBAdmin.Models.App
         [StringLength(250)]
         public string Address { get; set; }
 
-        public int? District { get; set; }
-
         public bool? isActive { get; set; }
 
         public bool? isDeleted { get; set; }

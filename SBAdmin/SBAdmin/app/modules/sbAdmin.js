@@ -22,10 +22,21 @@
            $routeProvider.when("/thiet-lap-danh-muc/nha-mang/them", {
                templateUrl: "/SBAdmin/app/views/menu/network/create.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/sua", {
+           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/sua/:nwID", {
                templateUrl: "/SBAdmin/app/views/menu/network/update.html"
            });
+           // supplier
+           $routeProvider.when("/dai-ly", {
+               templateUrl: "/SBAdmin/app/views/menu/supplier/index.html"
+           });
+           $routeProvider.when("/dai-ly/them", {
+               templateUrl: "/SBAdmin/app/views/menu/supplier/create.html"
+           });
+           $routeProvider.when("/dai-ly/sua/:spID", {
+               templateUrl: "/SBAdmin/app/views/menu/supplier/update.html"
+           });
 
+           //ban lam viec
            $routeProvider.otherwise({
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"
            });

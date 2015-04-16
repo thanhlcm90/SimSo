@@ -38,6 +38,6 @@ namespace SBAdmin.Models.App
         public string UpdateBy { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? Last_Update { get; set; }
+        public DateTime? LastUpdate { get; set; }
     }
 }

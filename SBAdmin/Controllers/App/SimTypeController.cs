@@ -4,6 +4,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
+    [Authorize]
     public class SimTypeController : Controller
     {
         GenericRepository<SimType> context = null;

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
+    [Authorize]
     public class NetworkController : Controller
     {
         GenericRepository<NetWork> context = null;
@@ -19,14 +20,19 @@ namespace SBAdmin.Controllers.App
 
         public ActionResult Get(int id)
         {
-            return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+            var data = context.Get(id);
+            if (data != null)
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            return HttpNotFound();
         }
         [HttpPost]
         public ActionResult Create(NetWork model)
         {
+            model.CreateDate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
-                model.CreateDate = System.DateTime.Now;
                 var data = context.Insert(model);
                 context.Save();
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -37,9 +43,9 @@ namespace SBAdmin.Controllers.App
         [HttpPost]
         public ActionResult Update(NetWork model)
         {
+            model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
-                model.LastUpdate = System.DateTime.Now;
                 context.Update(model);
                 context.Save();
                 return Json(model, JsonRequestBehavior.AllowGet);

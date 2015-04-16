@@ -1,11 +1,12 @@
 ﻿angular.module("sbAdmin")
-.controller("networkCtrl", function ($http, $location, $scope, $rootScope, crudService, Authentication) {
+.controller("networkCtrl", function ($http, $location, $scope, $routeParams, crudService, Authentication) {
     //model
     $scope.lstNetWork = [];
     crudService.getAll("/Network/GetListNetWork")
         .success(function (data) {
             angular.forEach(data, function (item) {
                 item.CreateDate = parseDate(item.CreateDate);
+                item.LastUpdate = parseDate(item.LastUpdate);
             })
             $scope.lstNetWork = data;
         })
@@ -28,28 +29,40 @@
                         $location.path("/thiet-lap-danh-muc/nha-mang/")
                     })
                     .error(function (error) {
+                        $("#myModal").modal("hide");
                         console.log(error);
                     })
             })
     }
-
     //update
-    $scope.preUpdate = function (data) {
-        $rootScope.nwUpdate = data;
-        $location.path("/thiet-lap-danh-muc/nha-mang/sua")
+    var id = $routeParams.nwID;
+    if (id) {
+        crudService.get("/Network/Get/", id)
+            .success(function (data) {
+                console.log(data);
+                data.CreateDate = parseDate(data.CreateDate);
+                data.LastUpdate = parseDate(data.LastUpdate);
+                $scope.nwUpdate = data;
+            })
+            .error(function (error) {
+                alert(error);
+            });
     }
+
     $scope.update = function (data) {
         var currentUser = Authentication.currentUser();
         data.UpdateBy = currentUser.Name;
+        data.isActive = true;
+        data.isDeleted = false;
         crudService.update("/Network/Update", data)
             .success(function (data) {
-                delete $rootScope.nwUpdate;
                 $location.path("/thiet-lap-danh-muc/nha-mang/");
             })
             .error(function (error) {
                 console.log(error);
             })
     }
+    //delete
     $scope.remove = function (data) {
         var currentUser = Authentication.currentUser();
         data.UpdateBy = currentUser.Name;
@@ -74,8 +87,10 @@
             transformRequest: angular.identity
         });
     }
-
     var parseDate = function (value) {
-        return new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
+        if (value) {
+            return new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
+        }
+        return null;
     }
 });

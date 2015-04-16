@@ -6,7 +6,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <div class="row" style="padding:20px 50px 50px 100px">
+        <div class="row">
             <table class="table table-responsive table-hover table-condensed">
                 <thead>
                     <tr>
@@ -15,20 +15,25 @@
                         <th class="text-center">Logo</th>
                         <th class="text-center">Người tạo</th>
                         <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="nw in lstNetWork|filter:{isActive:true}|orderBy:'Name'" ng-mouseover="clickMe()">
+                    <tr ng-repeat="nw in lstNetWork|filter:{isDeleted:false}|orderBy:'Name'">
                         <td class="text-center" style="vertical-align:middle">{{nw.Name}}</td>
-                        <td class="text-center" style="vertical-align:middle">{{nw.Number}}</td>
+                        <td class="text-left" style="vertical-align:middle">{{nw.Number}}</td>
                         <td class="text-center"><img src="{{nw.image}}" width="70" height="70" /></td>
                         <td class="text-center" style="vertical-align:middle">{{nw.CreateBy}}</td>
                         <td class="text-center" style="vertical-align:middle">{{nw.CreateDate|date:"dd/MM/yyyy"}}</td>
-                        <td class="text-right" style="vertical-align:middle">
-                            <span class="pull-right control-btn">
-                                <button type="button" ng-click="preUpdate(nw)" class="btn btn-primary btn-xs">
+                        <td class="text-center" style="vertical-align:middle">
+                            <span class="fa fa-lg fa-unlock" ng-show="nw.isActive" title="Hoạt động"></span>
+                            <span class="fa fa-lg fa-lock" ng-hide="nw.isActive" title="Khóa"></span>
+                        </td>
+                        <td class="text-left" style="vertical-align:middle">
+                            <span class="control-btn">
+                                <a role="button" href="#/thiet-lap-danh-muc/nha-mang/sua/{{nw.ID}}" ng-click="preUpdate(nw.ID)" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
-                                </button>
+                                </a>
                                 <button type="button" ng-click="remove(nw)" class="btn btn-danger btn-xs">
                                     <span class="glyphicon glyphicon-remove" title="Xóa"></span> Xóa
                                 </button>
@@ -38,7 +43,7 @@
                 </tbody>
             </table>
             <a href="#/thiet-lap-danh-muc/nha-mang/them" class="btn btn-success">Tạo mới</a>
-            <input class="pull-right" />
+            <!--<input class="pull-right" />-->
         </div>
         <!-- /.row -->
     </div>
