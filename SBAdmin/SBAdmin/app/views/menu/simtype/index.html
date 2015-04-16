@@ -1,1 +1,45 @@
-﻿
+﻿<div id="page-wrapper" ng-controller="simtypeCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Danh sách loại SIM</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row" style="padding:20px 50px 50px 100px">
+            <table class="table table-responsive table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center">Tên loại</th>
+                        <th class="text-center">Điều kiện</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="st in lstSimType|filter:{isDeleted:false}|orderBy:'Name'">
+                        <td class="text-center" style="vertical-align:middle">{{st.Name}}</td>
+                        <td class="text-center" style="vertical-align:middle">{{st.Condition}}</td>
+                        <td class="text-center" style="vertical-align:middle">
+                            <span class="fa fa-lg fa-unlock" ng-show="st.isActive" title="Hoạt động"></span>
+                            <span class="fa fa-lg fa-lock" ng-hide="st.isActive" title="Khóa"></span>
+                        </td>
+                        <td class="text-right" style="vertical-align:middle">
+                            <span class="pull-right control-btn">
+                                <a role="button" href="#/thiet-lap-danh-muc/loai-sim/sua/{{st.ID}}" class="btn btn-primary btn-xs">
+                                    <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
+                                </a>
+                                <button type="button" ng-click="remove(st)" class="btn btn-danger btn-xs">
+                                    <span class="glyphicon glyphicon-remove" title="Xóa"></span> Xóa
+                                </button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#/thiet-lap-danh-muc/loai-sim/them" class="btn btn-success">Tạo mới</a>
+            <!--<input class="pull-right" />-->
+        </div>
+        <!-- /.row -->
+    </div>
+</div>

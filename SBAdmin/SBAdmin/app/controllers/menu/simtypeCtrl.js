@@ -1,7 +1,8 @@
 ﻿angular.module("sbAdmin")
-.controller("simtypeCtrl", function ($scope, crudService) {
+.controller("simtypeCtrl", function ($scope, crudService, $location, $routeParams) {
     $scope.lstSimType = [];
-
+    $scope.lstSTName = [];
+    // init
     crudService.getAll("/SimType/GetListSimType")
         .success(function (data) {
             $scope.lstSimType = data;
@@ -9,28 +10,56 @@
         .error(function (error) {
             console.log(error);
         })
+    crudService.get("/SimType/SimTypeName", "")
+        .success(function (data) {
+            $scope.lstSTName = data;
+        })
+        .error(function (error) {
+            console.log(error);
+        })
+    //create
     $scope.create = function (data) {
+        $("#myModal").modal("show");
+        data.isActive = true;
+        data.isDeleted = false;
         crudService.create("/SimType/Create", data)
             .success(function (data) {
-                console.log(data);
+                $("#myModal").modal("hide");
+                $location.path("/thiet-lap-danh-muc/loai-sim/")
             })
             .error(function (error) {
                 console.log(error);
             })
+    }
+    // update
+    var id = $routeParams.stID;
+    if (id) {
+        crudService.get("/SimType/Get/", id)
+            .success(function (data) {
+                $scope.stUpdate = data;
+            })
+            .error(function (error) {
+                console.log(error);
+            });
     }
     $scope.update = function (data) {
+        $("#myModal").modal("show");
         crudService.update("/SimType/Update", data)
             .success(function (data) {
-                console.log(data);
+                $("#myModal").modal("hide");
+                $location.path("/thiet-lap-danh-muc/loai-sim/")
             })
             .error(function (error) {
                 console.log(error);
             })
     }
-    $scope.remove = function (id) {
-        crudService.remove("/SimType/Delete", id)
+    //remove
+    $scope.remove = function (data) {
+        data.isActive = false;
+        data.IsDeleted = true;
+        crudService.update("/SimType/Delete", data)
             .success(function (data) {
-                console.log(data);
+                $location.path("/thiet-lap-danh-muc/loai-sim/")
             })
             .error(function (error) {
                 console.log(error);

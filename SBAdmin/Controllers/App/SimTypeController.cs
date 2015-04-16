@@ -1,7 +1,8 @@
 ﻿using SBAdmin.Models.App;
 using SBAdmin.Models.App.Repository;
+using System.Collections.Generic;
 using System.Web.Mvc;
-
+using System.Linq;
 namespace SBAdmin.Controllers.App
 {
     [Authorize]
@@ -17,9 +18,15 @@ namespace SBAdmin.Controllers.App
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult Get(int id)
         {
-            return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+            var data = context.Get(id);
+            if (data != null)
+            {
+                return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+            }
+            return HttpNotFound();
         }
 
         public ActionResult Create(SimType model)
@@ -30,22 +37,42 @@ namespace SBAdmin.Controllers.App
                 context.Save();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            return null;
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
-        public void Update(SimType model)
+        public ActionResult Update(SimType model)
         {
             if (ModelState.IsValid)
             {
                 context.Update(model);
                 context.Save();
+                return Json(model, JsonRequestBehavior.AllowGet);
             }
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
         public void Delete(int id)
         {
             context.Delete(id);
             context.Save();
+        }
+
+        [HttpGet]
+        public JsonResult SimTypeName()
+        {
+            var result = new List<SimType>();
+            var lstST = context.GetAll();
+            GetChild(result, lstST, lstST.Where(s => s.IDParent == null || s.IDParent == 0), "");
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        void GetChild(ICollection<SimType> result, IEnumerable<SimType> lstSimType, IEnumerable<SimType> parent, string prefix)
+        {
+            foreach (var item in parent)
+            {
+                result.Add(new SimType() { ID = item.ID, Name = prefix + item.Name });
+                GetChild(result, lstSimType, lstSimType.Where(r => r.IDParent == item.ID).ToList(), prefix + "---");
+            }
         }
     }
 }

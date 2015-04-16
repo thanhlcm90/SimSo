@@ -17,9 +17,15 @@ namespace SBAdmin.Controllers.App
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult Get(int id)
         {
-            return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+            var data = context.Get(id);
+            if (data != null)
+            {
+                return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]

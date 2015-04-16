@@ -5,7 +5,6 @@
     }
 
     this.get = function (url, id) {
-        console.log(id);
         return $http.get(url + id);
     }
 

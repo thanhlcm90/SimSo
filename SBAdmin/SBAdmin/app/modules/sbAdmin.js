@@ -35,6 +35,17 @@
            $routeProvider.when("/dai-ly/sua/:spID", {
                templateUrl: "/SBAdmin/app/views/menu/supplier/update.html"
            });
+           // menu-sim type
+           //menu-network
+           $routeProvider.when("/thiet-lap-danh-muc/loai-sim", {
+               templateUrl: "/SBAdmin/app/views/menu/simtype/index.html"
+           });
+           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/them", {
+               templateUrl: "/SBAdmin/app/views/menu/simtype/create.html"
+           });
+           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/sua/:stID", {
+               templateUrl: "/SBAdmin/app/views/menu/simtype/update.html"
+           });
 
            //ban lam viec
            $routeProvider.otherwise({

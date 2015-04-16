@@ -182,6 +182,7 @@
     <Compile Include="Models\App\SIM.cs" />
     <Compile Include="Models\App\SimType.cs" />
     <Compile Include="Models\App\Supplier.cs" />
+    <Compile Include="Models\App\ViewModels\SimTypeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
