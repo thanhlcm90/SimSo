@@ -62,7 +62,7 @@ namespace SBAdmin.Controllers.App
         {
             var result = new List<SimType>();
             var lstST = context.GetAll();
-            GetChild(result, lstST, lstST.Where(s => s.IDParent == null || s.IDParent == 0), "");
+            GetChild(result, lstST, lstST.Where(s => (s.IDParent == null || s.IDParent == 0) && s.isDeleted == false), "");
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -71,8 +71,27 @@ namespace SBAdmin.Controllers.App
             foreach (var item in parent)
             {
                 result.Add(new SimType() { ID = item.ID, Name = prefix + item.Name });
-                GetChild(result, lstSimType, lstSimType.Where(r => r.IDParent == item.ID).ToList(), prefix + "---");
+                GetChild(result, lstSimType, lstSimType.Where(r => r.IDParent == item.ID && r.isDeleted == false).ToList(), prefix + "---");
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetByNumber(string number)
+        {
+            return Json(new SimTypeRepo().GetByNumber(number));
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (context != null)
+                {
+                    context.Dispose();
+                    context = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

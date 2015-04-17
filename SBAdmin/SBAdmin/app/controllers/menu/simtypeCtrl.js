@@ -32,7 +32,7 @@
             })
     }
     // update
-    var id = $routeParams.stID;
+    var id = $routeParams.id;
     if (id) {
         crudService.get("/SimType/Get/", id)
             .success(function (data) {
@@ -56,8 +56,8 @@
     //remove
     $scope.remove = function (data) {
         data.isActive = false;
-        data.IsDeleted = true;
-        crudService.update("/SimType/Delete", data)
+        data.isDeleted = true;
+        crudService.update("/SimType/Update", data)
             .success(function (data) {
                 $location.path("/thiet-lap-danh-muc/loai-sim/")
             })

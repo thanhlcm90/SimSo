@@ -33,7 +33,7 @@
             })
     }
     // update
-    var id = $routeParams.spID;
+    var id = $routeParams.id;
     if (id) {
         crudService.get("/Supplier/Get/", id)
             .success(function (data) {

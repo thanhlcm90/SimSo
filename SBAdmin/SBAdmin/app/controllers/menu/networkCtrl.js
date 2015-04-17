@@ -35,11 +35,10 @@
             })
     }
     //update
-    var id = $routeParams.nwID;
+    var id = $routeParams.id;
     if (id) {
         crudService.get("/Network/Get/", id)
             .success(function (data) {
-                console.log(data);
                 data.CreateDate = parseDate(data.CreateDate);
                 data.LastUpdate = parseDate(data.LastUpdate);
                 $scope.nwUpdate = data;
@@ -50,17 +49,34 @@
     }
 
     $scope.update = function (data) {
+        $("#myModal").modal("show");
         var currentUser = Authentication.currentUser();
         data.UpdateBy = currentUser.Name;
-        data.isActive = true;
-        data.isDeleted = false;
-        crudService.update("/Network/Update", data)
-            .success(function (data) {
-                $location.path("/thiet-lap-danh-muc/nha-mang/");
-            })
-            .error(function (error) {
-                console.log(error);
-            })
+        var files = $("#chooseFile").get(0).files;
+        if (!files[0]) {
+            crudService.update("/Network/Update", data)
+                .success(function (data) {
+                    $location.path("/thiet-lap-danh-muc/nha-mang/");
+                })
+                .error(function (error) {
+                    console.log(error);
+                })
+        } else {
+            uploadFile()
+                .success(function (result) {
+                    data.image = result;
+                    crudService.update("/Network/Update", data)
+                        .success(function (result) {
+                            $("#myModal").modal("hide");
+                            $location.path("/thiet-lap-danh-muc/nha-mang/")
+                        })
+                        .error(function (error) {
+                            $("#myModal").modal("hide");
+                            console.log(error);
+                        })
+                })
+        }
+
     }
     //delete
     $scope.remove = function (data) {

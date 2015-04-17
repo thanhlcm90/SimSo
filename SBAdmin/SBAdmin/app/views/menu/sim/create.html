@@ -1,0 +1,73 @@
+﻿<div id="page-wrapper" ng-controller="crudSIMCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Quản lý SIM<small><span class="glyphicon glyphicon-chevron-right"></span>Thêm</small></h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div style="width:90%" class="row center-block">
+            <form role="form" class="form-horizontal" name="createForm">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="number">Số:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="number" data-ng-blur="changeNumber()" ng-model="SIM.Number" placeholder="Nhập số" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="nw">Nhà mạng:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="network" ng-model="SIM.NetWork_ID">
+                            <option ng-repeat="nw in lstNetwork" value="{{nw.ID}}">{{nw.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="type">Loại SIM:</label>
+                    <div class="col-sm-10">
+                        <select ng-model="SIM.SimType_ID" class="form-control">
+                            <option ng-repeat="st in lstSimType" value="{{st.ID}}">{{st.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="type">Đại lý:</label>
+                    <div class="col-sm-10">
+                        <select ng-model="SIM.Supplier_ID" class="form-control">
+                            <option ng-repeat="sp in lstSupplier" value="{{sp.ID}}">{{sp.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="price">Giá:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="price" ng-model="SIM.Price" placeholder="Nhập giá" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-primary" ng-click="create(SIM)">Submit</button>
+                        <a class="btn btn-default pull-right" href="#/thiet-lap-danh-muc/loai-sim">Hủy bỏ</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Đang xử lý...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

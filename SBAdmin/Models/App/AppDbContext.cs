@@ -17,6 +17,7 @@ namespace SBAdmin.Models.App
         public virtual DbSet<SIM> SIMs { get; set; }
         public virtual DbSet<SimType> SimTypes { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -91,6 +92,14 @@ namespace SBAdmin.Models.App
             modelBuilder.Entity<Supplier>()
                 .Property(e => e.UpdateBy)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Order>()
+              .Property(e => e.Email)
+              .IsUnicode(false);
+
+            modelBuilder.Entity<Order>()
+              .Property(e => e.UserBussiness)
+              .IsUnicode(false);
         }
     }
 }

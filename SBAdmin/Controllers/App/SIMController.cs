@@ -5,16 +5,22 @@ using System.Web.Mvc;
 namespace SBAdmin.Controllers.App
 {
     [Authorize]
-    public class SupplierController : Controller
+    public class SIMController : Controller
     {
-        GenericRepository<Supplier> context = null;
-        public SupplierController()
+        GenericRepository<SIM> context = null;
+        public SIMController()
         {
-            context = new GenericRepository<Supplier>();
+            context = new GenericRepository<SIM>();
         }
-        public ActionResult GetListSupplier()
+        // get list sim filter
+        public ActionResult GetListSIM(SIMFilter filter)
         {
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAll()
+        {
+            return Json(new SIMRepository().GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -29,9 +35,10 @@ namespace SBAdmin.Controllers.App
         }
 
         [HttpPost]
-        public ActionResult Create(Supplier model)
+        public ActionResult Create(SIM model)
         {
             model.CreateDate = System.DateTime.Now;
+            model.Status = true;
             if (ModelState.IsValid)
             {
                 var data = context.Insert(model);
@@ -42,7 +49,7 @@ namespace SBAdmin.Controllers.App
         }
 
         [HttpPost]
-        public ActionResult Update(Supplier model)
+        public ActionResult Update(SIM model)
         {
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
@@ -54,11 +61,13 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [HttpPost]
         public void Delete(int id)
         {
             context.Delete(id);
             context.Save();
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -69,7 +78,6 @@ namespace SBAdmin.Controllers.App
                     context = null;
                 }
             }
-
             base.Dispose(disposing);
         }
     }

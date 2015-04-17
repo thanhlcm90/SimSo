@@ -162,6 +162,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\App\NetworkController.cs" />
+    <Compile Include="Controllers\App\SIMController.cs" />
     <Compile Include="Controllers\App\SimTypeController.cs" />
     <Compile Include="Controllers\App\SupplierController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -173,16 +174,26 @@
     <Compile Include="Migrations\201504160847444_InitCreate.Designer.cs">
       <DependentUpon>201504160847444_InitCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504171453594_AddOrderEntity.cs" />
+    <Compile Include="Migrations\201504171453594_AddOrderEntity.Designer.cs">
+      <DependentUpon>201504171453594_AddOrderEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\App\Employee.cs" />
     <Compile Include="Models\App\AppDbContext.cs" />
     <Compile Include="Models\App\NetWork.cs" />
+    <Compile Include="Models\App\Order.cs" />
     <Compile Include="Models\App\Repository\GenericRepository.cs" />
+    <Compile Include="Models\App\Repository\NetworkRepo.cs" />
+    <Compile Include="Models\App\Repository\SIMRepository.cs" />
+    <Compile Include="Models\App\Repository\SimTypeRepo.cs" />
     <Compile Include="Models\App\SIM.cs" />
     <Compile Include="Models\App\SimType.cs" />
     <Compile Include="Models\App\Supplier.cs" />
+    <Compile Include="Models\App\ViewModels\SIMFilter.cs" />
     <Compile Include="Models\App\ViewModels\SimTypeViewModel.cs" />
+    <Compile Include="Models\App\ViewModels\SIMViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +215,7 @@
     <Content Include="SBAdmin\app\components\waitingDialog\waitingDialog.js" />
     <Content Include="SBAdmin\app\controllers\appCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\networkCtrl.js" />
+    <Content Include="SBAdmin\app\controllers\menu\simCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\simtypeCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\supplierCtrl.js" />
     <Content Include="SBAdmin\app\customServices\authenticate.js" />
@@ -221,6 +233,9 @@
     <Content Include="SBAdmin\app\views\menu\simtype\create.html" />
     <Content Include="SBAdmin\app\views\menu\simtype\index.html" />
     <Content Include="SBAdmin\app\views\menu\simtype\update.html" />
+    <Content Include="SBAdmin\app\views\menu\sim\create.html" />
+    <Content Include="SBAdmin\app\views\menu\sim\index.html" />
+    <Content Include="SBAdmin\app\views\menu\sim\update.html" />
     <Content Include="SBAdmin\app\views\menu\supplier\create.html" />
     <Content Include="SBAdmin\app\views\menu\supplier\index.html" />
     <Content Include="SBAdmin\app\views\menu\supplier\update.html" />
@@ -1020,7 +1035,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1035,6 +1049,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201504160847444_InitCreate.resx">
       <DependentUpon>201504160847444_InitCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504171453594_AddOrderEntity.resx">
+      <DependentUpon>201504171453594_AddOrderEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

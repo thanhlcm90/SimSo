@@ -73,5 +73,24 @@ namespace SBAdmin.Controllers.App
             }
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
+
+        [HttpGet]
+        public JsonResult GetByNumber(string number)
+        {
+            return Json(new NetworkRepo().GetByNumber(number),JsonRequestBehavior.AllowGet);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (context != null)
+                {
+                    context.Dispose();
+                    context = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

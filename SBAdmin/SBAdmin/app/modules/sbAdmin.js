@@ -22,7 +22,7 @@
            $routeProvider.when("/thiet-lap-danh-muc/nha-mang/them", {
                templateUrl: "/SBAdmin/app/views/menu/network/create.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/sua/:nwID", {
+           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/sua/:id", {
                templateUrl: "/SBAdmin/app/views/menu/network/update.html"
            });
            // supplier
@@ -32,21 +32,29 @@
            $routeProvider.when("/dai-ly/them", {
                templateUrl: "/SBAdmin/app/views/menu/supplier/create.html"
            });
-           $routeProvider.when("/dai-ly/sua/:spID", {
+           $routeProvider.when("/dai-ly/sua/:id", {
                templateUrl: "/SBAdmin/app/views/menu/supplier/update.html"
            });
            // menu-sim type
-           //menu-network
            $routeProvider.when("/thiet-lap-danh-muc/loai-sim", {
                templateUrl: "/SBAdmin/app/views/menu/simtype/index.html"
            });
            $routeProvider.when("/thiet-lap-danh-muc/loai-sim/them", {
                templateUrl: "/SBAdmin/app/views/menu/simtype/create.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/sua/:stID", {
+           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/sua/:id", {
                templateUrl: "/SBAdmin/app/views/menu/simtype/update.html"
            });
-
+           // menu-sim
+           $routeProvider.when("/quan-ly-sim", {
+               templateUrl: "/SBAdmin/app/views/menu/sim/index.html"
+           });
+           $routeProvider.when("/quan-ly-sim/them", {
+               templateUrl: "/SBAdmin/app/views/menu/sim/create.html"
+           });
+           $routeProvider.when("/quan-ly-sim/sua/:id", {
+               templateUrl: "/SBAdmin/app/views/menu/sim/update.html"
+           });
            //ban lam viec
            $routeProvider.otherwise({
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"

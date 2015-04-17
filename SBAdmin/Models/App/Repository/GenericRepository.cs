@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SBAdmin.Models.App.Repository
 {
-    public class GenericRepository<T> where T : class
+    public class GenericRepository<T> : IDisposable where T : class
     {
         private AppDbContext context = null;
         private DbSet<T> table = null;
@@ -46,6 +46,15 @@ namespace SBAdmin.Models.App.Repository
         public void Save()
         {
             context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            if (context != null)
+            {
+                context.Dispose();
+                context = null;
+            }
         }
     }
 }
