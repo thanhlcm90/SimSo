@@ -17,15 +17,13 @@
     <link href="~/SBAdmin/dist/css/timeline.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="~/SBAdmin/dist/css/sb-admin-2.css" rel="stylesheet" />
-    <!-- Morris Charts CSS -->
-    <link href="~/SBAdmin/bower_components/morrisjs/morris.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="~/SBAdmin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body ng-controller="appCtrl">
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-show="currentUser()">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" >
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -136,9 +134,10 @@
     <!-- Angular app -->
     <script src="~/Scripts/angular.js"></script>
     <script src="~/SBAdmin/app/modules/sbAdmin.js"></script>
+    <script src="~/SBAdmin/app/modules/appRun.js"></script>
+    <script src="~/SBAdmin/app/customServices/authenticate.js"></script>
     <script src="~/SBAdmin/app/controllers/authenticateCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/manageUsersCtrl.js"></script>
-    <script src="~/SBAdmin/app/customServices/authenticate.js"></script>
     <script src="~/SBAdmin/app/customServices/crud.js"></script>
     <script src="~/SBAdmin/app/controllers/appCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/menu/networkCtrl.js"></script>
@@ -147,7 +146,7 @@
     <script src="~/SBAdmin/app/controllers/menu/simCtrl.js"></script>
     <script src="~/SBAdmin/app/ngmodules/angular-route.js"></script>
     <script>
-        var signedIn = "@ViewBag.SignedIn";
+        var signedIn = '@TempData["SignedIn"]';
     </script>
 </body>
 </html>

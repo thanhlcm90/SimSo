@@ -194,7 +194,6 @@
     <Compile Include="Models\App\NetWork.cs" />
     <Compile Include="Models\App\Order.cs" />
     <Compile Include="Models\App\Repository\GenericRepository.cs" />
-    <Compile Include="Models\App\Repository\NetworkRepo.cs" />
     <Compile Include="Models\App\Repository\SIMRepository.cs" />
     <Compile Include="Models\App\Repository\SimTypeRepo.cs" />
     <Compile Include="Models\App\SIM.cs" />
@@ -231,6 +230,7 @@
     <Content Include="SBAdmin\app\customServices\crud.js" />
     <Content Include="SBAdmin\app\controllers\authenticateCtrl.js" />
     <Content Include="SBAdmin\app\controllers\manageUsersCtrl.js" />
+    <Content Include="SBAdmin\app\modules\appRun.js" />
     <Content Include="SBAdmin\app\modules\sbAdmin.js" />
     <Content Include="SBAdmin\app\views\authentication\authentication.html" />
     <Content Include="SBAdmin\app\ngmodules\angular-resource.js" />
@@ -1042,6 +1042,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

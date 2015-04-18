@@ -49,8 +49,6 @@
     $scope.update = function (data) {
         var currentUser = Authentication.currentUser();
         data.UpdateBy = currentUser.Name;
-        data.isActive = true;
-        data.isDeleted = false;
         crudService.update("/Supplier/Update", data)
             .success(function (data) {
                 $location.path("/dai-ly/");

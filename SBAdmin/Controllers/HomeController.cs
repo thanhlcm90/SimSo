@@ -10,11 +10,20 @@ namespace SBAdmin.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.SignedIn = User.Identity.IsAuthenticated;
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View("Login");
+            }
+            TempData["SignedIn"] = User.Identity.IsAuthenticated;
             return View();
         }
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                TempData["SignedIn"] = User.Identity.IsAuthenticated;
+                return RedirectToAction("Index");
+            }
             return View();
         }
         public ActionResult About()

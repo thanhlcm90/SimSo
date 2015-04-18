@@ -17,7 +17,7 @@
            $routeProvider.when("/quan-ly-nhan-vien/cap-nhat/:id", {
                templateUrl: "/SBAdmin/app/views/manageUser/update.html"
            });
-         
+
            //menu-network
            $routeProvider.when("/thiet-lap-danh-muc/nha-mang", {
                templateUrl: "/SBAdmin/app/views/menu/network/index.html"
@@ -63,14 +63,3 @@
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"
            });
        });
-
-angular.module("sbAdmin").run(['Authentication', '$location', function (Authentication, $location) {
-    if (Authentication.signedIn == "False") {
-        $location.path('/signIn');
-    } else {
-        Authentication.getCurrentUser("/Account/GetCurrentUser")
-            .success(function (data) {
-                Authentication.setCurrentUser(data);
-            });
-    }
-}]);

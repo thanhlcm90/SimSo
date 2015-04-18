@@ -1,18 +1,12 @@
-﻿angular.module("sbAdmin")
-.controller("authenCtrl", function ($scope, $rootScope, Authentication, $location, $window) {
-
+﻿angular.module("authenticate")
+.controller("authenCtrl", function ($scope, Authentication) {
     $scope.signIn = function (user) {
         $("#myModal").modal("show");
         Authentication.signIn("/Account/SignIn", user)
             .success(function (result) {
                 if (result == "Login Success") {
                     $("#myModal").modal("hide");
-                    Authentication.getCurrentUser("/Account/GetCurrentUser")
-                        .success(function (data) {
-                            Authentication.setCurrentUser(data);
-                            Authentication.signedIn = "True";
-                            $location.path("/");
-                        });
+                    window.location = "";
                 } else {
                     $("#myModal").modal("hide");
                     alert(result);
@@ -23,17 +17,10 @@
                 alert(error);
             });
     }
-
     $scope.signOut = function () {
         Authentication.signOut("/Account/SignOut")
             .success(function () {
-                Authentication.signedIn = "False";
-                Authentication.setCurrentUser();
-                $location.path("/signIn");
-                alert("Signed out!");
+                window.location = "";
             })
-    }
-    $scope.currentUser = function () {
-        return Authentication.currentUser();
     }
 })

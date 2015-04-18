@@ -1,13 +1,8 @@
 ﻿angular.module("sbAdmin")
-.controller("manageUserCtrl", function ($scope, $location, crudService, Authentication, $http,$routeParams) {
+.controller("manageUserCtrl", function ($scope, $location, crudService, Authentication, $http, $routeParams) {
     // init
     if (Authentication.signedIn == "False") {
-        $location.path('/signIn');
-    } else {
-        Authentication.getCurrentUser("/Account/GetCurrentUser")
-           .success(function (data) {
-               Authentication.setCurrentUser(data);
-           });
+        window.location = "";
     }
     $scope.lstEmp = [];
     // crud
@@ -21,7 +16,6 @@
         data.ConfirmPassword = user.ConfirmPassword;
         crudService.create("/Account/CreateUser", data)
             .success(function (result) {
-               // $location.path('/manageUser');
             })
             .error(function (error) {
                 console.log(error);
@@ -74,7 +68,7 @@
         if (!files[0]) {
             crudService.update("/Employee/Update", data)
                 .success(function (data) {
-                    $location.path("/manageUser/");
+                    $location.path("/quan-ly-nhan-vien/");
                 })
                 .error(function (error) {
                     console.log(error);
@@ -86,7 +80,7 @@
                     crudService.update("/Employee/Update", data)
                         .success(function (result) {
                             $("#myModal").modal("hide");
-                            $location.path("/manageUser/")
+                            $location.path("/quan-ly-nhan-vien/")
                         })
                         .error(function (error) {
                             $("#myModal").modal("hide");

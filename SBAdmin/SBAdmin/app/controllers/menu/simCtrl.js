@@ -13,7 +13,7 @@
             console.log(error);
         })
 })
-.controller("crudSIMCtrl", function ($scope, crudService, $http, $routeParams, $location,Authentication) {
+.controller("crudSIMCtrl", function ($scope, crudService, $http, $routeParams, $location, Authentication) {
     // models
     $scope.lstSimType = [];
     $scope.lstNetwork = [];
@@ -42,15 +42,22 @@
         .error(function (error) {
             console.log(error);
         })
+    // tự động nhận loại nhà mạng
     $scope.changeNumber = function () {
-        if ($scope.SIM.Number && ($scope.SIM.Number.length >= 4)) {
-            $http.get("NetWork/GetByNumber/?number=" + $scope.SIM.Number)
-                .success(function (data) {
-                    $scope.SIM.NetWork_ID = data.ID;
-                })
-                .error(function (error) {
-                    console.log(error);
-                });
+        if ($scope.SIM.Number && ($scope.SIM.Number.length >= 3)) {
+            var number = $scope.SIM.Number;
+            var count = $scope.lstNetwork.length;
+            for (i = 0; i < count; i++) {
+                item = $scope.lstNetwork[i];
+                if (item.Number.indexOf(number.substring(0, 3)) > -1 || item.Number.indexOf(number.substring(0, 4)) > -1) {
+                    $scope.SIM.NetWork_ID = item.ID;
+                    break;
+                } else {
+                    $scope.SIM.NetWork_ID = 0;
+                }
+            }
+        } else {
+            $scope.SIM.NetWork_ID = 0;
         }
     }
     //create
@@ -81,8 +88,6 @@
     }
     $scope.update = function (data) {
         $("#myModal").modal("show");
-        data.isActive = true;
-        data.isDeleted = false;
         data.CreateDate = parseDate(data.CreateDate);
         data.LastUpdate = null;
         data.UpdateBy = Authentication.currentUser().Name;
