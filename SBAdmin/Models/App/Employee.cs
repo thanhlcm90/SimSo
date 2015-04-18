@@ -31,8 +31,8 @@ namespace SBAdmin.Models.App
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] images { get; set; }
+        [StringLength(200)]
+        public string images { get; set; }
 
         public bool? isActive { get; set; }
 

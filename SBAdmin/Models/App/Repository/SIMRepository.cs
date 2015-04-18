@@ -13,18 +13,17 @@ namespace SBAdmin.Models.App.Repository
         {
             context = new AppDbContext();
         }
-        //public IEnumerable<SIM> GetSimsFilter(SIMFilter filter)
-        //{
-        //    var data = from sim in context.SIMs 
-        //               where (sim.isDeleted==false||sim.isDeleted==filter.deletedIncluded)&&
-        //               (sim.isActive==true || sim.isActive!=filter.activeIncluded)&&
-        //               (filter.nwId==null||sim.NetWork_ID==filter.nwId)&&
-        //               (filter.spId==null||filter.spId==sim.Supplier_ID)&&
-        //               (filter.stId==null||filter.stId==sim.SimType_ID)&&
-        //               filter.
-                          
-        //    return null;
-        //}
+        public IEnumerable<SIM> GetSimsFilter(SIMFilter filter)
+        {
+            //var data = from sim in context.SIMs 
+            //           where (sim.isDeleted==false||sim.isDeleted==filter.deletedIncluded)&&
+            //           (sim.isActive==true || sim.isActive!=filter.activeIncluded)&&
+            //           (filter.nwId==null||sim.NetWork_ID==filter.nwId)&&
+            //           (filter.spId==null||filter.spId==sim.Supplier_ID)&&
+            //           (filter.stId==null||filter.stId==sim.SimType_ID)&&
+            //           filter.
+            return null;
+        }
 
         public IEnumerable<SIMViewModel> GetAll()
         {

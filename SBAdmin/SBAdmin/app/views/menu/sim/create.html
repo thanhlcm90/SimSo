@@ -18,7 +18,7 @@
                     <label class="control-label col-sm-2" for="nw">Nhà mạng:</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="network" ng-model="SIM.NetWork_ID">
-                            <option ng-repeat="nw in lstNetwork" value="{{nw.ID}}">{{nw.Name}}</option>
+                            <option ng-repeat="nw in lstNetwork|filter:{isDeleted:false}" value="{{nw.ID}}">{{nw.Name}}</option>
                         </select>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <label class="control-label col-sm-2" for="type">Loại SIM:</label>
                     <div class="col-sm-10">
                         <select ng-model="SIM.SimType_ID" class="form-control">
-                            <option ng-repeat="st in lstSimType" value="{{st.ID}}">{{st.Name}}</option>
+                            <option ng-repeat="st in lstSimType|filter:{isDeleted:false}" value="{{st.ID}}">{{st.Name}}</option>
                         </select>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                     <label class="control-label col-sm-2" for="type">Đại lý:</label>
                     <div class="col-sm-10">
                         <select ng-model="SIM.Supplier_ID" class="form-control">
-                            <option ng-repeat="sp in lstSupplier" value="{{sp.ID}}">{{sp.Name}}</option>
+                            <option ng-repeat="sp in lstSupplier|filter:{isDeleted:false}" value="{{sp.ID}}">{{sp.Name}}</option>
                         </select>
                     </div>
                 </div>

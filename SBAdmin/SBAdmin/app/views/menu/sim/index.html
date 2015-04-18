@@ -11,7 +11,7 @@
                     Danh sách SIM
                 </div>
                 <div class="panel-body">
-                    <div class="form-inline" style="padding:0 20px">
+                    <!--<div class="form-inline" style="padding:0 20px">
                         <div class="form-group-sm">
                             <label style="font-weight:initial">
                                 Show
@@ -24,7 +24,7 @@
                             </label>
                         </div>
                     </div>
-                    <hr />
+                    <hr />-->
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="sim in lstSIM">
-                                <td>{{sim.Number}}</td>
+                                <td><a href="#/quan-ly-sim/sua/{{sim.ID}}">{{sim.Number}}</a></td>
                                 <td><span><span><img src="{{sim.Network.image}}" height="30" width="30" /> </span>{{sim.Network.Name}}</span></td>
                                 <td>{{sim.SimType}}</td>
                                 <td>{{sim.Supplier}}</td>

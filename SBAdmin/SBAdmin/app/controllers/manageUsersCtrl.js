@@ -1,5 +1,6 @@
 ﻿angular.module("sbAdmin")
-.controller("manageUserCtrl", function ($scope, $location, crudService, Authentication) {
+.controller("manageUserCtrl", function ($scope, $location, crudService, Authentication, $http,$routeParams) {
+    // init
     if (Authentication.signedIn == "False") {
         $location.path('/signIn');
     } else {
@@ -8,37 +9,136 @@
                Authentication.setCurrentUser(data);
            });
     }
-    $scope.listUser = [];
+    $scope.lstEmp = [];
     // crud
-    $scope.createUser = function (user) {
-        crudService.create("/Account/CreateUser", user)
+    $scope.create = function (user) {
+        $("#myModal").modal("show");
+        // insert to AspNetUser
+        var data = {};
+        data.Email = user.Email;
+        data.UserName = user.UserName;
+        data.Password = user.Password;
+        data.ConfirmPassword = user.ConfirmPassword;
+        crudService.create("/Account/CreateUser", data)
             .success(function (result) {
-                $location.path('/manageUser');
+               // $location.path('/manageUser');
             })
             .error(function (error) {
-            })
+                console.log(error);
+            });
+
+        // insert to employee
+        var emp = {};
+        angular.copy(user, emp);
+        emp.CreateBy = Authentication.currentUser().Name;
+        emp.isActive = true;
+        emp.isDeleted = false;
+        delete emp.Password;
+        delete emp.ConfirmPassword;
+        uploadFile()
+           .success(function (result) {
+               emp.images = result;
+               crudService.create("/Employee/Create", emp)
+                   .success(function (result) {
+                       $("#myModal").modal("hide");
+                       $location.path('/quan-ly-nhan-vien');
+                   })
+                   .error(function (error) {
+                       $("#myModal").modal("hide");
+                       console.log(error);
+                   })
+           })
     }
 
-    $scope.deleteUser = function (userId) {
-        crudService.remove("/", userId)
+
+    // update
+    var id = $routeParams.id;
+    if (id) {
+        crudService.get("/Employee/Get/", id)
             .success(function (data) {
+                data.CreateDate = parseDate(data.CreateDate);
+                data.LastUpdate = parseDate(data.LastUpdate);
+                data.BirthDay = parseDate(data.BirthDay);
+                $scope.user = data;
             })
             .error(function (error) {
-            })
+                alert(error);
+            });
     }
 
-    $scope.updateUser = function (user) {
-        crudService.update("/", user)
-            .success(function (data) {
-            })
-            .error(function (error) {
-            })
+    $scope.update = function (data) {
+        $("#myModal").modal("show");
+        var currentUser = Authentication.currentUser();
+        data.UpdateBy = currentUser.Name;
+        var files = $("#chooseFile").get(0).files;
+        if (!files[0]) {
+            crudService.update("/Employee/Update", data)
+                .success(function (data) {
+                    $location.path("/manageUser/");
+                })
+                .error(function (error) {
+                    console.log(error);
+                })
+        } else {
+            uploadFile()
+                .success(function (result) {
+                    data.image = result;
+                    crudService.update("/Employee/Update", data)
+                        .success(function (result) {
+                            $("#myModal").modal("hide");
+                            $location.path("/manageUser/")
+                        })
+                        .error(function (error) {
+                            $("#myModal").modal("hide");
+                            console.log(error);
+                        })
+                })
+        }
+
+    }
+    // remove
+    $scope.remove = function (data) {
+        var currentUser = Authentication.currentUser();
+        data.UpdateBy = currentUser.Name;
+        data.isActive = false;
+        data.isDeleted = true;
+        crudService.update("/Employee/Update", data)
+       .success(function (data) {
+           $location.path("/quan-ly-nhan-vien");
+       })
+       .error(function (error) {
+           console.log(error);
+       })
     }
 
-    crudService.getAll("/Account/GetUsers")
-        .success(function (users) {
-            $scope.listUser = users;
+    //get all
+    crudService.getAll("/Employee/GetAll")
+        .success(function (emps) {
+            angular.forEach(emps, function (item) {
+                item.CreateDate = parseDate(item.CreateDate);
+                item.LastUpdate = parseDate(item.LastUpdate);
+                item.BirthDay = parseDate(item.BirthDay);
+            })
+            $scope.lstEmp = emps;
         })
        .error(function (error) {
-       })
+       });
+    // upload image
+    var uploadFile = function () {
+        var formData = new FormData();
+        var files = $("#chooseFile").get(0).files;
+        formData.append("photo", files[0]);
+        return $http.post("/Employee/UploadFile", formData, {
+            withCredentials: true,
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        });
+    }
+
+    var parseDate = function (value) {
+        if (value) {
+            return new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
+        }
+        return null;
+    }
 });

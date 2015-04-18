@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Manage User<small><span class="glyphicon glyphicon-chevron-right"></span>Create</small></h1>
+                <h1 class="page-header">Quản lý nhân viên<small><span class="glyphicon glyphicon-chevron-right"></span>Sửa</small></h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -11,10 +11,10 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Tên tài khoản:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" name="username" ng-model="user.UserName" placeholder="Nhập tên tài khoản" />
+                        <input type="text" class="form-control" id="username" name="username" ng-model="user.UserName" placeholder="Nhập tên tài khoản" disabled/>
                     </div>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="control-label col-sm-2" for="pwd">Mật khẩu:</label>
                     <div class="col-sm-10">
                         <input class="form-control" name="password" type="password" ng-model="user.Password" placeholder="Nhập mật khẩu" />
@@ -25,7 +25,7 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="confirmPassword" type="password" ng-model="user.ConfirmPassword" placeholder="Nhập lại mật khẩu" />
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="fullname">Họ tên:</label>
                     <div class="col-sm-10">
@@ -70,22 +70,18 @@
                     <label class="control-label col-sm-2" for="img">Ảnh đại diện:</label>
                     <div class="col-sm-10">
                         <span style="display:inline-block">
-                            <img class="img-thumbnail" width="100" height="100" id="imageUpload" style="display:none" />
+                            <img src="{{user.images}}" class="img-thumbnail" width="100" height="100" id="imageUpload" />
                         </span>
                         <span style="display:inline-block">
                             <input type="file" id="chooseFile" name="photo" accept="image/*" />
                         </span>
                     </div>
                 </div>
-                <div class="form-group" ng-hide="!error.signUp">
-                    <label class="control-label text-danger col-sm-12">{{error.create}}</label>
-                </div>
                 <br />
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-primary" ng-click="create(user)">Create</button>
-                        <button class="btn btn-default" type="reset">Reset</button>
-                        <a class="btn btn-default pull-right" href="#/quan-ly-nhan-vien">Cancel</a>
+                        <button class="btn btn-primary" ng-click="update(user)">Cập nhật</button>
+                        <a class="btn btn-default pull-right" href="#/quan-ly-nhan-vien">Hủy bỏ</a>
                     </div>
                 </div>
             </form>

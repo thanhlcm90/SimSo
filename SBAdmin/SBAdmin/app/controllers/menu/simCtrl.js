@@ -43,7 +43,7 @@
             console.log(error);
         })
     $scope.changeNumber = function () {
-        if ($scope.SIM.Number && ($scope.SIM.Number.length >= 3)) {
+        if ($scope.SIM.Number && ($scope.SIM.Number.length >= 4)) {
             $http.get("NetWork/GetByNumber/?number=" + $scope.SIM.Number)
                 .success(function (data) {
                     $scope.SIM.NetWork_ID = data.ID;

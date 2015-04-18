@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\App\EmployeeController.cs" />
     <Compile Include="Controllers\App\NetworkController.cs" />
     <Compile Include="Controllers\App\SIMController.cs" />
     <Compile Include="Controllers\App\SimTypeController.cs" />
@@ -177,6 +178,14 @@
     <Compile Include="Migrations\201504171453594_AddOrderEntity.cs" />
     <Compile Include="Migrations\201504171453594_AddOrderEntity.Designer.cs">
       <DependentUpon>201504171453594_AddOrderEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504180438082_EmployeeDeleteImagesField.cs" />
+    <Compile Include="Migrations\201504180438082_EmployeeDeleteImagesField.Designer.cs">
+      <DependentUpon>201504180438082_EmployeeDeleteImagesField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504180439065_Employee_Add_Images.cs" />
+    <Compile Include="Migrations\201504180439065_Employee_Add_Images.Designer.cs">
+      <DependentUpon>201504180439065_Employee_Add_Images.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -227,6 +236,8 @@
     <Content Include="SBAdmin\app\ngmodules\angular-resource.js" />
     <Content Include="SBAdmin\app\ngmodules\angular-route.js" />
     <Content Include="SBAdmin\app\views\manageUser\create.html" />
+    <Content Include="SBAdmin\app\views\manageUser\index.html" />
+    <Content Include="SBAdmin\app\views\manageUser\update.html" />
     <Content Include="SBAdmin\app\views\menu\network\create.html" />
     <Content Include="SBAdmin\app\views\menu\network\index.html" />
     <Content Include="SBAdmin\app\views\menu\network\update.html" />
@@ -241,7 +252,6 @@
     <Content Include="SBAdmin\app\views\menu\supplier\update.html" />
     <Content Include="SBAdmin\app\views\authentication\signIn.html" />
     <Content Include="SBAdmin\app\views\page-wrapper\dashboard.html" />
-    <Content Include="SBAdmin\app\views\page-wrapper\manageUser.html" />
     <Content Include="SBAdmin\bower_components\bootstrap-social\.gitignore" />
     <Content Include="SBAdmin\bower_components\bootstrap-social\bootstrap-social.css" />
     <Content Include="SBAdmin\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
@@ -1052,6 +1062,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504171453594_AddOrderEntity.resx">
       <DependentUpon>201504171453594_AddOrderEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504180438082_EmployeeDeleteImagesField.resx">
+      <DependentUpon>201504180438082_EmployeeDeleteImagesField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504180439065_Employee_Add_Images.resx">
+      <DependentUpon>201504180439065_Employee_Add_Images.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

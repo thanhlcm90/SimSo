@@ -1,44 +1,36 @@
 ﻿using SBAdmin.Models.App;
 using SBAdmin.Models.App.Repository;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
     [Authorize]
-    public class SIMController : Controller
+    public class EmployeeController : Controller
     {
-        GenericRepository<SIM> context = null;
-        public SIMController()
+        GenericRepository<Employee> context = null;
+        public EmployeeController()
         {
-            context = new GenericRepository<SIM>();
+            context = new GenericRepository<Employee>();
         }
-        // get list sim filter
-        public ActionResult GetListSIM(SIMFilter filter)
-        {
-            return Json(new SIMRepository().GetSimsFilter(filter),JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult GetAll()
         {
-            return Json(new SIMRepository().GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
         public ActionResult Get(int id)
         {
             var data = context.Get(id);
             if (data != null)
             {
-                return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
             return HttpNotFound();
         }
-
         [HttpPost]
-        public ActionResult Create(SIM model)
+        public ActionResult Create(Employee model)
         {
             model.CreateDate = System.DateTime.Now;
-            model.Status = true;
             if (ModelState.IsValid)
             {
                 var data = context.Insert(model);
@@ -49,7 +41,7 @@ namespace SBAdmin.Controllers.App
         }
 
         [HttpPost]
-        public ActionResult Update(SIM model)
+        public ActionResult Update(Employee model)
         {
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
@@ -68,6 +60,20 @@ namespace SBAdmin.Controllers.App
             context.Save();
         }
 
+        [HttpPost]
+        public ActionResult UploadFile()
+        {
+            HttpPostedFileBase photo = Request.Files["photo"];
+            if (photo != null)
+            {
+                string path = Server.MapPath(@"~/Content/Images/");
+                string photoName = System.DateTime.Now.ToFileTime() + "_" + photo.FileName;
+                photo.SaveAs(path + photoName);
+                return Json(@"/Content/Images/" + photoName, JsonRequestBehavior.AllowGet);
+            }
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -78,6 +84,7 @@ namespace SBAdmin.Controllers.App
                     context = null;
                 }
             }
+
             base.Dispose(disposing);
         }
     }

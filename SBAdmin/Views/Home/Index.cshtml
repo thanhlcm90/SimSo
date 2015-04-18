@@ -59,8 +59,8 @@
                         <li>
                             <a href="#/dashboard"><i class="fa fa-th-large fa-fw"></i> Bàn làm việc</a>
                         </li>
-                        <li>
-                            <a href="#/nhan-vien"><i class="fa fa-user fa-fw"></i> Nhân viên</a>
+                        <li ng-show="currentUser().IsAdmin">
+                            <a href="#/quan-ly-nhan-vien"><i class="fa fa-user fa-fw"></i> Nhân viên</a>
                         </li>
                         <li>
                             <a href="#/quan-ly-sim"><i class="fa fa-columns fa-fw"></i> Quản lý SIM</a>

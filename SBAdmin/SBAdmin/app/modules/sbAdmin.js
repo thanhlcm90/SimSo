@@ -8,11 +8,14 @@
                templateUrl: "/SBAdmin/app/views/authentication/signIn.html"
            });
            //manage user
-           $routeProvider.when("/manageUser", {
-               templateUrl: "/SBAdmin/app/views/page-wrapper/manageUser.html"
+           $routeProvider.when("/quan-ly-nhan-vien", {
+               templateUrl: "/SBAdmin/app/views/manageUser/index.html"
            });
-           $routeProvider.when("/manageUser/create", {
+           $routeProvider.when("/quan-ly-nhan-vien/them", {
                templateUrl: "/SBAdmin/app/views/manageUser/create.html"
+           });
+           $routeProvider.when("/quan-ly-nhan-vien/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manageUser/update.html"
            });
          
            //menu-network
