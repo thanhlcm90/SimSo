@@ -13,7 +13,7 @@ namespace SBAdmin.Controllers.App
         {
             context = new GenericRepository<SimType>();
         }
-        public ActionResult GetListSimType()
+        public ActionResult GetAll()
         {
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }

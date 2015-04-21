@@ -6,26 +6,26 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <div class="row" style="padding:20px 50px 50px 100px">
-            <table class="table table-responsive table-hover table-condensed">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">Tên loại</th>
-                        <th class="text-center">Điều kiện</th>
-                        <th class="text-center">Trạng thái</th>
-                        <th></th>
+                        <th class="text-center" style="border-bottom:none;">Tên loại</th>
+                        <th class="text-center" style="border-bottom:none;">Điều kiện</th>
+                        <th class="text-center" style="border-bottom:none; width:90px;">Trạng thái</th>
+                        <th class="text-center" style="border-bottom:none; width:150px;">Chức năng</th>                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="st in lstSimType|filter:{isDeleted:false}|orderBy:'Name'">
-                        <td class="text-center" style="vertical-align:middle">{{st.Name}}</td>
-                        <td class="text-center" style="vertical-align:middle">{{st.Condition}}</td>
+                    <tr ng-repeat="st in lstSimType|filter:{isDeleted:false}|orderBy:'Name'" class="odd gradeX">
+                        <td style="vertical-align:middle">{{st.Name}}</td>
+                        <td style="vertical-align:middle">{{st.Condition}}</td>
                         <td class="text-center" style="vertical-align:middle">
                             <span class="fa fa-lg fa-unlock" ng-show="st.isActive" title="Hoạt động"></span>
                             <span class="fa fa-lg fa-lock" ng-hide="st.isActive" title="Khóa"></span>
                         </td>
-                        <td class="text-right" style="vertical-align:middle">
-                            <span class="pull-right control-btn">
+                        <td class="text-center" style="vertical-align:middle">
+                            <span class="text-center control-btn">
                                 <a role="button" href="#/thiet-lap-danh-muc/loai-sim/sua/{{st.ID}}" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
                                 </a>

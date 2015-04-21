@@ -1,54 +1,54 @@
-﻿<div id="page-wrapper" ng-controller="supplierCtrl">
+﻿<div id="page-wrapper" ng-controller="orderCtrl">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Nhà cung cấp<small><span class="glyphicon glyphicon-chevron-right"></span>Sửa</small></h1>
+                <h1 class="page-header">Quản lý giao dịch<small><span class="glyphicon glyphicon-chevron-right"></span>Thêm</small></h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <div style="width:90%" class="row center-block">
             <form role="form" class="form-horizontal" name="createForm">
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="username">Tài khoản:</label>
+                    <label class="control-label col-sm-2" for="number">Số:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" name="username" ng-model="spUpdate.UserName" placeholder="Nhập tài khoản" />
+                        <input type="text" class="form-control" id="number" name="number" ng-model="orderCreate.Number" placeholder="Nhập số" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="pw">Mật khẩu:</label>
+                    <label class="control-label col-sm-2" for="pw">Họ tên:</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="pw" name="pw" ng-model="spUpdate.Password" placeholder="Nhập mật khẩu" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="name">Tên nhà cung cấp:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" name="name" ng-model="spUpdate.Name" placeholder="Nhập tên nhà cung cấp" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="mobile">Điện thoại:</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" name="mobile" type="text" ng-model="spUpdate.Mobile" placeholder="Nhập số điện thoại" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Email:</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" name="email" type="email" ng-model="spUpdate.Email" placeholder="Nhập email" />
+                        <input type="text" class="form-control" id="fn" name="fn" ng-model="orderCreate.FullName" placeholder="Nhập họ tên" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="address">Địa chỉ:</label>
                     <div class="col-sm-10">
-                        <input class="form-control" name="address" type="text" ng-model="spUpdate.Address" placeholder="Nhập địa chỉ" />
+                        <input class="form-control" name="address" type="text" ng-model="orderCreate.Address" placeholder="Nhập địa chỉ" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mobile">Điện thoại:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="mobile" type="text" ng-model="orderCreate.Mobile" placeholder="Nhập số điện thoại" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Email:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="email" type="email" ng-model="orderCreate.Email" placeholder="Nhập email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="description">Ghi chú:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="description" ng-model="orderCreate.Description" placeholder="Ghi chú..." />
                     </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-primary" ng-click="update(spUpdate)">Cập nhật</button>
-                        <a class="btn btn-default" href="#/dai-ly">Hủy bỏ</a>
+                        <button class="btn btn-primary" ng-click="create(orderCreate)">Lưu</button>
+                        <a class="btn btn-default" href="#/quan-ly-giao-dich">Hủy bỏ</a>
                     </div>
                 </div>
             </form>

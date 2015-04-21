@@ -13,7 +13,7 @@ namespace SBAdmin.Controllers.App
         {
             context = new GenericRepository<NetWork>();
         }
-        public ActionResult GetListNetWork()
+        public ActionResult GetAll()
         {
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }

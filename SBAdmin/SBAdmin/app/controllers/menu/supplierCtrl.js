@@ -2,7 +2,7 @@
 .controller("supplierCtrl", function ($location, $scope, $routeParams, crudService, Authentication) {
     $scope.lstSupplier = [];
     // init
-    crudService.getAll("/Supplier/GetListSupplier")
+    crudService.getAll("/Supplier/GetAll")
         .success(function (data) {
             //  console.log(data);
             angular.forEach(data, function (item) {

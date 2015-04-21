@@ -38,11 +38,24 @@ namespace SBAdmin.Models.App.Repository
                     SimType = context.SimTypes.Find(sim.SimType_ID).Name,
                     Supplier = context.Suppliers.Find(sim.Supplier_ID).Name,
                     Price = sim.Price,
-                    Status = (bool)sim.Status ? "Available" : "Unavailable",
+                    Status = sim.Status == 1 ? "Available" : "Unavailable",
                     isActive = sim.isActive,
                     isDelete = sim.isDeleted
                 };
             }
+        }
+
+        public SIM GetByNumber(string number)
+        {
+            var sim = from s in context.SIMs
+                      where s.Number == number &&
+                      s.isActive == true &&
+                      s.Status == 1
+                      orderby s.Price
+                      select s;
+            if (sim.Count() > 0)
+                return sim.First();
+            return null;
         }
     }
 }

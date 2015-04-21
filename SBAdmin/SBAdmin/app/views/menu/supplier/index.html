@@ -6,17 +6,17 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <div class="row" style="padding:20px 50px 50px 100px">
-            <table class="table table-responsive table-hover table-condensed">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">Tên NCC</th>
-                        <th class="text-center">Điện thoại</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Địa chỉ</th>
-                        <th class="text-center">Ngày tạo</th>
-                        <th class="text-center">Trạng thái</th>
-                        <th></th>
+                        <th class="text-center" style="border-bottom:none;">Tên NCC</th>
+                        <th class="text-center" style="border-bottom:none;">Điện thoại</th>
+                        <th class="text-center" style="border-bottom:none;">Email</th>
+                        <th class="text-center" style="border-bottom:none;">Địa chỉ</th>
+                        <th class="text-center" style="border-bottom:none;">Ngày tạo</th>
+                        <th class="text-center" style="border-bottom:none; width:90px;">Trạng thái</th>
+                        <th class="text-center" style="border-bottom:none; width:150px;">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,8 +30,8 @@
                             <span class="fa fa-lg fa-unlock" ng-show="sp.isActive" title="Hoạt động"></span>
                             <span class="fa fa-lg fa-lock" ng-hide="sp.isActive" title="Khóa"></span>
                         </td>
-                        <td class="text-right" style="vertical-align:middle">
-                            <span class="pull-right control-btn">
+                        <td class="text-center" style="vertical-align:middle">
+                            <span class="text-center control-btn">
                                 <a role="button" href="#/dai-ly/sua/{{sp.ID}}" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
                                 </a>

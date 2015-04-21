@@ -20,7 +20,7 @@
     $scope.lstSupplier = [];
     $scope.SIM = {};
     //init
-    crudService.getAll("/NetWork/GetListNetWork")
+    crudService.getAll("/NetWork/GetAll")
         .success(function (data) {
             $scope.lstNetwork = data;
         })
@@ -28,14 +28,14 @@
             console.log(error);
         })
 
-    crudService.getAll("/SimType/GetListSimType")
+    crudService.getAll("/SimType/GetAll")
         .success(function (data) {
             $scope.lstSimType = data;
         })
         .error(function (error) {
             console.log(error);
         })
-    crudService.getAll("/Supplier/GetListSupplier")
+    crudService.getAll("/Supplier/GetAll")
         .success(function (data) {
             $scope.lstSupplier = data;
         })

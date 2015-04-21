@@ -1,35 +1,38 @@
 ﻿using SBAdmin.Models.App;
 using SBAdmin.Models.App.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
-    [Authorize]
-    public class SupplierController : Controller
+    public class OrderController : Controller
     {
-        GenericRepository<Supplier> context = null;
-        public SupplierController()
+        private GenericRepository<Order> context = null;
+        public OrderController()
         {
-            context = new GenericRepository<Supplier>();
+            context = new GenericRepository<Order>();
         }
+
+        [HttpGet]
         public ActionResult GetAll()
         {
-            return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(new OrderRepository().GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult Get(int id)
         {
-            var data = context.Get(id);
+            var data = new OrderRepository().Get(id);
             if (data != null)
-            {
-                return Json(context.Get(id), JsonRequestBehavior.AllowGet);
-            }
+                return Json(data, JsonRequestBehavior.AllowGet);
             return HttpNotFound();
         }
 
         [HttpPost]
-        public ActionResult Create(Supplier model)
+        public ActionResult Create(Order model)
         {
             model.CreateDate = System.DateTime.Now;
             if (ModelState.IsValid)
@@ -42,7 +45,7 @@ namespace SBAdmin.Controllers.App
         }
 
         [HttpPost]
-        public ActionResult Update(Supplier model)
+        public ActionResult Update(Order model)
         {
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
@@ -54,11 +57,13 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [HttpPost]
         public void Delete(int id)
         {
             context.Delete(id);
             context.Save();
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

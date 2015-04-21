@@ -58,6 +58,16 @@
            $routeProvider.when("/quan-ly-sim/sua/:id", {
                templateUrl: "/SBAdmin/app/views/menu/sim/update.html"
            });
+           // menu order
+           $routeProvider.when("/quan-ly-giao-dich", {
+               templateUrl: "/SBAdmin/app/views/menu/order/index.html"
+           });
+           $routeProvider.when("/quan-ly-giao-dich/them", {
+               templateUrl: "/SBAdmin/app/views/menu/order/create.html"
+           });
+           $routeProvider.when("/quan-ly-giao-dich/sua/:id", {
+               templateUrl: "/SBAdmin/app/views/menu/order/update.html"
+           });
            //ban lam viec
            $routeProvider.otherwise({
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"

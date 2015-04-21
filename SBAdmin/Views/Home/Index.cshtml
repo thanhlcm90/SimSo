@@ -23,7 +23,7 @@
 <body ng-controller="appCtrl">
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" >
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -36,7 +36,23 @@
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
-                <li ng-include="'/SBAdmin/app/views/authentication/authentication.html'" ng-controller="authenCtrl"></li>
+                <li ng-controller="authenCtrl">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#/profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a href="#/setting"><i class="fa fa-gear fa-fw"></i> Setting</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0)" ng-click="signOut()"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a>
+                        </li>
+                    </ul>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -64,22 +80,17 @@
                             <a href="#/quan-ly-sim"><i class="fa fa-columns fa-fw"></i> Quản lý SIM</a>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-columns fa-send"></i> Gửi bảng số</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-check"></i> Kiểm tra sim</a>
+                        </li>
+                        <li>
                             <a href="#/quan-ly-giao-dich"><i class="fa fa-money fa-fw"></i> Quản lý giao dịch</a>
                         </li>
                         <li>
                             <a href="#/dai-ly"><i class="fa fa-home fa-fw"></i> Đại Lý(Kho)</a>
                         </li>
-                        <!-- <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Quản lý tài khoản<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="panels-wells.html">Danh sách tài khoản</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Phân quyền chức năng</a>
-                                </li>
-                            </ul>
-                        </li> -->
                         <li>
                             <a href="#/quan-ly-menu"><i class="fa fa-sitemap fa-fw"></i> Quản lý Menu</a>
                         </li>
@@ -144,6 +155,7 @@
     <script src="~/SBAdmin/app/controllers/menu/supplierCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/menu/simtypeCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/menu/simCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/menu/orderCtrl.js"></script>
     <script src="~/SBAdmin/app/ngmodules/angular-route.js"></script>
     <script>
         var signedIn = '@TempData["SignedIn"]';

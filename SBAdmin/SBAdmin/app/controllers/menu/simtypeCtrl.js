@@ -3,7 +3,7 @@
     $scope.lstSimType = [];
     $scope.lstSTName = [];
     // init
-    crudService.getAll("/SimType/GetListSimType")
+    crudService.getAll("/SimType/GetAll")
         .success(function (data) {
             $scope.lstSimType = data;
         })

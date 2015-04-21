@@ -163,6 +163,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\App\EmployeeController.cs" />
     <Compile Include="Controllers\App\NetworkController.cs" />
+    <Compile Include="Controllers\App\OrderController.cs" />
     <Compile Include="Controllers\App\SIMController.cs" />
     <Compile Include="Controllers\App\SimTypeController.cs" />
     <Compile Include="Controllers\App\SupplierController.cs" />
@@ -187,6 +188,10 @@
     <Compile Include="Migrations\201504180439065_Employee_Add_Images.Designer.cs">
       <DependentUpon>201504180439065_Employee_Add_Images.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504210158294_Change_Order_and_SIM_table.cs" />
+    <Compile Include="Migrations\201504210158294_Change_Order_and_SIM_table.Designer.cs">
+      <DependentUpon>201504210158294_Change_Order_and_SIM_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\App\Employee.cs" />
@@ -194,11 +199,13 @@
     <Compile Include="Models\App\NetWork.cs" />
     <Compile Include="Models\App\Order.cs" />
     <Compile Include="Models\App\Repository\GenericRepository.cs" />
+    <Compile Include="Models\App\Repository\OrderRepository.cs" />
     <Compile Include="Models\App\Repository\SIMRepository.cs" />
     <Compile Include="Models\App\Repository\SimTypeRepo.cs" />
     <Compile Include="Models\App\SIM.cs" />
     <Compile Include="Models\App\SimType.cs" />
     <Compile Include="Models\App\Supplier.cs" />
+    <Compile Include="Models\App\ViewModels\OrderViewModel.cs" />
     <Compile Include="Models\App\ViewModels\SIMFilter.cs" />
     <Compile Include="Models\App\ViewModels\SimTypeViewModel.cs" />
     <Compile Include="Models\App\ViewModels\SIMViewModel.cs" />
@@ -223,6 +230,7 @@
     <Content Include="SBAdmin\app\components\waitingDialog\waitingDialog.js" />
     <Content Include="SBAdmin\app\controllers\appCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\networkCtrl.js" />
+    <Content Include="SBAdmin\app\controllers\menu\orderCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\simCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\simtypeCtrl.js" />
     <Content Include="SBAdmin\app\controllers\menu\supplierCtrl.js" />
@@ -241,6 +249,9 @@
     <Content Include="SBAdmin\app\views\menu\network\create.html" />
     <Content Include="SBAdmin\app\views\menu\network\index.html" />
     <Content Include="SBAdmin\app\views\menu\network\update.html" />
+    <Content Include="SBAdmin\app\views\menu\order\create.html" />
+    <Content Include="SBAdmin\app\views\menu\order\index.html" />
+    <Content Include="SBAdmin\app\views\menu\order\update.html" />
     <Content Include="SBAdmin\app\views\menu\simtype\create.html" />
     <Content Include="SBAdmin\app\views\menu\simtype\index.html" />
     <Content Include="SBAdmin\app\views\menu\simtype\update.html" />
@@ -1046,6 +1057,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1069,6 +1081,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504180439065_Employee_Add_Images.resx">
       <DependentUpon>201504180439065_Employee_Add_Images.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504210158294_Change_Order_and_SIM_table.resx">
+      <DependentUpon>201504210158294_Change_Order_and_SIM_table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -2,7 +2,7 @@
 .controller("networkCtrl", function ($http, $location, $scope, $routeParams, crudService, Authentication) {
     //model
     $scope.lstNetWork = [];
-    crudService.getAll("/Network/GetListNetWork")
+    crudService.getAll("/Network/GetAll")
         .success(function (data) {
             angular.forEach(data, function (item) {
                 item.CreateDate = parseDate(item.CreateDate);

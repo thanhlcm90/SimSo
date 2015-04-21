@@ -20,7 +20,7 @@
     $scope.signOut = function () {
         Authentication.signOut("/Account/SignOut")
             .success(function () {
-                window.location = "";
+                window.location = "/Home/Login";
             })
     }
 })

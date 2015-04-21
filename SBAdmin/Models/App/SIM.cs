@@ -23,7 +23,7 @@ namespace SBAdmin.Models.App
         [Column(TypeName = "money")]
         public decimal? Price { get; set; }
 
-        public bool? Status { get; set; }
+        public int? Status { get; set; }
 
         public bool? isActive { get; set; }
 

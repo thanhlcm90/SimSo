@@ -13,11 +13,12 @@ namespace SBAdmin.Controllers.App
             context = new GenericRepository<SIM>();
         }
         // get list sim filter
-        public ActionResult GetListSIM(SIMFilter filter)
-        {
-            return Json(new SIMRepository().GetSimsFilter(filter),JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult GetListSIM(SIMFilter filter)
+        //{
+        //    return Json(new SIMRepository().GetSimsFilter(filter),JsonRequestBehavior.AllowGet);
+        //}
 
+        [HttpGet]
         public ActionResult GetAll()
         {
             return Json(new SIMRepository().GetAll(), JsonRequestBehavior.AllowGet);
@@ -29,7 +30,17 @@ namespace SBAdmin.Controllers.App
             var data = context.Get(id);
             if (data != null)
             {
-                return Json(context.Get(id), JsonRequestBehavior.AllowGet);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            return HttpNotFound();
+        }
+
+        public ActionResult GetByNumber(string number)
+        {
+            var data = new SIMRepository().GetByNumber(number);
+            if (data != null)
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
             return HttpNotFound();
         }
@@ -38,7 +49,7 @@ namespace SBAdmin.Controllers.App
         public ActionResult Create(SIM model)
         {
             model.CreateDate = System.DateTime.Now;
-            model.Status = true;
+            model.Status = 1;
             if (ModelState.IsValid)
             {
                 var data = context.Insert(model);

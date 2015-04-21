@@ -5,32 +5,33 @@
                 <h1 class="page-header">Danh sách nhà mạng</h1>
             </div>
             <!-- /.col-lg-12 -->
-        </div>
+        </div>       
         <div class="row">
-            <table class="table table-responsive table-hover table-condensed">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">Tên nhà mạng</th>
-                        <th class="text-center">Đầu số</th>
-                        <th class="text-center">Logo</th>
-                        <th class="text-center">Người tạo</th>
-                        <th class="text-center">Ngày tạo</th>
-                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center" style="border-bottom:none;">Tên nhà mạng</th>
+                        <th class="text-center" style="border-bottom:none;">Đầu số</th>
+                        <th class="text-center" style="border-bottom:none;">Logo</th>
+                        <th class="text-center" style="border-bottom:none;">Người tạo</th>
+                        <th class="text-center" style="border-bottom:none;">Ngày tạo</th>
+                        <th class="text-center" style="border-bottom:none;">Trạng thái</th>
+                        <th class="text-center" style="border-bottom:none;">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="nw in lstNetWork|filter:{isDeleted:false}|orderBy:'Name'">
-                        <td class="text-center" style="vertical-align:middle">{{nw.Name}}</td>
+                    <tr ng-repeat="nw in lstNetWork|filter:{isDeleted:false}|orderBy:'Name'" class="odd gradeX">
+                        <td style="vertical-align:middle">{{nw.Name}}</td>
                         <td class="text-left" style="vertical-align:middle">{{nw.Number}}</td>
-                        <td class="text-center"><img src="{{nw.image}}" width="70" height="70" /></td>
+                        <td class="text-center"><img src="{{nw.image}}" style="max-width:50px; height:30px;" /></td>
                         <td class="text-center" style="vertical-align:middle">{{nw.CreateBy}}</td>
                         <td class="text-center" style="vertical-align:middle">{{nw.CreateDate|date:"dd/MM/yyyy"}}</td>
                         <td class="text-center" style="vertical-align:middle">
                             <span class="fa fa-lg fa-unlock" ng-show="nw.isActive" title="Hoạt động"></span>
                             <span class="fa fa-lg fa-lock" ng-hide="nw.isActive" title="Khóa"></span>
                         </td>
-                        <td class="text-left" style="vertical-align:middle">
-                            <span class="control-btn">
+                        <td class="text-center" style="vertical-align:middle">
+                            <span class="text-center control-btn">
                                 <a role="button" href="#/thiet-lap-danh-muc/nha-mang/sua/{{nw.ID}}" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
                                 </a>
