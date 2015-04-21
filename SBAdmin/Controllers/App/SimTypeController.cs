@@ -62,24 +62,10 @@ namespace SBAdmin.Controllers.App
         {
             var result = new List<SimType>();
             var lstST = context.GetAll();
-            GetChild(result, lstST, lstST.Where(s => (s.IDParent == null || s.IDParent == 0) && s.isDeleted == false), "");
+            new SimTypeRepo().GetChildren(result, lstST, lstST.Where(s => (s.IDParent == null || s.IDParent == 0) && s.isDeleted == false), "");
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        void GetChild(ICollection<SimType> result, IEnumerable<SimType> lstSimType, IEnumerable<SimType> parent, string prefix)
-        {
-            foreach (var item in parent)
-            {
-                result.Add(new SimType() { ID = item.ID, Name = prefix + item.Name });
-                GetChild(result, lstSimType, lstSimType.Where(r => r.IDParent == item.ID && r.isDeleted == false).ToList(), prefix + "---");
-            }
-        }
-
-        [HttpGet]
-        public JsonResult GetByNumber(string number)
-        {
-            return Json(new SimTypeRepo().GetByNumber(number));
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

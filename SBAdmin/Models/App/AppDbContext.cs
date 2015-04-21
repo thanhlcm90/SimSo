@@ -4,6 +4,8 @@ namespace SBAdmin.Models.App
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
 
     public partial class AppDbContext : DbContext
     {
@@ -100,6 +102,15 @@ namespace SBAdmin.Models.App
             modelBuilder.Entity<Order>()
               .Property(e => e.UserBussiness)
               .IsUnicode(false);
+        }
+
+        public virtual ObjectResult<Nullable<int>> SimTypeGetTypeBySim(string simNumber)
+        {
+            var simNumberParameter = simNumber != null ?
+                new ObjectParameter("SimNumber", simNumber) :
+                new ObjectParameter("SimNumber", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SimTypeGetTypeBySim", simNumberParameter);
         }
     }
 }

@@ -55,6 +55,9 @@
            $routeProvider.when("/quan-ly-sim/them", {
                templateUrl: "/SBAdmin/app/views/menu/sim/create.html"
            });
+           $routeProvider.when("/quan-ly-sim/import", {
+               templateUrl: "/SBAdmin/app/views/menu/sim/import.html"
+           });
            $routeProvider.when("/quan-ly-sim/sua/:id", {
                templateUrl: "/SBAdmin/app/views/menu/sim/update.html"
            });

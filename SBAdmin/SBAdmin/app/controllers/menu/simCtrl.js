@@ -112,6 +112,27 @@
                 console.log(error);
             })
     }
+
+    //
+    $scope.upload = function () {
+        $("#myModal").modal("show");
+        var formData = new FormData();
+        var files = $("#chooseFile").get(0).files;
+        formData.append("excel", files[0]);
+        $http.post("/SIM/UploadFile", formData, {
+            withCredentials: true,
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        }).success(function (data) {
+            $("#myModal").modal("hide");
+            alert(data);
+        }).error(function (error) {
+            $("#myModal").modal("hide");
+            alert("Something wrong!");
+            console.log(error);
+        })
+    }
+    //
     var parseDate = function (value) {
         if (value) {
             return new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
