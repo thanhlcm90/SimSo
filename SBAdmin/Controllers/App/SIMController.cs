@@ -1,11 +1,9 @@
 ﻿using LinqToExcel;
+using Microsoft.AspNet.Identity;
 using SBAdmin.Models.App;
 using SBAdmin.Models.App.Repository;
-using System.Web.Mvc;
 using System.Linq;
-using Microsoft.AspNet.Identity;
-using SBAdmin.Models;
-using System.Data.SqlClient;
+using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
@@ -18,15 +16,16 @@ namespace SBAdmin.Controllers.App
             context = new GenericRepository<SIM>();
         }
         // get list sim filter
-        //public ActionResult GetListSIM(SIMFilter filter)
-        //{
-        //    return Json(new SIMRepository().GetSimsFilter(filter),JsonRequestBehavior.AllowGet);
-        //}
+        [HttpGet]
+        public ActionResult GetSIMsByNumber(string number, int pageIndex, int itemsPerPage)
+        {
+            return Json(new SIMRepository().GetSimsByNumber(number, pageIndex, itemsPerPage), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetPageSim(int pageIndex, int itemsPerPage)
         {
-            return Json(new SIMRepository().GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(new SIMRepository().GetPageSim(pageIndex, itemsPerPage), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

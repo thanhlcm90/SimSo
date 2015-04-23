@@ -425,8 +425,8 @@ namespace SBAdmin.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<JsonResult> CreateUser(RegisterViewModel model)
+        [Authorize(Roles = "QuanLy")]
+        public async Task<JsonResult> CreateUser(RegisterViewModel model, string role)
         {
             if (ModelState.IsValid)
             {
@@ -434,6 +434,7 @@ namespace SBAdmin.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(UserManager.FindByName(user.UserName).Id, role);
                     return Json("Register success", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -477,13 +478,14 @@ namespace SBAdmin.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.UserName,
-                IsAdmin = UserManager.IsInRole(user.Id, "Admin")
+                IsAdmin = UserManager.IsInRole(user.Id, "QuanLy"),
+                Role = UserManager.GetRoles(user.Id).First()
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "QuanLy")]
         public JsonResult GetUsers()
         {
             var users = from u

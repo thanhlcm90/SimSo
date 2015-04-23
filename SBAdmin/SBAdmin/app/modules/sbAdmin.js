@@ -3,73 +3,73 @@
            $routeProvider.when("/dashboard", {
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"
            });
-           //sign in
-           $routeProvider.when("/signIn", {
-               templateUrl: "/SBAdmin/app/views/authentication/signIn.html"
+           //quan ly nhan vien
+           $routeProvider.when("/quan-ly/nhan-vien", {
+               templateUrl: "/SBAdmin/app/views/manage/employee/index.html"
            });
-           //manage user
-           $routeProvider.when("/quan-ly-nhan-vien", {
-               templateUrl: "/SBAdmin/app/views/manageUser/index.html"
+           $routeProvider.when("/quan-ly/nhan-vien/them", {
+               templateUrl: "/SBAdmin/app/views/manage/employee/create.html"
            });
-           $routeProvider.when("/quan-ly-nhan-vien/them", {
-               templateUrl: "/SBAdmin/app/views/manageUser/create.html"
-           });
-           $routeProvider.when("/quan-ly-nhan-vien/cap-nhat/:id", {
-               templateUrl: "/SBAdmin/app/views/manageUser/update.html"
+           $routeProvider.when("/quan-ly/nhan-vien/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/employee/update.html"
            });
 
-           //menu-network
-           $routeProvider.when("/thiet-lap-danh-muc/nha-mang", {
-               templateUrl: "/SBAdmin/app/views/menu/network/index.html"
+           //quan ly nha mang
+           $routeProvider.when("/quan-ly/nha-mang", {
+               templateUrl: "/SBAdmin/app/views/manage/network/index.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/them", {
-               templateUrl: "/SBAdmin/app/views/menu/network/create.html"
+           $routeProvider.when("/quan-ly/nha-mang/them", {
+               templateUrl: "/SBAdmin/app/views/manage/network/create.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/nha-mang/sua/:id", {
-               templateUrl: "/SBAdmin/app/views/menu/network/update.html"
+           $routeProvider.when("/quan-ly/nha-mang/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/network/update.html"
            });
-           // supplier
-           $routeProvider.when("/dai-ly", {
-               templateUrl: "/SBAdmin/app/views/menu/supplier/index.html"
+           // quan ly dai ly
+           $routeProvider.when("/quan-ly/dai-ly", {
+               templateUrl: "/SBAdmin/app/views/manage/supplier/index.html"
            });
-           $routeProvider.when("/dai-ly/them", {
-               templateUrl: "/SBAdmin/app/views/menu/supplier/create.html"
+           $routeProvider.when("/quan-ly/dai-ly/them", {
+               templateUrl: "/SBAdmin/app/views/manage/supplier/create.html"
            });
-           $routeProvider.when("/dai-ly/sua/:id", {
-               templateUrl: "/SBAdmin/app/views/menu/supplier/update.html"
+           $routeProvider.when("/quan-ly/dai-ly/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/supplier/update.html"
            });
-           // menu-sim type
-           $routeProvider.when("/thiet-lap-danh-muc/loai-sim", {
-               templateUrl: "/SBAdmin/app/views/menu/simtype/index.html"
+           // quan ly loai sim
+           $routeProvider.when("/quan-ly/loai-sim", {
+               templateUrl: "/SBAdmin/app/views/manage/simtype/index.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/them", {
-               templateUrl: "/SBAdmin/app/views/menu/simtype/create.html"
+           $routeProvider.when("/quan-ly/loai-sim/them", {
+               templateUrl: "/SBAdmin/app/views/manage/simtype/create.html"
            });
-           $routeProvider.when("/thiet-lap-danh-muc/loai-sim/sua/:id", {
-               templateUrl: "/SBAdmin/app/views/menu/simtype/update.html"
+           $routeProvider.when("/quan-ly/loai-sim/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/simtype/update.html"
            });
-           // menu-sim
-           $routeProvider.when("/quan-ly-sim", {
-               templateUrl: "/SBAdmin/app/views/menu/sim/index.html"
+
+           // thao tao voi sim
+           $routeProvider.when("/sim", {
+               templateUrl: "/SBAdmin/app/views/working/sim/index.html"
            });
-           $routeProvider.when("/quan-ly-sim/them", {
-               templateUrl: "/SBAdmin/app/views/menu/sim/create.html"
+           $routeProvider.when("/sim/them", {
+               templateUrl: "/SBAdmin/app/views/working/sim/create.html"
            });
-           $routeProvider.when("/quan-ly-sim/import", {
-               templateUrl: "/SBAdmin/app/views/menu/sim/import.html"
+           $routeProvider.when("/sim/gui-bang-so", {
+               templateUrl: "/SBAdmin/app/views/working/sim/import.html"
            });
-           $routeProvider.when("/quan-ly-sim/sua/:id", {
-               templateUrl: "/SBAdmin/app/views/menu/sim/update.html"
+           $routeProvider.when("/sim/kiem-tra-sim", {
+               templateUrl: "/SBAdmin/app/views/working/sim/check.html"
            });
-           // menu order
-           $routeProvider.when("/quan-ly-giao-dich", {
-               templateUrl: "/SBAdmin/app/views/menu/order/index.html"
+           $routeProvider.when("/sim/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/working/sim/update.html"
            });
-           $routeProvider.when("/quan-ly-giao-dich/them", {
-               templateUrl: "/SBAdmin/app/views/menu/order/create.html"
+           // thao tac voi order
+           $routeProvider.when("/giao-dich", {
+               templateUrl: "/SBAdmin/app/views/working/order/index.html"
            });
-           $routeProvider.when("/quan-ly-giao-dich/sua/:id", {
-               templateUrl: "/SBAdmin/app/views/menu/order/update.html"
+           $routeProvider.when("/giao-dich/them", {
+               templateUrl: "/SBAdmin/app/views/working/order/create.html"
+           });
+           $routeProvider.when("/giao-dich/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/working/order/update.html"
            });
            //ban lam viec
            $routeProvider.otherwise({

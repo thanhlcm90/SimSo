@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
-    [Authorize]
+    [Authorize(Roles="QuanLy, NhanVien")]
     public class SupplierController : Controller
     {
         GenericRepository<Supplier> context = null;

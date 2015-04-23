@@ -29,6 +29,13 @@ namespace SBAdmin.Controllers.App
             return HttpNotFound();
         }
 
+        [HttpGet]
+        public ActionResult GetByNumber(string number)
+        {
+            return Json(new SimTypeRepo().SimTypeGetTypeBySim(number), JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "QuanLy")]
         public ActionResult Create(SimType model)
         {
             if (ModelState.IsValid)
@@ -40,6 +47,7 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "QuanLy")]
         public ActionResult Update(SimType model)
         {
             if (ModelState.IsValid)
@@ -51,6 +59,8 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "QuanLy")]
+        [HttpPost]
         public void Delete(int id)
         {
             context.Delete(id);

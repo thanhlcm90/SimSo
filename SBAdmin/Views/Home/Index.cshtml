@@ -73,31 +73,31 @@
                         <li>
                             <a href="#/dashboard"><i class="fa fa-th-large fa-fw"></i> Bàn làm việc</a>
                         </li>
-                        <li ng-show="currentUser().IsAdmin">
-                            <a href="#/quan-ly-nhan-vien"><i class="fa fa-user fa-fw"></i> Nhân viên</a>
+                        <li ng-show="currentUser().Role=='QuanLy'">
+                            <a href="#/quan-ly/nhan-vien"><i class="fa fa-user fa-fw"></i> Nhân viên</a>
                         </li>
-                        <li>
-                            <a href="#/quan-ly-sim"><i class="fa fa-columns fa-fw"></i> Quản lý SIM</a>
+                        <li ng-hide="currentUser().Role=='DaiLy'">
+                            <a href="#/sim"><i class="fa fa-columns fa-fw"></i> Quản lý SIM</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-columns fa-send"></i> Gửi bảng số</a>
+                        <li ng-show="currentUser().Role=='DaiLy'">
+                            <a href="#/sim/gui-bang-so"><i class="fa fa-columns fa-send"></i> Gửi bảng số</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-check"></i> Kiểm tra sim</a>
+                        <li ng-show="currentUser().Role=='DaiLy'">
+                            <a href="#/sim/kiem-tra-sim"><i class="fa fa-check"></i> Kiểm tra sim</a>
                         </li>
-                        <li>
-                            <a href="#/quan-ly-giao-dich"><i class="fa fa-money fa-fw"></i> Quản lý giao dịch</a>
+                        <li ng-hide="currentUser().Role=='DaiLy'">
+                            <a href="#/giao-dich"><i class="fa fa-money fa-fw"></i> Quản lý giao dịch</a>
                         </li>
-                        <li>
-                            <a href="#/dai-ly"><i class="fa fa-home fa-fw"></i> Đại Lý(Kho)</a>
+                        <li ng-hide="currentUser().Role=='DaiLy'">
+                            <a href="#/quan-ly/dai-ly"><i class="fa fa-home fa-fw"></i> Đại Lý(Kho)</a>
                         </li>
-                        <li>
+                        <li ng-show="currentUser().Role=='QuanLy'">
                             <a href="#/quan-ly-menu"><i class="fa fa-sitemap fa-fw"></i> Quản lý Menu</a>
                         </li>
-                        <li>
+                        <li ng-hide="currentUser().Role=='DaiLy'">
                             <a href="#/quan-ly-tin-tuc"><i class="fa fa-list fa-fw"></i> Quản lý tin tức</a>
                         </li>
-                        <li>
+                        <li ng-show="currentUser().Role=='QuanLy'">
                             <a href="javascript:void(0)"><i class="fa fa-bar-chart-o fa-fw"></i> Báo cáo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -112,14 +112,14 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
+                        <li ng-show="currentUser().Role=='QuanLy'">
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Thiết lập Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#/thiet-lap-danh-muc/nha-mang">Nhà mạng</a>
+                                    <a href="#/quan-ly/nha-mang">Nhà mạng</a>
                                 </li>
                                 <li>
-                                    <a href="#/thiet-lap-danh-muc/loai-sim">Loại Sim</a>
+                                    <a href="#/quan-ly/loai-sim">Loại Sim</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -147,15 +147,18 @@
     <script src="~/SBAdmin/app/modules/sbAdmin.js"></script>
     <script src="~/SBAdmin/app/modules/appRun.js"></script>
     <script src="~/SBAdmin/app/customServices/authenticate.js"></script>
-    <script src="~/SBAdmin/app/controllers/authenticateCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/manageUsersCtrl.js"></script>
     <script src="~/SBAdmin/app/customServices/crud.js"></script>
+
+    <script src="~/SBAdmin/app/controllers/manage/networkCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/simtypeCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/supplierCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/userCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/working/orderCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/working/simCtrl.js"></script>
+
     <script src="~/SBAdmin/app/controllers/appCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/menu/networkCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/menu/supplierCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/menu/simtypeCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/menu/simCtrl.js"></script>
-    <script src="~/SBAdmin/app/controllers/menu/orderCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/authenticateCtrl.js"></script>
+
     <script src="~/SBAdmin/app/ngmodules/angular-route.js"></script>
     <script>
         var signedIn = '@TempData["SignedIn"]';

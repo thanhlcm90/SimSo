@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
-    [Authorize]
+    [Authorize(Roles = "QuanLy")]
     public class EmployeeController : Controller
     {
         GenericRepository<Employee> context = null;
@@ -13,6 +13,7 @@ namespace SBAdmin.Controllers.App
         {
             context = new GenericRepository<Employee>();
         }
+
         public ActionResult GetAll()
         {
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
@@ -61,10 +62,10 @@ namespace SBAdmin.Controllers.App
         }
 
         [HttpPost]
-        public ActionResult UploadFile()
+        public ActionResult UploadImage()
         {
             HttpPostedFileBase photo = Request.Files["photo"];
-            if (photo != null)
+            if (photo != null && photo.ContentType.ToLower().Contains("image"))
             {
                 string path = Server.MapPath(@"~/Content/Images/");
                 string photoName = System.DateTime.Now.ToFileTime() + "_" + photo.FileName;

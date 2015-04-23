@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SBAdmin.Controllers.App
 {
+    [Authorize(Roles="QuanLy, NhanVien")]
     public class OrderController : Controller
     {
         private GenericRepository<Order> context = null;

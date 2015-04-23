@@ -27,6 +27,8 @@ namespace SBAdmin.Controllers.App
             }
             return HttpNotFound();
         }
+
+        [Authorize(Roles = "QuanLy")]
         [HttpPost]
         public ActionResult Create(NetWork model)
         {
@@ -40,6 +42,7 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "QuanLy")]
         [HttpPost]
         public ActionResult Update(NetWork model)
         {
@@ -53,6 +56,7 @@ namespace SBAdmin.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "QuanLy")]
         [HttpPost]
         public void Delete(int id)
         {
@@ -60,6 +64,7 @@ namespace SBAdmin.Controllers.App
             context.Save();
         }
 
+        [Authorize(Roles = "QuanLy")]
         [HttpPost]
         public ActionResult UploadFile()
         {
