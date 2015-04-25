@@ -20,6 +20,9 @@ namespace SBAdmin.Models.App
         public virtual DbSet<SimType> SimTypes { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+
+        public virtual DbSet<New> News { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -102,15 +105,7 @@ namespace SBAdmin.Models.App
             modelBuilder.Entity<Order>()
               .Property(e => e.UserBussiness)
               .IsUnicode(false);
-        }
 
-        public virtual ObjectResult<Nullable<int>> SimTypeGetTypeBySim(string simNumber)
-        {
-            var simNumberParameter = simNumber != null ?
-                new ObjectParameter("SimNumber", simNumber) :
-                new ObjectParameter("SimNumber", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SimTypeGetTypeBySim", simNumberParameter);
         }
     }
 }

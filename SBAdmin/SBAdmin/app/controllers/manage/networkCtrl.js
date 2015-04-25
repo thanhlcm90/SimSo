@@ -42,6 +42,10 @@
                 data.CreateDate = parseDate(data.CreateDate);
                 data.LastUpdate = parseDate(data.LastUpdate);
                 $scope.nwUpdate = data;
+                var isHaveImg = data.image != null;
+                if (isHaveImg) {
+                    angular.element("#imageUpload").show();
+                }
             })
             .error(function (error) {
                 alert(error);
@@ -97,7 +101,7 @@
         var formData = new FormData();
         var files = $("#chooseFile").get(0).files;
         formData.append("photo", files[0]);
-        return $http.post("/Network/UploadFile", formData, {
+        return $http.post("/Helper/UploadFile?name=photo", formData, {
             withCredentials: true,
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity

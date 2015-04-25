@@ -1,0 +1,52 @@
+﻿<div id="page-wrapper" ng-controller="menuCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Quản lý Menu</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div style="width:80%" class="center-block">
+                <table class="table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom:none">Tên mục</th>
+                            <th style="border-bottom:none">Vị trí</th>
+                            <th style="border-bottom:none">Loại mục</th>
+                            <th style="border-bottom:none">Người tạo</th>
+                            <th style="border-bottom:none">Ngày tạo</th>
+                            <th style="border-bottom:none">Trạng thái</th>
+                            <th style="border-bottom:none">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstMenu">
+                            <td>{{item.Name}}</td>
+                            <td>{{item.Stand}}</td>
+                            <td><span ng-show="item.Type==0">Group</span><span ng-show="item.Type==1">Detail</span></td>
+                            <td>{{item.CreateBy}}</td>
+                            <td>{{item.CreateDate|date:"dd/MM/yyyy"}}</td>
+                            <td style="vertical-align:middle">
+                                <span class="fa fa-lg fa-unlock" ng-show="item.isActive" title="Hoạt động"></span>
+                                <span class="fa fa-lg fa-lock" ng-hide="item.isActive" title="Khóa"></span>
+                            </td>
+                            <td class="text-left" style="vertical-align:middle">
+                                <span class="control-btn">
+                                    <a role="button" href="#/quan-ly/menu/cap-nhat/{{item.ID}}" class="btn btn-primary btn-xs">
+                                        <span class="glyphicon glyphicon-edit" title="Sửa"></span> Sửa
+                                    </a>
+                                    <button type="button" ng-click="remove(item)" class="btn btn-danger btn-xs">
+                                        <span class="glyphicon glyphicon-remove" title="Xóa"></span> Xóa
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="#/quan-ly/menu/them" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</a>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+</div>

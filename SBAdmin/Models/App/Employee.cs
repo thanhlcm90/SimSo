@@ -32,7 +32,7 @@ namespace SBAdmin.Models.App
         public string Email { get; set; }
 
         [StringLength(200)]
-        public string images { get; set; }
+        public string image { get; set; }
 
         public bool? isActive { get; set; }
 

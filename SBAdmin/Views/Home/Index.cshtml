@@ -19,6 +19,7 @@
     <link href="~/SBAdmin/dist/css/sb-admin-2.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="~/SBAdmin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 </head>
 <body ng-controller="appCtrl">
     <div id="wrapper">
@@ -92,10 +93,10 @@
                             <a href="#/quan-ly/dai-ly"><i class="fa fa-home fa-fw"></i> Đại Lý(Kho)</a>
                         </li>
                         <li ng-show="currentUser().Role=='QuanLy'">
-                            <a href="#/quan-ly-menu"><i class="fa fa-sitemap fa-fw"></i> Quản lý Menu</a>
+                            <a href="#/quan-ly/menu"><i class="fa fa-sitemap fa-fw"></i> Quản lý Menu</a>
                         </li>
                         <li ng-hide="currentUser().Role=='DaiLy'">
-                            <a href="#/quan-ly-tin-tuc"><i class="fa fa-list fa-fw"></i> Quản lý tin tức</a>
+                            <a href="#/quan-ly/tin-tuc"><i class="fa fa-list fa-fw"></i> Quản lý tin tức</a>
                         </li>
                         <li ng-show="currentUser().Role=='QuanLy'">
                             <a href="javascript:void(0)"><i class="fa fa-bar-chart-o fa-fw"></i> Báo cáo<span class="fa arrow"></span></a>
@@ -143,7 +144,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="~/SBAdmin/dist/js/sb-admin-2.js"></script>
     <!-- Angular app -->
-    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
     <script src="~/SBAdmin/app/modules/sbAdmin.js"></script>
     <script src="~/SBAdmin/app/modules/appRun.js"></script>
     <script src="~/SBAdmin/app/customServices/authenticate.js"></script>
@@ -153,9 +154,10 @@
     <script src="~/SBAdmin/app/controllers/manage/simtypeCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/manage/supplierCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/manage/userCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/menuCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/newCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/working/orderCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/working/simCtrl.js"></script>
-
     <script src="~/SBAdmin/app/controllers/appCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/authenticateCtrl.js"></script>
 
@@ -163,5 +165,8 @@
     <script>
         var signedIn = '@TempData["SignedIn"]';
     </script>
+    <script src="~/SBAdmin/ckeditor/ckeditor.js"></script>
+    <script src="~/SBAdmin/ckeditor/adapters/jquery.js"></script>
+    <script src="~/SBAdmin/app/components/angular-ckeditor.min.js"></script>
 </body>
 </html>

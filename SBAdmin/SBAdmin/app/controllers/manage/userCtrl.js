@@ -31,7 +31,7 @@
         delete emp.ConfirmPassword;
         uploadImage()
            .success(function (result) {
-               emp.images = result;
+               emp.image = result;
                crudService.create("/Employee/Create", emp)
                     .success(function (result) {
                         $("#myModal").modal("hide");
@@ -58,6 +58,10 @@
                 data.LastUpdate = parseDate(data.LastUpdate);
                 data.BirthDay = parseDate(data.BirthDay);
                 $scope.user = data;
+                var isHaveImg = data.image != null;
+                if (isHaveImg) {
+                    angular.element("#imageUpload").show();
+                }
             })
             .error(function (error) {
                 alert(error);
@@ -125,7 +129,7 @@
         var formData = new FormData();
         var files = $("#chooseFile").get(0).files;
         formData.append("photo", files[0]);
-        return $http.post("/Employee/UploadImage", formData, {
+        return $http.post("/Helper/UploadFile?name=photo", formData, {
             withCredentials: true,
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity

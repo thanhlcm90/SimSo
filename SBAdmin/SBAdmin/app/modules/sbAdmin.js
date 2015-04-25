@@ -1,4 +1,4 @@
-﻿angular.module("sbAdmin", ["authenticate", "ngRoute", "crud"])
+﻿angular.module("sbAdmin", ["authenticate", "ngRoute", "crud","ckeditor"])
        .config(function ($routeProvider) {
            $routeProvider.when("/dashboard", {
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"
@@ -44,7 +44,26 @@
            $routeProvider.when("/quan-ly/loai-sim/cap-nhat/:id", {
                templateUrl: "/SBAdmin/app/views/manage/simtype/update.html"
            });
-
+           // quan ly danh muc
+           $routeProvider.when("/quan-ly/menu", {
+               templateUrl: "/SBAdmin/app/views/manage/menu/index.html"
+           });
+           $routeProvider.when("/quan-ly/menu/them", {
+               templateUrl: "/SBAdmin/app/views/manage/menu/create.html"
+           });
+           $routeProvider.when("/quan-ly/menu/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/menu/update.html"
+           });
+           // quan ly tin tuc
+           $routeProvider.when("/quan-ly/tin-tuc", {
+               templateUrl: "/SBAdmin/app/views/manage/new/index.html"
+           });
+           $routeProvider.when("/quan-ly/tin-tuc/them", {
+               templateUrl: "/SBAdmin/app/views/manage/new/create.html"
+           });
+           $routeProvider.when("/quan-ly/tin-tuc/cap-nhat/:id", {
+               templateUrl: "/SBAdmin/app/views/manage/new/update.html"
+           });
            // thao tao voi sim
            $routeProvider.when("/sim", {
                templateUrl: "/SBAdmin/app/views/working/sim/index.html"

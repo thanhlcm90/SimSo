@@ -61,19 +61,19 @@ namespace SBAdmin.Controllers.App
             context.Save();
         }
 
-        [HttpPost]
-        public ActionResult UploadImage()
-        {
-            HttpPostedFileBase photo = Request.Files["photo"];
-            if (photo != null && photo.ContentType.ToLower().Contains("image"))
-            {
-                string path = Server.MapPath(@"~/Content/Images/");
-                string photoName = System.DateTime.Now.ToFileTime() + "_" + photo.FileName;
-                photo.SaveAs(path + photoName);
-                return Json(@"/Content/Images/" + photoName, JsonRequestBehavior.AllowGet);
-            }
-            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-        }
+        //[HttpPost]
+        //public ActionResult UploadImage()
+        //{
+        //    HttpPostedFileBase photo = Request.Files["photo"];
+        //    if (photo != null && photo.ContentType.ToLower().Contains("image"))
+        //    {
+        //        string path = Server.MapPath(@"~/Content/Images/");
+        //        string photoName = System.DateTime.Now.ToFileTime() + "_" + photo.FileName;
+        //        photo.SaveAs(path + photoName);
+        //        return Json(@"/Content/Images/" + photoName, JsonRequestBehavior.AllowGet);
+        //    }
+        //    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        //}
 
         protected override void Dispose(bool disposing)
         {

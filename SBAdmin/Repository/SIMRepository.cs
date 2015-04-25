@@ -16,15 +16,16 @@ namespace SBAdmin.Models.App.Repository
         }
 
         // kiem tra sim (dai ly)
-        public ListSimViewModel GetSimsByNumber(string number, int pageIndex, int itemsPerPage)
+        public ListSimViewModel GetSimsByNumber(string number, int pageIndex, int pageSize)
         {
             var data = (from sim in context.SIMs
-                        where sim.Number.Contains(number)
-                        orderby sim.Price
+                        where String.IsNullOrEmpty(number) || sim.Number.Contains(number)
+                        orderby sim.Number
                         select sim);
-            int count = (int)Math.Ceiling((double)data.Count() / (double)itemsPerPage);
-            var sims = data.Skip((pageIndex - 1) * itemsPerPage).Take(itemsPerPage);
-            return new ListSimViewModel { Count = count, ListSim = GetSimsChecking(sims) };
+            int total = data.Count();
+            int count = (int)Math.Ceiling((double)total / (double)pageSize);
+            var sims = data.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return new ListSimViewModel { PageCount = count, TotalSims = total, ListSim = GetSimsChecking(sims) };
         }
         private IEnumerable<Object> GetSimsChecking(IQueryable<SIM> data)
         {
@@ -59,12 +60,13 @@ namespace SBAdmin.Models.App.Repository
                 };
             }
         }
-        public ListSimViewModel GetPageSim(int pageIndex, int itemsPerPage)
+        public ListSimViewModel GetPageSim(int pageIndex, int pageSize)
         {
             var data = (from sim in context.SIMs select sim).OrderBy(s => s.Number);
-            int count = (int)Math.Ceiling((double)data.Count() / (double)itemsPerPage);
-            var sims = data.Skip((pageIndex - 1) * itemsPerPage).Take(itemsPerPage);
-            return new ListSimViewModel { Count = count, ListSim = GetPageSim(sims) };
+            int total = data.Count();
+            int count = (int)Math.Ceiling((double)total / (double)pageSize);
+            var sims = data.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return new ListSimViewModel { PageCount = count, TotalSims = total, ListSim = GetPageSim(sims) };
         }
 
         public SIM GetByNumber(string number)

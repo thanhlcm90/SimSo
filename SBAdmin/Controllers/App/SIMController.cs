@@ -15,17 +15,18 @@ namespace SBAdmin.Controllers.App
         {
             context = new GenericRepository<SIM>();
         }
-        // get list sim filter
+        // get list sim filter // dai ly
         [HttpGet]
-        public ActionResult GetSIMsByNumber(string number, int pageIndex, int itemsPerPage)
+        public ActionResult GetSIMsByNumber(string number, int pageIndex, int pageSize)
         {
-            return Json(new SIMRepository().GetSimsByNumber(number, pageIndex, itemsPerPage), JsonRequestBehavior.AllowGet);
+            return Json(new SIMRepository().GetSimsByNumber(number, pageIndex, pageSize), JsonRequestBehavior.AllowGet);
         }
 
+        // get all sim // quan ly+nhan vien
         [HttpGet]
-        public ActionResult GetPageSim(int pageIndex, int itemsPerPage)
+        public ActionResult GetPageSim(int pageIndex, int pageSize)
         {
-            return Json(new SIMRepository().GetPageSim(pageIndex, itemsPerPage), JsonRequestBehavior.AllowGet);
+            return Json(new SIMRepository().GetPageSim(pageIndex, pageSize), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

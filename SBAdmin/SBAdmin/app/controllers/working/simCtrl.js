@@ -3,22 +3,26 @@
     $scope.lstSIM = [];
     $scope.lstPage = [];
     $scope.currentPage = 1;
-    $scope.itemsPerPage = 10;
+    $scope.pageSize = 10;
     $scope.pageCount = 0;
+    $scope.currentSimCount = 0;
+    $scope.totalSim = 0;
     // get data from server
-    var getData = function (index, itemsPerPage) {
+    var getData = function (index, pageSize) {
         return $http({
             url: "/SIM/GetPageSim",
             method: "GET",
-            params: { pageIndex: index, itemsPerPage: itemsPerPage }
+            params: { pageIndex: index, pageSize: pageSize }
         });
     }
     // init
     var init = function () {
-        getData(1, $scope.itemsPerPage)
+        getData(1, $scope.pageSize)
             .success(function (data) {
                 $scope.lstSIM = data.ListSim;
-                $scope.pageCount = data.Count;
+                $scope.pageCount = data.PageCount;
+                $scope.totalSim = data.TotalSims;
+                $scope.currentSimCount = data.ListSim.length;
                 for (i = 1; i <= $scope.pageCount && i <= 9; i++) {
                     $scope.lstPage.push(i);
                 }
@@ -27,10 +31,12 @@
                 console.log(error);
             })
     }
-
     init();
 
-    $scope.changeItemPerPage = function () {
+    // 
+    $scope.changePageSize = function () {
+        $scope.currentPage = 1;
+        $scope.lstPage.splice(0);
         init();
     }
     // select page
@@ -60,9 +66,10 @@
             }
         }
         // get data
-        getData(index, $scope.itemsPerPage)
+        getData(index, $scope.pageSize)
             .success(function (data) {
                 $scope.lstSIM = data.ListSim;
+                $scope.currentSim = data.ListSim.length;
             })
             .error(function (error) {
                 console.log(error);
@@ -77,7 +84,7 @@
         return index1 == index2 ? "disabled" : "";
     }
 })
-.controller("crudSIMCtrl", function ($scope, crudService, $http, $routeParams, $location, Authentication) {
+.controller("crudSIMCtrl", function ($scope, crudService, $routeParams, $location, Authentication) {
     // models
     $scope.lstSimType = [];
     $scope.lstNetwork = [];
@@ -222,7 +229,7 @@
 })
 .controller("checkSIM", function ($scope, $http) {
     $scope.filter = {};
-    $scope.filter.itemsPerPage = 10;
+    $scope.filter.pageSize = 10;
     $scope.lstSIM = [];
     $scope.lstPage = [];
     $scope.currentPage = 1;
@@ -234,11 +241,12 @@
         $http({
             url: "/SIM/GetSIMsByNumber",
             method: "GET",
-            params: { number: filter.number, pageIndex: index, itemsPerPage: filter.itemsPerPage }
+            params: { number: filter.number, pageIndex: index, pageSize: filter.pageSize }
         })
             .success(function (data) {
                 $scope.lstSIM = data.ListSim;
-                $scope.pageCount = data.Count;
+                $scope.pageCount = data.PageCount;
+                $scope.totalSim = data.TotalSims;
                 $scope.lstPage.splice(0);
                 for (i = 1; i <= $scope.pageCount && i <= 9; i++) {
                     $scope.lstPage.push(i);
@@ -277,7 +285,7 @@
         $http({
             url: "/SIM/GetSIMsByNumber",
             method: "GET",
-            params: { number: $scope.filter.number, pageIndex: index, itemsPerPage: $scope.filter.itemsPerPage }
+            params: { number: $scope.filter.number, pageIndex: index, pageSize: $scope.filter.pageSize }
         })
         .success(function (data) {
             $scope.lstSIM = data.ListSim;
