@@ -1,0 +1,128 @@
+// SEARCH FUL WIDTH UI
+.search-full
+  form(action='#search-form')
+    .clearfix
+      .group-item.col-100
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Viettel
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Mobifone
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Vinaphone
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Vietnammobile
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Gmobile
+        .item.col-md-2.col-sm-6.col-xs-12.text-uppercase
+          |Cố định
+      .search-form-dropdown.text-center
+        .form-group.col-md-2.col-sm-6.col-xs-12
+          .dropdown
+            button#dropdownMenu1.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+              | Chọn loại sim
+              span.caret
+            |             
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu1')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Sim t&#x1EE9; q&uacute;y
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Sim n&abreve;m sinh
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Sim tam hoa
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Sim n&abreve;m sinh
+        |         
+        .form-group.col-md-2.col-sm-6.col-xs-12
+          .dropdown
+            button#dropdownMenu3.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+              | Năm sinh
+              span.caret
+            |             
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu3')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 1990
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 1989
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 1987
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 1986
+        |         
+        .form-group.col-md-3.col-sm-6.col-xs-12
+          .dropdown
+            button#dropdownMenu2.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+              | Ch&#x1ECD;n nh&agrave; m&#x1EA1;ng
+              span.caret
+            |             
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu2')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Viettel
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Mobile
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Vina
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') Gmobile
+        |         
+        .form-group.col-md-2.col-sm-6.col-xs-12
+          .dropdown
+            button#dropdownMenu3.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+              | Gi&aacute; t&#x1EEB;
+              span.caret
+            |             
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu3')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 100
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 200
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 300
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 500
+        |         
+        .form-group.col-md-2.col-sm-6.col-xs-12
+          .dropdown
+            button#dropdownMenu4.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+              | &Dstrok;&#x1EBF;n gi&aacute;
+              span.caret
+            |             
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu4')
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 100
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 200
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 300
+              |               
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='#') 500
+      // col-md-8
+      .celarfix
+    |     
+    .form-group.coll-md-12.search-inline
+      input.col-100(type='text', placeholder='Nhập từ khóa tìm kiếm ...')
+      |       
+      button(type='submit')
+        //- i.fa.fa-search
+        span Tìm kiếm
+    // alert
+    .alert.alert-dismissible.fade.in(role='alert')
+      button.close(type='button', data-dismiss='alert', aria-label='Close')
+        span(aria-hidden='true') &times;
+      |       &bull; Tìm sim có số 6789 bạn hãy gõ 6789 , &bull; Tìm sim có đầu 090 đuôi 8888 hãy gõ 090*8888, &bull; Tìm sim bắt đầu bằng 0914 đuôi bất kỳ, bạn hãy gõ: 0914*
+    // end alert
+// end SEARCH FUL WIDTH UI

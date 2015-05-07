@@ -1,0 +1,78 @@
+.navbar-default {
+	font-weight:bold;
+} 
+.border-right-md {border-left:1px solid #eaeaea;}
+.pull-right-md {float:right !important;}
+
+.showcase {
+	width:75%;
+	margin:15px auto;
+	float:none;
+	.item {
+		width: 20%;
+		float:left;
+	}
+	&>.thre-col-content {
+		.item {
+			width: 33.333333%;
+		}
+	}
+}
+
+/* UTILITY
+--------------------------------------------------*/
+.md-hidden {
+	display:none !important;
+}
+
+/* TOP UI 
+--------------------------------------------------*/ 
+$top-height		:40px;
+$top-color		:rgba(0,0,0,0.9);
+
+$top-line-height	:$top-height / 2;
+$top-padding		:$top-height/2 - $top-line-height/2 ;
+.top {
+	@include clearfix;
+	background-color:#444;
+	background-color:$top-color; 
+	&>span,&>a {
+		line-height: $top-height/2;
+		padding:$top-padding;
+		display: block;
+		color:#eaeaea;
+	}
+	&>span,&>a,
+	&>div,&>form,
+	&>.mainmenu, .user-menu {
+		display: inline-block;
+		vertical-align: middle;
+		text-align: left;
+		a {display:block;}
+	}	
+} 
+// form elemement
+.mainmenu, .user-menu {
+	@include menu($top-height);
+}
+.search-form-base {
+	position:relative;
+	input,button {
+		height: $top-line-height;
+	}
+	input[type="text"] {
+		border: none;
+		background-color:transparent;
+		width: 100%;
+		border: 1px solid #ccc;
+		background-color:rgba(#fff,0.9);
+		padding-left:5px;
+	} 
+	input[type="submit"],button.search-icon{
+		position: absolute;
+		top:0px;
+		right: 0px;
+		border:none;
+		background-color:transparent;
+	}
+}

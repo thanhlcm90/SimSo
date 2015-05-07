@@ -1,0 +1,24 @@
+/* IE FIXED 
+-------------------------*/
+$menu-width :220px;
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+/* IE10+ CSS styles go here */
+	.page.menu-open {
+		.top,.col-top:after {
+			margin-left:$menu-width; 
+			white-space: nowrap;
+		}
+		.open.mainmenu {
+			position: absolute;
+			left:$menu-width*(-1);
+			top:0;
+			bottom:0;
+			z-index: 99999;
+		} 
+		.show-overlay.overlay {
+			margin-left: 0;
+		} 
+	}	
+}
+ 

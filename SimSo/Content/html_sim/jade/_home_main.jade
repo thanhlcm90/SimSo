@@ -1,0 +1,158 @@
+// home main content
+.col-main
+	.container
+		.row
+			.main-side-wrapper
+				.col-md-9.main-wrapper
+					// maincotnent
+					.main-content
+						// search box
+						include _search_fullwidth.jade
+						// breadcrumb
+						ol.breadcrumb
+							li
+								a(href='#')
+								i.fa.fa-home
+								|  Trang chủ 
+							li
+								a(href='#') Sim   
+							li.active Tam hoa
+						// end breadcrumb
+						// table sim
+						.table-wrapper
+							ul.ul-tb-sim.clearfix
+								li.tb-head
+									.col-md-1.col-xs-6
+										span STT
+									.col-md-3.col-xs-6.bold
+										span Sim  
+									.col-md-2.col-xs-4
+										a(href='#0')
+										| Giá 
+										i.fa.fa-angle-down 
+									.col-md-2.sm-hidden.text-center
+										a(href='#0')  Mạng 
+											i.fa.fa-angle-down 
+									.col-md-2.sm-hidden.text-center
+										a(href='#0')
+										| Loại sim 
+										i.fa.fa-angle-down
+									.col-md-2.col-xs-2.text-right
+										span.sm-hidden Mua sim
+								- for (var x=1;x<21;x++)
+									li
+										.col-md-1.col-xs-6
+											a(href='#')
+												| 0#{x}
+										.col-md-3.col-xs-6.bold
+											a(href='#')
+												| 09123
+												span.red-text 4567
+												| 8
+										.col-md-2.col-xs-4
+											span 65.000.000 
+										.col-md-2.sm-hidden.text-center
+											a(href='#')
+												img(src='images/viettel.png', alt='viettel')			              
+										.col-md-2.sm-hidden.text-center
+											span Tứ quý			              
+										.col-md-2.col-xs-2.text-right
+											a.inline.btn-addtocard(href='#0')
+												i.fa.fa-shopping-cart
+												| 
+												span.inline.sm-hidden Mua sim               
+						// end table sim data
+						// pagination
+						.pagination
+							a(href='') &laquo; Đầu tiên 
+							a(href='') &laquo; Trước 
+							a.active(href='') 1 
+							a(href='') 2 
+							a(href='') 3 
+							a(href='') 4 
+							a(href='') 5 
+							a(href='') Tiếp  &raquo; 
+							a(href='') Cuối cùng  &raquo;
+						// banner main content
+						.banner.text-center
+							a(href='')
+								img(src='images/banner.png', alt='banner maincontent')
+						// backlink
+						.tag-wrapper
+							h3.title-module
+								a(href='#') Chọn loại sim 
+							ul
+								-for (var x=0;x<10;x++)
+									li.col-25
+										a(href='#0') Loại sim 
+					// end main content 
+				.col-md-3.sidebar-wrapper
+					.sidebar
+						// sidebar
+					h3.sidebar-title
+						a.text-uppercase(href='#') Bán hàng online
+					.sidebar-content
+						ul.support-module
+							- for (var x=1;x<4;x++)
+								li
+									a.support-name.clearfix(href='#0') 
+										|  Trần Văn Văn
+									a.support-phone(href='#0') 0912 345 678
+									span.support-icon.text-center
+										a.col-100(href='#0') 
+											img(src='images/yahoo.png', alt='') 
+						p.text-center
+							strong Làm việc từ 7h - 21h
+							br
+							span Tất cả các ngày trong tuần
+							br
+							small (Ngoài giờ Quý khách vui lòng 
+								br 
+								|Đặt mua trên Web hoặc gửi SMS)
+						p.text-center
+							span Bộ phận kế toán
+							br
+							strong 0912.22.11.22
+						div.text-center
+							div.red-text Hotline khiếu nại dịch vụ
+							div.text-center
+								strong Mr Ngọc Anh
+								br
+								strong 01292.866.866
+					h3.sidebar-title
+						a.text-uppercase(href='#') Đơn hàng mới
+					.sidebar-content
+						ul.list-news
+							marquee(direction='up', onmouseover='this.stop()', scrolldelay='1', scrollamount='2', onmouseout='this.start()', height='350', align='left', style='height: 350px;')
+								li
+									a.title(href='#0') Dương Mạnh Phi
+									a.description(href='#0') Đặt sim: 09123456
+									a(href='#0') Vào lúc: 19:56 12/04/2015
+								li
+									a.title(href='#0') Dương Mạnh Phi
+									a.description(href='#0') Đặt sim: 09123456
+									a(href='#0') Vào lúc: 19:56 12/04/2015
+								li
+									a.title(href='#0') Dương Mạnh Phi
+									a.description(href='#0') Đặt sim: 09123456
+									a(href='#0') Vào lúc: 19:56 12/04/2015
+								li
+									a.title(href='#0') Dương Mạnh Phi
+									a.description(href='#0') Đặt sim: 09123456
+									a(href='#0') Vào lúc: 19:56 12/04/2015
+								li
+									a.title(href='#0') Dương Mạnh Phi
+									a.description(href='#0') Đặt sim: 09123456
+									a(href='#0') Vào lúc: 19:56 12/04/2015
+					h3.sidebar-title
+						a.text-uppercase(href='#') Bạn cần biết
+					.sidebar-content
+						ul.list-news
+							- for (var x=1; x<6;x++)
+								li
+									a.description(href='#0') Kiểm tra thông tin chủ thuê bao di động
+										br
+										small: a(href='#0') Vào lúc: 19:56 12/04/2015 
+					.sidebar-content.text-center
+						span
+							img(src="images/dangkybocongthuong.png", title="đăng ký bộ công thương")

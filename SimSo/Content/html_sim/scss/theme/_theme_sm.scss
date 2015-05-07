@@ -1,0 +1,14 @@
+.mainmenu > li > ul > li > a, .user-menu > li > ul > li > a {
+	padding-left:15px;
+	font-size:12px;
+} 
+
+.afixed { 
+	&.small-menu {
+		background-color:rgba(#000,.9);
+		height: 40px;
+		.logo-wrapper{
+			max-width: 60px;
+		}
+	}
+}

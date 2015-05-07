@@ -1,0 +1,22 @@
+/* IE 9 ONLY 
+*/
+$menu-width :220px;
+.page.menu-open { 
+	margin-left:$menu-width;
+	.col-top {
+		z-index:9999;
+	}
+	.icon-menu { 
+	}
+}
+
+.mainmenu.open {
+	position:fixed;
+	width:$menu-width;
+	top:0;
+	left:0;
+}
+.overlay.show-overlay {
+	margin-left:$menu-width;
+	z-index:99999;
+}

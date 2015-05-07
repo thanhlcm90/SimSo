@@ -1,0 +1,20 @@
+/* IE 9 ONLY 
+*/
+.page.menu-open {
+  margin-left: 220px;
+}
+.page.menu-open .col-top {
+  z-index: 9999;
+}
+
+.mainmenu.open {
+  position: fixed;
+  width: 220px;
+  top: 0;
+  left: 0;
+}
+
+.overlay.show-overlay {
+  margin-left: 220px;
+  z-index: 99999;
+}
