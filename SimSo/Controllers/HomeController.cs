@@ -18,6 +18,7 @@ namespace SimSo.Controllers
             ViewBag.SimTypes = new SimTypeRepo().GetSimTypes();
             //
             ViewBag.Page = page ?? 1;
+            ViewBag.PageSize = 20;
             ViewBag.Simtype = simtype;
             ViewBag.Network = network;
             ViewBag.Price_Min = price_min;

@@ -1,373 +1,62 @@
-﻿<!DOCTYPE html>
+﻿@model SimSo.Models.App.ViewModels.ListSimViewModel
 @{
-    Layout = null;
-    var menus = ViewBag.Menus;
-    var networks = ViewBag.Networks;
-    var simtypes = ViewBag.SimTypes;
     int stt = 1;
-}
-@model SimSo.Models.App.ViewModels.ListSimViewModel
-@{
     int pageCount = Model.PageCount;
     int page = ViewBag.Page;
+    int pageSize = ViewBag.PageSize;
     var isHidden = pageCount == 0 ? "none" : "";
     var isShow = pageCount > 0 ? "none" : "";
+    ViewBag.Title = "Trang chủ";
 }
-<html lang="vi">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/html_sim/images/favicon.png">
-    <title>Sim so dep</title>
-    <!-- Font roboto and chunkfive -->
-    <link href="~/Content/html_sim/css/robotofont.css " rel="stylesheet">
-    <!-- Font awesome -->
-    <link href="~/Content/html_sim/css/font-awesome.css " rel="stylesheet">
-    <link href="~/Content/html_sim/libs/owl-carousel/owl.carousel.css" rel="stylesheet">
-    <!-- Bootstrap core CSS -->
-    <link href="~/Content/html_sim/libs/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="~/Content/html_sim/css/style.css" rel="stylesheet">
-    <script src="~/Content/html_sim/libs/ie-emulation-modes-warning.js"></script>
-    <style>
-        .show-grid1 [class^=col-] {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            background-color: #eee;
-            background-color: rgba(86,61,124,.15);
-            border: 1px solid #ddd;
-            border: 1px solid rgba(86,61,124,.2);
-        }
-
-        .border {
-            border: 1px solid #ccc;
-        }
-    </style>
-</head>
-<body class="page show-grid">
-    <div class="col-top afixed">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- UI TOP -->
-                    <a class="overlay" href="#2"></a>
-                    <div class="top">
-                        <span class="md-hidden icon-menu"><a id="icon-menu" href="#0"><i class="fa fa-bars"></i></a></span>
-                        <ul class="mainmenu">
-                            <li><a class="active" href="index.html">Trang chủ</a></li>
-                            @foreach (var item in menus)
-                            {
-                                <li><a href="#">@item.Name</a></li>
-                            }
-                            <li class="right-fixed-mobile">
-                                <ul>
-                                    <li class="col-50"><a href="#0">Đăng nhập</a></li>
-                                    <li class="col-50"><a href="#0">Đăng ký</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- end UI TOP -->
-                </div>
-            </div>
-        </div>
-    </div> <!-- top -->
-    <!-- banner right and left sidebar -->
-    <div class="banner-side-wrapper">
-        <div class="fixed-top-90px">
-            <div class="container">
-                <div class="banner-side-left"><a href="#0"><img src="~/Content/html_sim/images/banner-side-left.png" alt=""></a></div>
-                <div class="banner-side-right"><a href="#0"><img src="~/Content/html_sim/images/banner-side-left.png" alt=""></a></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1><a href=""><img src="~/Content/html_sim/images/logo_sodep.svg" alt="" /></a></h1>
-                </div>
-                <div class="col-md-8">
-                    <div class="banner pull-right"><a href="#0"><img src="~/Content/html_sim/images/banner-header-right.png" alt="banner" /></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- home main content-->
-    <div class="col-main">
-        <div class="container">
-            <div class="row">
-                <div class="main-side-wrapper">
-                    <div class="col-md-9 main-wrapper">
-                        <!-- maincotnent-->
-                        <div class="main-content">
-                            <!-- search box-->
-                            <!-- SEARCH FUL WIDTH UI-->
-                            <div class="search-full">
-                                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-                                {
-                                    <div class="clearfix">
-                                        <div class="group-item col-100">
-                                            @foreach (var item in networks)
-                                            {
-                                                <div class="item col-md-2 col-sm-6 col-xs-12 text-uppercase">@item.Name</div>
-                                            }
-                                        </div>
-                                        <div class="search-form-dropdown text-center">
-                                            <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="simtype">
-                                                    <option value="">Chọn loại Sim</option>
-                                                    @foreach (var item in simtypes)
-                                                    {
-                                                        var select = item.ID == ViewBag.SimType;
-                                                        <option value="@item.ID" selected="@select">@item.Name</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="network">
-                                                    <option value="">Chọn nhà mạng</option>
-                                                    @foreach (var item in networks)
-                                                    {
-                                                        var select = item.ID == ViewBag.Network;
-                                                        <option value="@item.ID" selected="@select">@item.Name</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-2 col-sm-6 col-xs-12">
-                                                <label style="font-weight:initial">Giá từ:</label>
-                                                <input type="text" class="form-control" style="color:black" name="price_min" value="@ViewBag.Price_Min" placeholder="Nhập giá...">
-                                            </div>
-                                            <div class="form-group col-md-2 col-sm-6 col-xs-12">
-                                                <label style="font-weight:initial">Đến giá:</label>
-                                                <input type="text" class="form-control" style="color:black" name="price_max" value="@ViewBag.Price_Max" placeholder="Nhập giá...">
-                                            </div>
-                                        </div>
-                                        <!-- col-md-8-->
-                                        <div class="celarfix"></div>
-                                    </div>
-                                    <div class="form-group coll-md-12 search-inline">
-                                        <input type="text" style="color:black" name="searchStr" value="@ViewBag.SearchStr" placeholder="Nhập từ khóa tìm kiếm ..." class="col-100" />
-                                        <button type="submit">
-                                            <span>Tìm kiếm</span>
-                                        </button>
-                                    </div>
-                                <!-- alert-->
-                                    <div role="alert" class="alert alert-dismissible fade in">
-                                        <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>      &bull; Tìm sim có số 6789 bạn hãy gõ 6789 , &bull; Tìm sim có đầu 090 đuôi 8888 hãy gõ 090*8888, &bull; Tìm sim bắt đầu bằng 0914 đuôi bất kỳ, bạn hãy gõ: 0914*
-                                    </div>
-                                <!-- end alert-->
-                                }
-                            </div>
-                            <!-- end SEARCH FUL WIDTH UI-->
-                            <!-- breadcrumb-->
-                            <ol class="breadcrumb" style="display:@isHidden">
-                                <li><a href="#"></a><i class="fa fa-home"></i> Trang chủ </li>
-                                <li><a href="#">Sim   </a></li>
-                                <li class="active">Tam hoa</li>
-                            </ol>
-                            <!-- end breadcrumb-->
-                            <!-- table sim-->
-                            <h4 style="display:@isShow;margin-left:30px">Không tìm thấy Sim nào.</h4>
-                            <div class="table-wrapper" style="display:@isHidden">
-                                <ul class="ul-tb-sim clearfix">
-                                    <li class="tb-head">
-                                        <div class="col-md-1 col-xs-6"><span>STT </span></div>
-                                        <div class="col-md-3 col-xs-6 bold"><span>Sim  </span></div>
-                                        <div class="col-md-2 col-xs-4"><a href="#0"></a>Giá <i class="fa fa-angle-down"></i></div>
-                                        <div class="col-md-2 sm-hidden text-center"><a href="#0"> Mạng <i class="fa fa-angle-down"></i></a></div>
-                                        <div class="col-md-2 sm-hidden text-center"><a href="#0"></a>Loại sim <i class="fa fa-angle-down"></i></div>
-                                        <div class="col-md-2 col-xs-2 text-right"><span class="sm-hidden">Mua sim</span></div>
-                                    </li>
-                                    @foreach (var item in Model.ListSim)
+<ol class="breadcrumb" style="display:@isHidden">
+    <li><a href="#"></a><i class="fa fa-home"></i> Trang chủ </li>
+    <li><a href="#">Sim   </a></li>
+    <li class="active">Tam hoa</li>
+</ol>
+<!-- end breadcrumb-->
+<!-- table sim-->
+<h4 style="display:@isShow;margin-left:30px">Không tìm thấy Sim nào.</h4>
+<div class="table-wrapper" style="display:@isHidden">
+    <ul class="ul-tb-sim clearfix">
+        <li class="tb-head">
+            <div class="col-md-1 col-xs-6"><span>STT </span></div>
+            <div class="col-md-3 col-xs-6 bold"><span>Sim  </span></div>
+            <div class="col-md-2 col-xs-4"><a href="#0"></a>Giá <i class="fa fa-angle-down"></i></div>
+            <div class="col-md-2 sm-hidden text-center"><a href="#0"> Mạng <i class="fa fa-angle-down"></i></a></div>
+            <div class="col-md-2 sm-hidden text-center"><a href="#0"></a>Loại sim <i class="fa fa-angle-down"></i></div>
+            <div class="col-md-2 col-xs-2 text-right"><span class="sm-hidden">Mua sim</span></div>
+        </li>
+        @foreach (var item in Model.ListSim)
                                     {
                                         dynamic sim = item;
-                                        <li>
-                                            <div class="col-md-1 col-xs-6 sm-hidden"><a href="#">@((page - 1) * 100 + stt++)</a></div>
-                                            <div class="col-md-3 col-xs-6 bold"><a href="#">@sim.Number</a></div>
-                                            <div class="col-md-2 col-xs-4"><span>@System.String.Format("{0:#,###}", @sim.Price)</span></div>
-                                            <div class="col-md-2 sm-hidden text-center"><a href="#"><img src="@sim.Network.image" alt="@sim.Network.Name" width="30" height="30"></a></div>
-                                            <div class="col-md-2 sm-hidden text-center"><span>@sim.SimType</span></div>
-                                            <div class="col-md-2 col-xs-2 text-right"><a href="#0" class="inline btn-addtocard"><i class="fa fa-shopping-cart"></i><span class="inline sm-hidden">Mua sim                                    </span></a></div>
-                                        </li>
+                                    <li>
+                                        <div class="col-md-1 col-xs-6 sm-hidden"><a href="#">@((page - 1) * pageSize + stt++)</a></div>
+                                        <div class="col-md-3 col-xs-6 bold"><a href="#">@sim.Number</a></div>
+                                        <div class="col-md-2 col-xs-4"><span>@System.String.Format("{0:#,###}", @sim.Price)</span></div>
+                                        <div class="col-md-2 sm-hidden text-center"><a href="#"><img src="@sim.Network.image" alt="@sim.Network.Name" width="30" height="30"></a></div>
+                                        <div class="col-md-2 sm-hidden text-center"><span>@sim.SimType</span></div>
+                                        <div class="col-md-2 col-xs-2 text-right"><a href="#0" class="inline btn-addtocard"><i class="fa fa-shopping-cart"></i><span class="inline sm-hidden">Mua sim                                    </span></a></div>
+                                    </li>
                                     }
-                                </ul>
-                            </div>
-                            <!-- end table sim data-->
-                            <!-- pagination-->
-                            <div class="pagination" style="display:@isHidden">
-                                <a href="">&laquo; Đầu tiên </a>
-                                <a href="">&laquo; Trước </a>
-                                @for (int i = page > 2 ? (page >= pageCount - 2 ? pageCount - 4 : page - 2) : 1; i <= (page > 2 ? page + 2 : 5) && i <= pageCount; i++)
+    </ul>
+</div>
+<!-- end table sim data-->
+<!-- pagination-->
+<div class="pagination" style="display:@isHidden">
+    @Html.ActionLink("« Đầu tiên ", "", new { page = 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
+    @Html.ActionLink("« Trước ", "", new { page = page - 1 > 0 ? page - 1 : 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
+
+    @for (int i = page > 2 ? (page >= pageCount - 2 ? (pageCount > 4 ? pageCount - 4 : 1) : page - 2) : 1; i <= (page > 2 ? page + 2 : 5) && i <= pageCount; i++)
                                 {
                                     if (page == i)
                                     {
-                                        @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy }, new { @class = "active" })
+                                @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy }, new { @class = "active" })
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
+                                @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
                                     }
                                 }
-                                <a href="">Tiếp  &raquo; </a>
-                                <a href="">Cuối cùng  &raquo;</a>
-                            </div>
-                            <br />
-                            <!-- banner main content-->
-                            <div class="banner text-center"><a href=""><img src="~/Content/html_sim/images/banner.png" alt="banner maincontent" /></a></div>
-                            <!-- backlink-->
-                            <div class="tag-wrapper">
-                                <h3 class="title-module"><a href="#">Chọn loại sim </a></h3>
-                                <ul>
-                                    @foreach (var item in simtypes)
-                                    {
-                                        var res = (string)item.Name;
-                                        res = res.Replace("-", "");
-                                        <li class="col-25"><a href="">@res</a></li>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- end main content -->
-                    </div>
-                    <div class="col-md-3 sidebar-wrapper">
-                        <div class="sidebar">
-                            <!-- sidebar-->
-                        </div>
-                        <h3 class="sidebar-title"><a href="#" class="text-uppercase">Bán hàng online</a></h3>
-                        <div class="sidebar-content">
-                            <ul class="support-module">
-                                <li><a href="#0" class="support-name clearfix"> Trần Văn Văn</a><a href="#0" class="support-phone">0912 345 678</a><span class="support-icon text-center"><a href="#0" class="col-100"><img src="~/Content/html_sim/images/yahoo.png" alt="" /></a></span></li>
-                                <li><a href="#0" class="support-name clearfix"> Trần Văn Văn</a><a href="#0" class="support-phone">0912 345 678</a><span class="support-icon text-center"><a href="#0" class="col-100"><img src="~/Content/html_sim/images/yahoo.png" alt="" /></a></span></li>
-                                <li><a href="#0" class="support-name clearfix"> Trần Văn Văn</a><a href="#0" class="support-phone">0912 345 678</a><span class="support-icon text-center"><a href="#0" class="col-100"><img src="~/Content/html_sim/images/yahoo.png" alt="" /></a></span></li>
-                            </ul>
-                            <p class="text-center"><strong>Làm việc từ 7h - 21h</strong><br /><span>Tất cả các ngày trong tuần</span><br /><small>(Ngoài giờ Quý khách vui lòng <br />Đặt mua trên Web hoặc gửi SMS)</small></p>
-                            <p class="text-center"><span>Bộ phận kế toán</span><br /><strong>0912.22.11.22</strong></p>
-                            <div class="text-center">
-                                <div class="red-text">Hotline khiếu nại dịch vụ</div>
-                                <div class="text-center"><strong>Mr Ngọc Anh</strong><br /><strong>01292.866.866</strong></div>
-                            </div>
-                        </div>
-                        <h3 class="sidebar-title"><a href="#" class="text-uppercase">Đơn hàng mới</a></h3>
-                        <div class="sidebar-content">
-                            <ul class="list-news">
-                                <marquee direction="up" onmouseover="this.stop()" scrolldelay="1" scrollamount="2" onmouseout="this.start()" height="350" align="left" style="height: 350px;">
-                                    <li><a href="#0" class="title">Dương Mạnh Phi</a><a href="#0" class="description">Đặt sim: 09123456</a><a href="#0">Vào lúc: 19:56 12/04/2015</a></li>
-                                    <li><a href="#0" class="title">Dương Mạnh Phi</a><a href="#0" class="description">Đặt sim: 09123456</a><a href="#0">Vào lúc: 19:56 12/04/2015</a></li>
-                                    <li><a href="#0" class="title">Dương Mạnh Phi</a><a href="#0" class="description">Đặt sim: 09123456</a><a href="#0">Vào lúc: 19:56 12/04/2015</a></li>
-                                    <li><a href="#0" class="title">Dương Mạnh Phi</a><a href="#0" class="description">Đặt sim: 09123456</a><a href="#0">Vào lúc: 19:56 12/04/2015</a></li>
-                                    <li><a href="#0" class="title">Dương Mạnh Phi</a><a href="#0" class="description">Đặt sim: 09123456</a><a href="#0">Vào lúc: 19:56 12/04/2015</a></li>
-                                </marquee>
-                            </ul>
-                        </div>
-                        <h3 class="sidebar-title"><a href="#" class="text-uppercase">Bạn cần biết</a></h3>
-                        <div class="sidebar-content">
-                            <ul class="list-news">
-                                <li><a href="#0" class="description">Kiểm tra thông tin chủ thuê bao di động<br /><small><a href="#0">Vào lúc: 19:56 12/04/2015 </a></small></a></li>
-                                <li><a href="#0" class="description">Kiểm tra thông tin chủ thuê bao di động<br /><small><a href="#0">Vào lúc: 19:56 12/04/2015 </a></small></a></li>
-                                <li><a href="#0" class="description">Kiểm tra thông tin chủ thuê bao di động<br /><small><a href="#0">Vào lúc: 19:56 12/04/2015 </a></small></a></li>
-                                <li><a href="#0" class="description">Kiểm tra thông tin chủ thuê bao di động<br /><small><a href="#0">Vào lúc: 19:56 12/04/2015 </a></small></a></li>
-                                <li><a href="#0" class="description">Kiểm tra thông tin chủ thuê bao di động<br /><small><a href="#0">Vào lúc: 19:56 12/04/2015 </a></small></a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar-content text-center"><span><img src="~/Content/html_sim/images/dangkybocongthuong.png" title="đăng ký bộ công thương" /></span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="colophone-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- backlink-->
-                    <div class="tag-wrapper blue">
-                        <h3 class="title-module"><a href="#">Từ khóa</a></h3>
-                        <ul>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                            <li class="tag"><a href="#0">Loại sim</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="fmenu-wrapper">
-        <div class="container text-center">
-            <ul class="fmenu">
-                <li><a href="#0">menu</a></li>
-                <li><a href="#0">menu</a></li>
-                <li><a href="#0">menu</a></li>
-                <li><a href="#0">menu</a></li>
-                <li><a href="#0">menu</a></li>
-                <li><a href="#0">menu</a></li>
-            </ul>
-        </div>
-    </div>
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-9 col-sm-12">
-                    <!-- pull-right-md if need this block right-->
-                    <div class="col-md-6 col-xs-12">
-                        <h3><a href="#0" class="title text-uppercase">Tiêu đề</a></h3>
-                        <div class="content">
-                            <p class="text-justify">Hệ thống phân phối Sim số đẹp lớn nhất Việt Nam!</p>
-                            <p class="text-justify">Sim số đẹp VTC là trang web chuyên về số đẹp giá rẻ - Một dịch vụ của Công ty CP Dịch vụ Viễn thông Hiệp Thành</p>
-                            <p class="text-justify">Giấy phép KD số 0106459562 cấp tại Sở Kế hoạch và đầu tư Hà Nội</p>
-                            <p class="text-justify">Lưu ý: Sim số đẹp VTC  KHÔNG LÀM DỊCH VỤ MÔI GIỚI mua bán các số sim đang được sử dụng.</p>
-                            <p class="text-justify">Chúng tôi CHỈ BÁN TRỰC TIẾP các sim còn trong kho. Tất cả sim bán ra đều là sim mới, nguyên kít chưa kích hoạt.</p>
-                            <p class="text-justify">Chúng tôi cam kết luôn vào tên chính chủ sở hữu sim cho khách hàng (Cách kiểm tra chủ thuê bao)</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <h3><a href="#0" class="title text-uppercase">Chi nhánh</a></h3>
-                        <div class="content">
-                            <p class="text-justify text-uppercase">Giao sim tận nơi toàn quốc trong 24-48 h</p>
-                            <p class="text-justify"><span class="text-uppercase">Hà Nội</span><br />Số 176 La Thành, Đống Đa, HN (Đi thẳng vào ngõ 398 Xã Đàn)</p>
-                            <p>Điện thoại: (04).66.586.586</p>
-                            <p class="text-justify"><span class="text-uppercase">Hồ chí minh</span><br />Số 176 La Thành, Đống Đa, HN (Đi thẳng vào ngõ 398 Xã Đàn)</p>
-                            <p>Điện thoại: (04).66.586.586</p>
-                            <p class="text-justify"><span class="text-uppercase">Hồ chí minh</span><br />Số 176 La Thành, Đống Đa, HN (Đi thẳng vào ngõ 398 Xã Đàn)</p>
-                            <p>Điện thoại: (04).66.586.586</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- col-md-9-->
-                <div class="col-md-3 col-sm-12">
-                    <h3><a href="#0" class="title text-uppercase">Thanh toán</a></h3>
-                    <div class="col-100">
-                        <a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner1.png" title="title" height="43" class="col-100" /></a><a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner2.png" title="title" height="43" class="col-100" /></a><a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner3.png" title="title" height="43" class="col-100" /></a><a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner4.png" title="title" height="43" class="col-100" /></a><a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner5.png" title="title" height="43" class="col-100" /></a><a class="col-33"><img src="~/Content/html_sim/images/partners/logo-partner6.png" title="title" height="43" class="col-100" /></a>
-                    </div>
-                    <div class="clearfix"></div><br /><br />
-                    <h3><a href="#0" class="title text-uppercase">Facebook</a></h3>
-                    <div><img src="~/Content/html_sim/images/fanpage.png" title="Facebook" class="col-100" /></div>
-                </div>
-            </div>
-            <div class="copyright text-center">
-                <p>Copyright 2015 SimsodepVTC</p>
-            </div>
-        </div>
-    </footer>
-    <!--
-    Bootstrap core JavaScript
-    ==================================================
-    -->
-    <!-- Placed at the end of the document so the pages load faster-->
-    <script src="~/Content/html_sim/libs/jquery.min.js"></script>
-    <script src="~/Content/html_sim/libs/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug-->
-    <script src="~/Content/html_sim/libs/ie10-viewport-bug-workaround.js"></script>
-    <script src="~/Content/html_sim/libs/owl-carousel/owl.carousel.js"></script>
-    <!-- JS-->
-    <script src="~/Content/html_sim/js/script.js"></script>
-</body>
-</html>
+    <a href="">Tiếp  &raquo; </a>
+    <a href="">Cuối cùng  &raquo;</a>
+</div>
