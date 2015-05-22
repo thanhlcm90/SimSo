@@ -2,7 +2,7 @@
 using SimSo.Models.App.Repository;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Linq;
 namespace SimSo.Controllers.App
 {
     [Authorize(Roles = "QuanLy, NhanVien")]
@@ -40,6 +40,26 @@ namespace SimSo.Controllers.App
             model.CreateDate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
+                if (model.IDMenu != null)
+                {
+                    using (var entities = new AppDbContext())
+                    {
+                        if (entities.News.Where(n => n.IDMenu == model.IDMenu && n.isDeleted == false).Count() > 0)
+                        {
+                            var menu = entities.Menus.Find(model.IDMenu);
+                            menu.Type = 0;      //group
+                            entities.Entry(menu).State = System.Data.Entity.EntityState.Modified;
+                            entities.SaveChanges();
+                        }
+                        else
+                        {
+                            var menu = entities.Menus.Find(model.IDMenu);
+                            menu.Type = 1;
+                            entities.Entry(menu).State = System.Data.Entity.EntityState.Modified;
+                            entities.SaveChanges();
+                        }
+                    }
+                }
                 var data = context.Insert(model);
                 context.Save();
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -53,6 +73,26 @@ namespace SimSo.Controllers.App
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
+                if (model.IDMenu != null)
+                {
+                    using (var entities = new AppDbContext())
+                    {
+                        if (entities.News.Where(n => n.IDMenu == model.IDMenu && n.isDeleted == false).Count() > 0)
+                        {
+                            var menu = entities.Menus.Find(model.IDMenu);
+                            menu.Type = 0;      //group
+                            entities.Entry(menu).State = System.Data.Entity.EntityState.Modified;
+                            entities.SaveChanges();
+                        }
+                        else
+                        {
+                            var menu = entities.Menus.Find(model.IDMenu);
+                            menu.Type = 1;
+                            entities.Entry(menu).State = System.Data.Entity.EntityState.Modified;
+                            entities.SaveChanges();
+                        }
+                    }
+                }
                 context.Update(model);
                 context.Save();
                 return Json(model, JsonRequestBehavior.AllowGet);

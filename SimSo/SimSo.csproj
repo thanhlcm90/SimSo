@@ -60,6 +60,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -177,7 +178,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\App\CMSController.cs" />
+    <Compile Include="Controllers\App\DiscountController.cs" />
     <Compile Include="Controllers\App\EmployeeController.cs" />
+    <Compile Include="Controllers\App\StatisticController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\App\MenuController.cs" />
     <Compile Include="Controllers\App\NetworkController.cs" />
@@ -187,23 +191,125 @@
     <Compile Include="Controllers\App\SimTypeController.cs" />
     <Compile Include="Controllers\App\SupplierController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Migrations\201505060421047_Init_Create.cs" />
     <Compile Include="Migrations\201505060421047_Init_Create.Designer.cs">
       <DependentUpon>201505060421047_Init_Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505070730367_Alter_Menu.cs" />
+    <Compile Include="Migrations\201505070730367_Alter_Menu.Designer.cs">
+      <DependentUpon>201505070730367_Alter_Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505070746086_Alter_Menu_2.cs" />
+    <Compile Include="Migrations\201505070746086_Alter_Menu_2.Designer.cs">
+      <DependentUpon>201505070746086_Alter_Menu_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505070755006_Alter_Simtype.cs" />
+    <Compile Include="Migrations\201505070755006_Alter_Simtype.Designer.cs">
+      <DependentUpon>201505070755006_Alter_Simtype.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080250081_Add_Discount_Table.cs" />
+    <Compile Include="Migrations\201505080250081_Add_Discount_Table.Designer.cs">
+      <DependentUpon>201505080250081_Add_Discount_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080503586_Alter_Order.cs" />
+    <Compile Include="Migrations\201505080503586_Alter_Order.Designer.cs">
+      <DependentUpon>201505080503586_Alter_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080701401_Alter_Order_2.cs" />
+    <Compile Include="Migrations\201505080701401_Alter_Order_2.Designer.cs">
+      <DependentUpon>201505080701401_Alter_Order_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080846040_Alter_Order_3.cs" />
+    <Compile Include="Migrations\201505080846040_Alter_Order_3.Designer.cs">
+      <DependentUpon>201505080846040_Alter_Order_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505091354436_Alter_Order1.cs" />
+    <Compile Include="Migrations\201505091354436_Alter_Order1.Designer.cs">
+      <DependentUpon>201505091354436_Alter_Order1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505111835354_Add_Number_to_Order.cs" />
+    <Compile Include="Migrations\201505111835354_Add_Number_to_Order.Designer.cs">
+      <DependentUpon>201505111835354_Add_Number_to_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505120242549_Alter_Menu1.cs" />
+    <Compile Include="Migrations\201505120242549_Alter_Menu1.Designer.cs">
+      <DependentUpon>201505120242549_Alter_Menu1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505120303267_Alter_Order2.cs" />
+    <Compile Include="Migrations\201505120303267_Alter_Order2.Designer.cs">
+      <DependentUpon>201505120303267_Alter_Order2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505131445260_Alter_Emp.cs" />
+    <Compile Include="Migrations\201505131445260_Alter_Emp.Designer.cs">
+      <DependentUpon>201505131445260_Alter_Emp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505131505442_Alter_Supp.cs" />
+    <Compile Include="Migrations\201505131505442_Alter_Supp.Designer.cs">
+      <DependentUpon>201505131505442_Alter_Supp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505140318161_Alter_Table.cs" />
+    <Compile Include="Migrations\201505140318161_Alter_Table.Designer.cs">
+      <DependentUpon>201505140318161_Alter_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505140720347_Add_Statistic_Table.cs" />
+    <Compile Include="Migrations\201505140720347_Add_Statistic_Table.Designer.cs">
+      <DependentUpon>201505140720347_Add_Statistic_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505150725562_Alter_Sim.cs" />
+    <Compile Include="Migrations\201505150725562_Alter_Sim.Designer.cs">
+      <DependentUpon>201505150725562_Alter_Sim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505191252586_alter_employee.cs" />
+    <Compile Include="Migrations\201505191252586_alter_employee.Designer.cs">
+      <DependentUpon>201505191252586_alter_employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505191300371_alter_employee_1.cs" />
+    <Compile Include="Migrations\201505191300371_alter_employee_1.Designer.cs">
+      <DependentUpon>201505191300371_alter_employee_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505201542191_add_keyword.cs" />
+    <Compile Include="Migrations\201505201542191_add_keyword.Designer.cs">
+      <DependentUpon>201505201542191_add_keyword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505210700573_add_sim_client.cs" />
+    <Compile Include="Migrations\201505210700573_add_sim_client.Designer.cs">
+      <DependentUpon>201505210700573_add_sim_client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505210705498_alter_sim_1123.cs" />
+    <Compile Include="Migrations\201505210705498_alter_sim_1123.Designer.cs">
+      <DependentUpon>201505210705498_alter_sim_1123.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505210711071_add_config.cs" />
+    <Compile Include="Migrations\201505210711071_add_config.Designer.cs">
+      <DependentUpon>201505210711071_add_config.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505210731375_alter_config.cs" />
+    <Compile Include="Migrations\201505210731375_alter_config.Designer.cs">
+      <DependentUpon>201505210731375_alter_config.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505210806091_alter_something.cs" />
+    <Compile Include="Migrations\201505210806091_alter_something.Designer.cs">
+      <DependentUpon>201505210806091_alter_something.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\App\Config.cs" />
     <Compile Include="Models\App\Employee.cs" />
     <Compile Include="Models\App\AppDbContext.cs" />
     <Compile Include="Models\App\Menu.cs" />
     <Compile Include="Models\App\NetWork.cs" />
     <Compile Include="Models\App\New.cs" />
     <Compile Include="Models\App\Order.cs" />
-    <Compile Include="Models\App\ViewModels\ListSimViewModel.cs" />
+    <Compile Include="Models\App\Discount.cs" />
+    <Compile Include="Models\App\Sim_Client.cs" />
+    <Compile Include="Models\App\Statistic.cs" />
+    <Compile Include="Models\App\ViewModels\ListItem.cs" />
+    <Compile Include="Models\App\ViewModels\NewViewModel.cs" />
+    <Compile Include="Repository\EmployeeRepo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\NetworkRepo.cs" />
     <Compile Include="Repository\NewRepository.cs" />
@@ -225,6 +331,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repository\StatisticRepo.cs" />
+    <Compile Include="Repository\SupplierRepo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,7 +371,11 @@
     <Content Include="Content\html_sim\fonts\roboto\Roboto-Thin-webfont.svg" />
     <Content Include="Content\html_sim\fonts\roboto\Roboto-ThinItalic-webfont.svg" />
     <Content Include="Content\html_sim\images\banner-header-right.png" />
+    <Content Include="Content\html_sim\images\banner-header-right1.png" />
+    <Content Include="Content\html_sim\images\banner-header-right2.png" />
+    <Content Include="Content\html_sim\images\banner-right.jpg" />
     <Content Include="Content\html_sim\images\banner-side-left.png" />
+    <Content Include="Content\html_sim\images\banner-side-left1.png" />
     <Content Include="Content\html_sim\images\banner.png" />
     <Content Include="Content\html_sim\images\bg.gif" />
     <Content Include="Content\html_sim\images\bg.png" />
@@ -299,7 +411,9 @@
     <Content Include="Content\html_sim\jade\_header.html" />
     <Content Include="Content\html_sim\jade\_home_slide.html" />
     <Content Include="Content\html_sim\jade\_top.html" />
+    <Content Include="Content\html_sim\js\min\script.min.js" />
     <Content Include="Content\html_sim\js\script.js" />
+    <Content Include="Content\html_sim\libs\css3-mediaqueries.js" />
     <Content Include="Content\html_sim\libs\html5shiv.min.js" />
     <Content Include="Content\html_sim\libs\ie-emulation-modes-warning.js" />
     <Content Include="Content\html_sim\libs\ie10-viewport-bug-workaround.js" />
@@ -338,6 +452,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="SBAdmin\app\components\angular-ckeditor.min.js" />
     <Content Include="SBAdmin\app\controllers\appCtrl.js" />
+    <Content Include="SBAdmin\app\controllers\manage\discountCtrl.js" />
     <Content Include="SBAdmin\app\controllers\manage\menuCtrl.js" />
     <Content Include="SBAdmin\app\controllers\manage\networkCtrl.js" />
     <Content Include="SBAdmin\app\controllers\manage\newCtrl.js" />
@@ -365,6 +480,7 @@
     <Content Include="SBAdmin\app\views\manage\new\create.html" />
     <Content Include="SBAdmin\app\views\manage\new\index.html" />
     <Content Include="SBAdmin\app\views\manage\new\update.html" />
+    <Content Include="SBAdmin\app\views\page-wrapper\error.html" />
     <Content Include="SBAdmin\app\views\working\order\create.html" />
     <Content Include="SBAdmin\app\views\working\order\index.html" />
     <Content Include="SBAdmin\app\views\working\order\update.html" />
@@ -1127,6 +1243,9 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\coloringNumber.js" />
+    <Content Include="Scripts\App\moneyFomat.js" />
+    <Content Include="Scripts\App\orderSim.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="SBAdmin\bower_components\bootstrap-social\.bower.json" />
@@ -1585,6 +1704,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CMS\Index.cshtml" />
     <Content Include="Views\CMS\Login.cshtml" />
+    <Content Include="Views\Home\Network.cshtml" />
+    <Content Include="Views\Home\SimType.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Group.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1602,6 +1727,78 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505060421047_Init_Create.resx">
       <DependentUpon>201505060421047_Init_Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505070730367_Alter_Menu.resx">
+      <DependentUpon>201505070730367_Alter_Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505070746086_Alter_Menu_2.resx">
+      <DependentUpon>201505070746086_Alter_Menu_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505070755006_Alter_Simtype.resx">
+      <DependentUpon>201505070755006_Alter_Simtype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080250081_Add_Discount_Table.resx">
+      <DependentUpon>201505080250081_Add_Discount_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080503586_Alter_Order.resx">
+      <DependentUpon>201505080503586_Alter_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080701401_Alter_Order_2.resx">
+      <DependentUpon>201505080701401_Alter_Order_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080846040_Alter_Order_3.resx">
+      <DependentUpon>201505080846040_Alter_Order_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505091354436_Alter_Order1.resx">
+      <DependentUpon>201505091354436_Alter_Order1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505111835354_Add_Number_to_Order.resx">
+      <DependentUpon>201505111835354_Add_Number_to_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505120242549_Alter_Menu1.resx">
+      <DependentUpon>201505120242549_Alter_Menu1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505120303267_Alter_Order2.resx">
+      <DependentUpon>201505120303267_Alter_Order2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505131445260_Alter_Emp.resx">
+      <DependentUpon>201505131445260_Alter_Emp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505131505442_Alter_Supp.resx">
+      <DependentUpon>201505131505442_Alter_Supp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505140318161_Alter_Table.resx">
+      <DependentUpon>201505140318161_Alter_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505140720347_Add_Statistic_Table.resx">
+      <DependentUpon>201505140720347_Add_Statistic_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505150725562_Alter_Sim.resx">
+      <DependentUpon>201505150725562_Alter_Sim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505191252586_alter_employee.resx">
+      <DependentUpon>201505191252586_alter_employee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505191300371_alter_employee_1.resx">
+      <DependentUpon>201505191300371_alter_employee_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505201542191_add_keyword.resx">
+      <DependentUpon>201505201542191_add_keyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210700573_add_sim_client.resx">
+      <DependentUpon>201505210700573_add_sim_client.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210705498_alter_sim_1123.resx">
+      <DependentUpon>201505210705498_alter_sim_1123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210711071_add_config.resx">
+      <DependentUpon>201505210711071_add_config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210731375_alter_config.resx">
+      <DependentUpon>201505210731375_alter_config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210806091_alter_something.resx">
+      <DependentUpon>201505210806091_alter_something.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

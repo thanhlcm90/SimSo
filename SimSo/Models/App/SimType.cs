@@ -22,10 +22,12 @@ namespace SimSo.Models.App
         public bool? isActive { get; set; }
 
         public bool? isDeleted { get; set; }
-
         [StringLength(200)]
+
         public string Title { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
+        [StringLength(1000)]
+        public string Keyword { get; set; }
     }
 }

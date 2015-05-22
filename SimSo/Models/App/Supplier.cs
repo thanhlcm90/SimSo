@@ -12,12 +12,15 @@ namespace SimSo.Models.App
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string UserName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100, MinimumLength = 6)]
+        [Required]
         public string Password { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string Name { get; set; }
 
         [StringLength(20)]

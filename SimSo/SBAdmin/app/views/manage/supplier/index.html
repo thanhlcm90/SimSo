@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th class="text-center" style="border-bottom:none;">Tên NCC</th>
+                        <th class="text-center" style="border-bottom:none;">Chiết khấu</th>
                         <th class="text-center" style="border-bottom:none;">Điện thoại</th>
                         <th class="text-center" style="border-bottom:none;">Email</th>
                         <th class="text-center" style="border-bottom:none;">Địa chỉ</th>
@@ -22,6 +23,9 @@
                 <tbody>
                     <tr ng-repeat="sp in lstSupplier|filter:{isDeleted:false}|orderBy:'Name'">
                         <td class="text-center" style="vertical-align:middle">{{sp.Name}}</td>
+                        <td class="text-center" style="vertical-align:middle" ng-controller="discountCtrl">
+                            <button type="button" class="btn btn-info" ng-click="initial(sp.ID)">Chi tiết</button>
+                        </td>
                         <td class="text-center" style="vertical-align:middle">{{sp.Mobile}}</td>
                         <td class="text-center" style="vertical-align:middle">{{sp.Email}}</td>
                         <td class="text-center" style="vertical-align:middle">{{sp.Address}}</td>
@@ -47,5 +51,101 @@
             <!--<input class="pull-right" />-->
         </div>
         <!-- /.row -->
+    </div>
+</div>
+
+<div ng-controller="discountCtrl" class="modal fade" id="DiscountModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Bảng chiết khấu - {{action}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="createForm" style="display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pf">Giá từ:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="pf" ng-model="discount.PriceFrom" placeholder="Nhập giá...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pt">Giá đến:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="pt" ng-model="discount.PriceTo" placeholder="Nhập giá...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="dc">Chiết khấu:</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="dc" ng-model="discount.Discounts" placeholder="Nhập chiết khấu...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pf">Ghi chú:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="des" ng-model="discount.Description" placeholder="Ghi chú..." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success" ng-click="create(discount)" id="btnSubmit">Thêm mới</button>
+                            <button type="submit" class="btn btn-success" ng-click="update(discount)" id="btnUpdate" style="display:none">Cập nhật</button>
+                            <button type="submit" class="btn btn-default" ng-click="cancel()" id="btnCancel">Hủy bỏ</button>
+                        </div>
+                    </div>
+                    <hr />
+                </form>
+                <table class="table table-hover table-bordered" id="lstDiscount">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-1" style="border-bottom:none">STT</th>
+                            <th class="col-sm-2" style="border-bottom:none">Giá từ</th>
+                            <th class="col-sm-2" style="border-bottom:none">Giá đến</th>
+                            <th class="col-sm-2" style="border-bottom:none">Chiết khấu (%)</th>
+                            <th class="col-sm-2" style="border-bottom:none">Ghi chú</th>
+                            <th class="col-sm-2" style="border-bottom:none">Người tạo</th>
+                            <th class="col-sm-1" style="border-bottom:none"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in getLstDiscount()">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.PriceFrom|number:0}}</td>
+                            <td>{{item.PriceTo|number:0}}</td>
+                            <td>{{item.Discounts}}</td>
+                            <td>{{item.Description}}</td>
+                            <td>{{item.CreateBy}}</td>
+                            <td class="text-center">
+                                <span class="text-center control-btn">
+                                    <button ng-click="preUpdate(item)" class="btn btn-primary btn-xs">
+                                        <span class="glyphicon glyphicon-edit" title="Sửa"></span>
+                                    </button>
+                                    <button ng-click="remove(item.ID)" class="btn btn-danger btn-xs">
+                                        <span class="glyphicon glyphicon-remove" title="Xóa"></span>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" id="btnCreate" ng-click="preCreate()">Thêm</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
     </div>
 </div>

@@ -23,6 +23,9 @@ namespace SimSo.Models.App
         [Column(TypeName = "money")]
         public decimal? Price { get; set; }
 
+        [Column(TypeName = "money")]
+        public decimal? Price_Sup{ get; set; }
+
         public int? Status { get; set; }
 
         public bool? isActive { get; set; }
@@ -39,5 +42,10 @@ namespace SimSo.Models.App
 
         [Column(TypeName = "date")]
         public DateTime? LastUpdate { get; set; }
+
+        [StringLength(200)]
+        public string TrangThaiSim { get; set; }
+        [StringLength(100)]
+        public string CamKet { get; set; }
     }
 }

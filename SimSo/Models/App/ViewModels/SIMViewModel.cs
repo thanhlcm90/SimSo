@@ -9,11 +9,12 @@ namespace SimSo.Models.App
     {
         public int ID { get; set; }
         public string Number { get; set; }
-        public NetWork Network { get; set; }
+        public string image { get; set; }
+        public string Name { get; set; }
         public string SimType { get; set; }
         public string Supplier { get; set; }
         public decimal? Price { get; set; }
-        public string Status { get; set; }
+        public bool? Status { get; set; }
         public bool? isActive { get; set; }
         public bool? isDelete { get; set; }
     }

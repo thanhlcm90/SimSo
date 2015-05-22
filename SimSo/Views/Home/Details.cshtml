@@ -1,0 +1,50 @@
+﻿@model SimSo.Models.App.New
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = Model.ShortDes;
+    var relNews = ViewBag.RelativeNews;
+}
+<ol class="breadcrumb">
+    <li><a href="/" style="color:#333"><i class="fa fa-home"></i></a> Trang chủ</li>
+    @if (ViewBag.Name != null)
+    {
+        <li><a href="/tin-tuc/@ViewBag.UTitle">@ViewBag.Name</a></li>
+    }
+    <li>@Model.Title</li>
+</ol>
+<!-- end breadcrumb-->
+<!-- table content-->
+<div class="page-content">
+    <h1 class="page-title">@Model.Title</h1>
+    <hr>
+    <!-- content page-->
+    <div class="content">
+        @Html.Raw(Model.Content)
+    </div>
+</div>
+<div class="relative-news">
+    <div class="box20 mt5 clearfix">
+        <div>
+            <h5 class="title">Bài liên quan</h5>
+        </div>
+        <ul class="ul12 ml2 mt2 mb2">
+            @foreach (var item in relNews)
+            {
+                var menuTitle = SimSo.Helper.StringHelper.UnicodeParse(item.Menu.Name);
+                string newTitle = SimSo.Helper.StringHelper.UnicodeParse(item.Title);
+                if (DateTime.Now.AddDays(-1) < (DateTime)item.CreateDate)
+                {
+                    <li class="new">
+                        <h3><a title='@item.Title (@String.Format("{0: dd/MM}",item.CreateDate))' href="/tin-tuc/@menuTitle/@item.ID/@newTitle">@item.Title (@String.Format("{0: dd/MM}", item.CreateDate))</a></h3>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <h3><a title='@item.Title (@String.Format("{0: dd/MM}",item.CreateDate))' href="/tin-tuc/@menuTitle/@item.ID/@newTitle">@item.Title (@String.Format("{0: dd/MM}", item.CreateDate))</a></h3>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

@@ -21,9 +21,11 @@ namespace SimSo.Models.App
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
-
         public virtual DbSet<New> News { get; set; }
-
+        public virtual DbSet<Discount> Discounts { get; set; }
+        public virtual DbSet<Statistic> Statistics { get; set; }
+        public virtual DbSet<Sim_Client> Sim_Clients { get; set; }
+        public virtual DbSet<Config> Configs { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
@@ -38,8 +40,24 @@ namespace SimSo.Models.App
                 .Property(e => e.UpdateBy)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Employee>()
+               .Property(e => e.Password)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Employee>()
+              .Property(e => e.Yahoo)
+              .IsUnicode(false); 
+            
+            modelBuilder.Entity<Employee>()
+               .Property(e => e.Skype)
+               .IsUnicode(false);
+
             modelBuilder.Entity<NetWork>()
                 .Property(e => e.Number)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NetWork>()
+                .Property(e => e.Tags)
                 .IsUnicode(false);
 
             modelBuilder.Entity<NetWork>()
@@ -53,10 +71,6 @@ namespace SimSo.Models.App
             modelBuilder.Entity<NetWork>()
                 .Property(e => e.UpdateBy)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<NetWork>()
-               .Property(e => e.Title)
-               .IsUnicode(false);
 
             modelBuilder.Entity<SIM>()
                 .Property(e => e.Number)
@@ -76,10 +90,6 @@ namespace SimSo.Models.App
 
             modelBuilder.Entity<SimType>()
                 .Property(e => e.Condition)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<SimType>()
-                .Property(e => e.Title)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()
@@ -111,9 +121,12 @@ namespace SimSo.Models.App
               .IsUnicode(false);
 
             modelBuilder.Entity<Order>()
-              .Property(e => e.UserBussiness)
+              .Property(e => e.UserBusiness)
               .IsUnicode(false);
 
+            modelBuilder.Entity<Order>()
+               .Property(e => e.Number)
+               .IsUnicode(false);
         }
     }
 }

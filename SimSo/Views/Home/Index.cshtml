@@ -1,4 +1,4 @@
-﻿@model SimSo.Models.App.ViewModels.ListSimViewModel
+﻿@model SimSo.Models.App.ViewModels.ListItem
 @{
     int stt = 1;
     int pageCount = Model.PageCount;
@@ -6,57 +6,143 @@
     int pageSize = ViewBag.PageSize;
     var isHidden = pageCount == 0 ? "none" : "";
     var isShow = pageCount > 0 ? "none" : "";
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = "Trang chủ" + (Request.QueryString.Count == 0 ? "" : "- Tìm kiếm");
 }
-<ol class="breadcrumb" style="display:@isHidden">
-    <li><a href="#"></a><i class="fa fa-home"></i> Trang chủ </li>
-    <li><a href="#">Sim   </a></li>
-    <li class="active">Tam hoa</li>
+<ol class="breadcrumb">
+    <li><a href="/" style="color:#333"><i class="fa fa-home"></i>Trang chủ</a></li>
 </ol>
 <!-- end breadcrumb-->
+<div class="filter checkbox-inline">
+    <div class="filter-count pull-left">
+        <div class="form-group">
+            <div class="dropdown">
+                <select class="dropdown" id="pageSizeSelect">
+                    @{
+                        var lstPs = new int[] { 20, 30, 50, 100, 150 };
+                        for (int i = 0; i < 5; i++)
+                        {
+                            bool isSelected = lstPs[i] == ViewBag.PageSize;
+                            <option value="@lstPs[i]" selected="@isSelected">@lstPs[i]</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="filter-radio">
+        @{
+            var lstNC = new int?[] { 0, 10, 11 };
+            for (int i = 0; i < 3; i++)
+            {
+                bool isChecked = lstNC[i] == ViewBag.NumCount;
+                if (lstNC[i] != 0)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="numCountSelect" value="@lstNC[i]" checked="@isChecked" name="filter-radio" id="ft-2">@lstNC[i] số
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="numCountSelect" value="@lstNC[i]" checked="@isChecked" name="filter-radio" id="ft-2">Tất cả
+                        </label>
+                    </div>
+                }
+
+            }
+        }
+    </div>
+</div>
 <!-- table sim-->
 <h4 style="display:@isShow;margin-left:30px">Không tìm thấy Sim nào.</h4>
 <div class="table-wrapper" style="display:@isHidden">
-    <ul class="ul-tb-sim clearfix">
+    <ul class="ul-tb-sim clearfix" id="dataTable">
         <li class="tb-head">
-            <div class="col-md-1 col-xs-6"><span>STT </span></div>
+            <div class="col-md-1 col-xs-6 sm-hidden"><span>STT </span></div>
             <div class="col-md-3 col-xs-6 bold"><span>Sim  </span></div>
-            <div class="col-md-2 col-xs-4"><a href="#0"></a>Giá <i class="fa fa-angle-down"></i></div>
-            <div class="col-md-2 sm-hidden text-center"><a href="#0"> Mạng <i class="fa fa-angle-down"></i></a></div>
-            <div class="col-md-2 sm-hidden text-center"><a href="#0"></a>Loại sim <i class="fa fa-angle-down"></i></div>
-            <div class="col-md-2 col-xs-2 text-right"><span class="sm-hidden">Mua sim</span></div>
+            <div id="priceOrder" class="col-md-2 col-xs-4 text-center"><a href="javascript:void(0)">Giá<i id="priceIcon" class="fa fa-angle-down"></i></a></div>
+            <div class="col-md-2 sm-hidden text-center"><a>Mạng</a></div>
+            <div class="col-md-2 sm-hidden text-center"><a>Loại sim</a></div>
+            <div class="col-md-2 col-xs-2 text-center"><span class="sm-hidden">Mua sim</span></div>
         </li>
-        @foreach (var item in Model.ListSim)
-                                    {
-                                        dynamic sim = item;
-                                    <li>
-                                        <div class="col-md-1 col-xs-6 sm-hidden"><a href="#">@((page - 1) * pageSize + stt++)</a></div>
-                                        <div class="col-md-3 col-xs-6 bold"><a href="#">@sim.Number</a></div>
-                                        <div class="col-md-2 col-xs-4"><span>@System.String.Format("{0:#,###}", @sim.Price)</span></div>
-                                        <div class="col-md-2 sm-hidden text-center"><a href="#"><img src="@sim.Network.image" alt="@sim.Network.Name" width="30" height="30"></a></div>
-                                        <div class="col-md-2 sm-hidden text-center"><span>@sim.SimType</span></div>
-                                        <div class="col-md-2 col-xs-2 text-right"><a href="#0" class="inline btn-addtocard"><i class="fa fa-shopping-cart"></i><span class="inline sm-hidden">Mua sim                                    </span></a></div>
-                                    </li>
-                                    }
+        @foreach (var item in Model.Items)
+        {
+            dynamic sim = item;
+            <li class="dataDynamic">
+                <div class="col-md-1 col-xs-6 sm-hidden"><a href="#">@((page - 1) * pageSize + stt++)</a></div>
+                <div class="col-md-3 col-xs-6 bold"><a href="/dat-mua-sim/@sim.Number" class="simNumber">@sim.Number</a></div>
+                <div class="col-md-2 col-xs-4"><span>@System.String.Format("{0:#,###}", @sim.Price)</span></div>
+                <div class="col-md-2 sm-hidden text-center"><a href="/mang/@SimSo.Helper.StringHelper.UnicodeParse(sim.Name)"><img src="@sim.image" title="@sim.Name" width="30" height="18"></a></div>
+                <div class="col-md-2 sm-hidden text-center"><span>@sim.SimType</span></div>
+                <div class="col-md-2 col-xs-2 text-center"><a href="/dat-mua-sim/@sim.Number" class="inline btn-addtocard"><i class="fa fa-shopping-cart"></i><span class="inline sm-hidden">Mua sim</span></a></div>
+            </li>
+        }
     </ul>
 </div>
 <!-- end table sim data-->
 <!-- pagination-->
-<div class="pagination" style="display:@isHidden">
-    @Html.ActionLink("« Đầu tiên ", "", new { page = 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
-    @Html.ActionLink("« Trước ", "", new { page = page - 1 > 0 ? page - 1 : 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
-
+<div class="pagination" style="display:@isHidden;min-width:50%">
+    @Html.ActionLink("« Đầu tiên ", "", new { page = 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy })
+    @Html.ActionLink("« Trước ", "", new { page = page - 1 > 0 ? page - 1 : 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy })
     @for (int i = page > 2 ? (page >= pageCount - 2 ? (pageCount > 4 ? pageCount - 4 : 1) : page - 2) : 1; i <= (page > 2 ? page + 2 : 5) && i <= pageCount; i++)
-                                {
-                                    if (page == i)
-                                    {
-                                @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy }, new { @class = "active" })
-                                    }
-                                    else
-                                    {
-                                @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, orderBy = ViewBag.OrderBy })
-                                    }
-                                }
-    <a href="">Tiếp  &raquo; </a>
-    <a href="">Cuối cùng  &raquo;</a>
+    {
+        if (page == i)
+        {
+            @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy }, new { @class = "active" })
+        }
+        else
+        {
+            @Html.ActionLink(i.ToString(), "", new { page = i, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy })
+        }
+    }
+    @Html.ActionLink("Tiếp  » ", "", new { page = page + 1 > pageCount ? page : page + 1, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy })
+    @Html.ActionLink("Cuối cùng  » ", "", new { page = pageCount, simtype = ViewBag.SimType, network = ViewBag.Network, price_min = ViewBag.Price_Min, price_max = ViewBag.Price_Max, searchStr = ViewBag.SearchStr, numCount = ViewBag.NumCount, pageSize = ViewBag.PageSize, orderBy = ViewBag.OrderBy })
 </div>
+<script>
+    $(document).ready(function(){
+        window.page=@ViewBag.Page;
+        window.simtype= "@ViewBag.Simtype";
+        window.network= "@ViewBag.Network";
+        window.price_min= "@ViewBag.Price_Min";
+        window.price_max= "@ViewBag.Price_Max";
+        window.searchStr= "@ViewBag.SearchStr";
+        window.orderBy= "@ViewBag.OrderBy";
+        window.pageSize=@ViewBag.PageSize;
+        window.numCount="@ViewBag.NumCount";
+
+        var st = $("#stSelect option[selected=selected]");
+        var nw = $("#nwSelect option[selected=selected]");
+        if (st.val()) {
+            var t = "<li>" + st.text() + "</li>";
+            $(".breadcrumb").append(t);
+        }
+        if (nw.val()) {
+            var t = "<li><a href='/mang/"+nw.text()+"'>" + nw.text() + "</li>";
+            $(".breadcrumb").append(t);
+        }
+        if(window.searchStr){
+            var t = "<li>" + window.searchStr + "</li>";
+            $(".breadcrumb").append(t);
+        }
+
+        $("#pageSizeSelect").change(function(){
+            var pageSize=$("#pageSizeSelect").val();
+            changeSomething(pageSize,window.numCount);
+        });
+
+        $(".numCountSelect").click(function(){
+            var numCount=$(this).val();
+            changeSomething(window.pageSize,numCount);
+        })
+
+        var changeSomething=function(pageSize,numCount){
+            var link="/?simType="+window.simtype+"&network="+window.network+"&price_min="+window.price_min+"&price_max="+window.price_max+"&searchStr="+window.searchStr+"&orderBy="+window.orderBy+"&page=1&numCount="+numCount+"&pageSize="+pageSize;
+            window.location=link;
+        }
+
+    })
+</script>
+<script src="~/Scripts/App/coloringNumber.js"></script>

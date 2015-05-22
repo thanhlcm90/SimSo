@@ -17,6 +17,7 @@ namespace SimSo.Models.App
         public decimal? price_max { get; set; }
         public string year { get; set; }
         public string orderBy { get; set; }
+        public int? numCount { get; set; }
     }
     public static class SimOrder
     {

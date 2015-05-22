@@ -20,6 +20,8 @@ namespace SimSo.Models.App
 
         public int Type { get; set; }
 
+        public int? isShow { get; set; }
+
         public bool? isDeleted { get; set; }
 
         [StringLength(50)]
@@ -31,5 +33,6 @@ namespace SimSo.Models.App
         public string UpdateBy { get; set; }
 
         public DateTime? LastUpdate { get; set; }
+
     }
 }

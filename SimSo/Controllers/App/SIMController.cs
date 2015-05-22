@@ -1,7 +1,10 @@
 ﻿using LinqToExcel;
 using Microsoft.AspNet.Identity;
+using SimSo.Helper;
 using SimSo.Models.App;
 using SimSo.Models.App.Repository;
+using System;
+using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -11,27 +14,28 @@ namespace SimSo.Controllers.App
     public class SIMController : Controller
     {
         GenericRepository<SIM> context = null;
-        public SIMController()
-        {
-            context = new GenericRepository<SIM>();
-        }
+        SIMRepository simRepo = null;
+
         // get list sim filter // dai ly
         [HttpGet]
         public ActionResult GetSIMsByNumber(string number, int pageIndex, int pageSize)
         {
-            return Json(new SIMRepository().CheckSimsByNumber(number, pageIndex, pageSize), JsonRequestBehavior.AllowGet);
+            simRepo = new SIMRepository();
+            return Json(simRepo.CheckSimsByNumber(number, pageIndex, pageSize), JsonRequestBehavior.AllowGet);
         }
 
         // get all sim // quan ly+nhan vien
         [HttpGet]
-        public ActionResult GetPageSim(int pageIndex, int pageSize)
+        public ActionResult GetPageSim(int pageIndex, int pageSize, int? included)
         {
-            return Json(new SIMRepository().GetPageSim(pageIndex, pageSize), JsonRequestBehavior.AllowGet);
+            simRepo = new SIMRepository();
+            return Json(simRepo.GetPageSim(pageIndex, pageSize, included), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult Get(int id)
         {
+            context = new GenericRepository<SIM>();
             var data = context.Get(id);
             if (data != null)
             {
@@ -40,9 +44,11 @@ namespace SimSo.Controllers.App
             return HttpNotFound();
         }
 
+        [AllowAnonymous]
         public ActionResult GetByNumber(string number)
         {
-            var data = new SIMRepository().GetByNumber(number);
+            simRepo = new SIMRepository();
+            var data = simRepo.GetByNumber(number);
             if (data != null)
             {
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -57,6 +63,8 @@ namespace SimSo.Controllers.App
             model.Status = 0;
             if (ModelState.IsValid)
             {
+                context = new GenericRepository<SIM>();
+                model.Number = StringHelper.FormatNumber(model.Number);
                 var data = context.Insert(model);
                 context.Save();
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -70,6 +78,8 @@ namespace SimSo.Controllers.App
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
+                model.Number = StringHelper.FormatNumber(model.Number);
+                context = new GenericRepository<SIM>();
                 context.Update(model);
                 context.Save();
                 return Json(model, JsonRequestBehavior.AllowGet);
@@ -78,15 +88,35 @@ namespace SimSo.Controllers.App
         }
 
         [HttpPost]
+        public void DuyetTrang(int page, int pageSize, string updateBy, int status, int? included)
+        {
+            simRepo = new SIMRepository();
+            simRepo.DuyetPage(page, pageSize, updateBy, status, included);
+        }
+
+        [HttpPost]
+        public ActionResult Approve_Sim(SIM sim)
+        {
+            sim.LastUpdate = System.DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                simRepo = new SIMRepository();
+                simRepo.Approve_Sim(sim);
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
         public void Delete(int id)
         {
+            context = new GenericRepository<SIM>();
             context.Delete(id);
             context.Save();
         }
 
-
         [HttpPost]
-        public ActionResult UploadFile()
+        public ActionResult UploadFile(int? supID)
         {
             System.Web.HttpPostedFileBase file = Request.Files["excel"];
             if (file != null)
@@ -96,12 +126,33 @@ namespace SimSo.Controllers.App
                 try
                 {
                     file.SaveAs(path + fileName);
-                    ImportSimFromExcel(path + fileName, "Sheet1");
+                    int? supplierId = 0;
+                    if (supID != null)
+                    {
+                        supplierId = supID;
+                    }
+                    else
+                    {
+                        using (var entities = new AppDbContext())
+                        {
+                            string userName = User.Identity.GetUserName();
+                            var supp = entities.Suppliers.Where(st => st.UserName == userName);
+                            if (supp.Count() > 0)
+                            {
+                                supplierId = supp.First().ID;
+                            }
+                            else
+                            {
+                                return Json("Chưa chọn đại lý!", JsonRequestBehavior.AllowGet);
+                            }
+                        }
+                    }
+                    ImportSimFromExcel(path + fileName, supplierId);
                     return Json("Success", JsonRequestBehavior.AllowGet);
                 }
                 catch (System.Exception exp)
                 {
-                    return Json(exp, JsonRequestBehavior.AllowGet);
+                    return Json(exp.Message, JsonRequestBehavior.AllowGet);
                 }
                 finally
                 {
@@ -111,31 +162,42 @@ namespace SimSo.Controllers.App
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
-        void ImportSimFromExcel(string path, string sheetName)
+        void ImportSimFromExcel(string path, int? supID)
         {
             string pathToExcelFile = path;
             var excelFile = new ExcelQueryFactory(pathToExcelFile);
-            var sims = from a in excelFile.Worksheet(sheetName) select a;
+            var sims = from a in excelFile.Worksheet(0) select a;
+            context = new GenericRepository<SIM>();
+            var stRepo = new SimTypeRepo();
+            var nwRepo = new NetworkRepo();
             foreach (var sim in sims)
             {
                 var SIM = new SIM();
-                SIM.Number = (string)sim["Number"].Value;
-                SIM.Price = decimal.Parse(sim["Price"].Value.ToString());
+                SIM.Number = StringHelper.FormatNumber(sim[0].ToString());
+                try
+                {
+                    SIM.Price = decimal.Parse(sim[1].ToString());
+                    SIM.Price_Sup = SIM.Price;
+                }
+                catch
+                {
+                    SIM.Price = 0;
+                    SIM.Price_Sup = 0;
+                }
+                SIM.TrangThaiSim = sim[2].ToString();
+                SIM.CamKet = sim[3].ToString();
                 SIM.Status = 0;
                 SIM.isActive = true;
-                SIM.isActive = false;
+                SIM.isDeleted = false;
                 SIM.CreateBy = User.Identity.Name;
                 SIM.CreateDate = System.DateTime.Now;
-                SIM.SimType_ID = new SimTypeRepo().SimTypeGetTypeBySim(SIM.Number);
-                SIM.NetWork_ID = new NetworkRepo().GetIdByNumber(SIM.Number);
-                using (var entities = new AppDbContext())
-                {
-                    string userName = User.Identity.GetUserName();
-                    SIM.Supplier_ID = entities.Suppliers.Where(st => st.UserName == userName).First().ID;
-                }
+                SIM.SimType_ID = stRepo.SimTypeGetTypeBySim(SIM.Number);
+                SIM.NetWork_ID = nwRepo.GetIdByNumber(SIM.Number);
+                SIM.Supplier_ID = supID;
                 context.Insert(SIM);
             }
             context.Save();
+            nwRepo.Dispose();
         }
 
         protected override void Dispose(bool disposing)
@@ -146,6 +208,11 @@ namespace SimSo.Controllers.App
                 {
                     context.Dispose();
                     context = null;
+                }
+                if (simRepo != null)
+                {
+                    simRepo.Dispose();
+                    simRepo = null;
                 }
             }
             base.Dispose(disposing);

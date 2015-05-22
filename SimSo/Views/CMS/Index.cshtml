@@ -74,31 +74,31 @@
                         <li>
                             <a href="#/dashboard"><i class="fa fa-th-large fa-fw"></i> Bàn làm việc</a>
                         </li>
-                        <li ng-show="currentUser().Role=='QuanLy'">
+                        <li ng-show="isInRole('QuanLy')">
                             <a href="#/quan-ly/nhan-vien"><i class="fa fa-user fa-fw"></i> Nhân viên</a>
                         </li>
-                        <li ng-hide="currentUser().Role=='DaiLy'">
+                        <li ng-hide="isInRole('DaiLy')">
                             <a href="#/sim"><i class="fa fa-columns fa-fw"></i> Quản lý SIM</a>
                         </li>
-                        <li ng-show="currentUser().Role=='DaiLy'">
+                        <li>
                             <a href="#/sim/gui-bang-so"><i class="fa fa-columns fa-send"></i> Gửi bảng số</a>
                         </li>
-                        <li ng-show="currentUser().Role=='DaiLy'">
+                        <li>
                             <a href="#/sim/kiem-tra-sim"><i class="fa fa-check"></i> Kiểm tra sim</a>
                         </li>
-                        <li ng-hide="currentUser().Role=='DaiLy'">
+                        <li ng-hide="isInRole('DaiLy')">
                             <a href="#/giao-dich"><i class="fa fa-money fa-fw"></i> Quản lý giao dịch</a>
                         </li>
-                        <li ng-hide="currentUser().Role=='DaiLy'">
+                        <li ng-hide="isInRole('DaiLy')">
                             <a href="#/quan-ly/dai-ly"><i class="fa fa-home fa-fw"></i> Đại Lý(Kho)</a>
                         </li>
-                        <li ng-show="currentUser().Role=='QuanLy'">
+                        <li ng-show="isInRole('QuanLy')">
                             <a href="#/quan-ly/menu"><i class="fa fa-sitemap fa-fw"></i> Quản lý Menu</a>
                         </li>
-                        <li ng-hide="currentUser().Role=='DaiLy'">
+                        <li ng-hide="isInRole('DaiLy')">
                             <a href="#/quan-ly/tin-tuc"><i class="fa fa-list fa-fw"></i> Quản lý tin tức</a>
                         </li>
-                        <li ng-show="currentUser().Role=='QuanLy'">
+                        <li ng-show="isInRole('QuanLy')">
                             <a href="javascript:void(0)"><i class="fa fa-bar-chart-o fa-fw"></i> Báo cáo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -113,7 +113,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li ng-show="currentUser().Role=='QuanLy'">
+                        <li ng-show="isInRole('QuanLy')">
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Thiết lập Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -156,6 +156,7 @@
     <script src="~/SBAdmin/app/controllers/manage/userCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/manage/menuCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/manage/newCtrl.js"></script>
+    <script src="~/SBAdmin/app/controllers/manage/discountCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/working/orderCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/working/simCtrl.js"></script>
     <script src="~/SBAdmin/app/controllers/appCtrl.js"></script>

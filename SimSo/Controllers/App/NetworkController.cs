@@ -18,6 +18,7 @@ namespace SimSo.Controllers.App
             return Json(context.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         public ActionResult Get(int id)
         {
             var data = context.Get(id);
@@ -64,6 +65,10 @@ namespace SimSo.Controllers.App
             context.Save();
         }
 
+        public JsonResult GetBySimNumber(string number)
+        {
+            return Json(new NetworkRepo().GetBySimNumber(number), JsonRequestBehavior.AllowGet);
+        }
         //[Authorize(Roles = "QuanLy")]
         //[HttpPost]
         //public ActionResult UploadFile()

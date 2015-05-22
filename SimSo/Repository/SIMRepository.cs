@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SimSo.Helper;
+using System.Data.SqlClient;
 
 namespace SimSo.Models.App.Repository
 {
-    public class SIMRepository
+    public class SIMRepository : IDisposable
     {
         private AppDbContext context;
 
@@ -16,133 +18,197 @@ namespace SimSo.Models.App.Repository
         }
 
         // kiem tra sim (dai ly)
-        public ListSimViewModel CheckSimsByNumber(string number, int pageIndex, int pageSize)
+        public ListItem CheckSimsByNumber(string number, int pageIndex, int pageSize)
         {
             var data = (from sim in context.SIMs
                         where String.IsNullOrEmpty(number) || sim.Number.Contains(number)
-                        orderby sim.Number
+                        orderby sim.ID
                         select sim);
             int total = data.Count();
             int count = (int)Math.Ceiling((double)total / (double)pageSize);
             var sims = data.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-            return new ListSimViewModel { PageCount = count, TotalSims = total, ListSim = CheckSimsByNumber(sims) };
+            return new ListItem { PageCount = count, TotalItems = total, Items = CheckSimsByNumber(sims.ToList()) };
         }
-        private IEnumerable<Object> CheckSimsByNumber(IQueryable<SIM> data)
+        private IEnumerable<Object> CheckSimsByNumber(IEnumerable<SIM> data)
         {
             foreach (var sim in data)
             {
+                var Supplier = context.Suppliers.Find(sim.Supplier_ID);
+                float? value = 0f;
+                bool isOnly = false;
+                var discount = context.Discounts.Where(s => (s.SupID == sim.Supplier_ID));
+                if (discount.Count() == 1 && (discount.First().PriceTo == null || discount.First().PriceTo == 0) && (discount.First().PriceFrom == null || discount.First().PriceFrom == 0))
+                {
+                    value = discount.First().Discounts;
+                    isOnly = true;
+                }
+                else
+                {
+                    discount = discount.Where(s => (s.PriceFrom <= sim.Price) && (s.PriceTo >= sim.Price));
+                    if (discount.Count() == 0) value = 0;
+                    else
+                    {
+                        value = discount.First().Discounts;
+                    }
+                }
+                var nw = context.NetWorks.Find(sim.NetWork_ID);
                 yield return new
                 {
                     Number = sim.Number,
-                    SupplierName = context.Suppliers.Find(sim.Supplier_ID).Name,
-                    SupplierMobile = context.Suppliers.Find(sim.Supplier_ID).Mobile,
+                    SupplierID = sim.Supplier_ID,
+                    SupplierName = Supplier == null ? "" : Supplier.Name,
+                    SupplierMobile = Supplier == null ? "" : Supplier.Mobile,
+                    SupplierAddress = Supplier == null ? "" : Supplier.Address,
+                    NetworkImg = nw == null ? "" : nw.image,
                     Price = sim.Price,
+                    Price_Sup=sim.Price_Sup,
+                    LastUpdate = sim.LastUpdate ?? sim.CreateDate,
+                    Discount = value,
+                    isOnly = isOnly
                 };
             }
         }
 
         // quan ly sim (quan ly va nhan vien)
-        private IEnumerable<SIMViewModel> GetPageSim(IQueryable<SIM> data)
+        private IEnumerable<Object> GetPageSim(IEnumerable<SIM> data)
         {
             foreach (var sim in data)
             {
-                yield return new SIMViewModel
+                var st = context.SimTypes.Find(sim.SimType_ID);
+                var sp = context.Suppliers.Find(sim.Supplier_ID);
+                var nw = context.NetWorks.Find(sim.NetWork_ID);
+                yield return new
                 {
                     ID = sim.ID,
                     Number = sim.Number,
                     Network = context.NetWorks.Find(sim.NetWork_ID),
-                    SimType = context.SimTypes.Find(sim.SimType_ID).Name,
-                    Supplier = context.Suppliers.Find(sim.Supplier_ID).Name,
+                    SimType = st == null ? "" : st.Name,
+                    Supplier = sp == null ? "" : sp.Name,
                     Price = sim.Price,
-                    Status = sim.Status == 1 ? "Đã duyệt" : "Chưa duyệt",
+                    Status = sim.Status == 0 ? false : true,
                     isActive = sim.isActive,
                     isDelete = sim.isDeleted
                 };
             }
         }
-        public ListSimViewModel GetPageSim(int pageIndex, int pageSize)
+        public ListItem GetPageSim(int pageIndex, int pageSize, int? included)
         {
-            var data = (from sim in context.SIMs select sim).OrderBy(s => s.Number);
+            var data = (from sim in context.SIMs where included == null || sim.Status == included select sim).OrderBy(s => s.CreateDate);
             int total = data.Count();
             int count = (int)Math.Ceiling((double)total / (double)pageSize);
             var sims = data.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-            return new ListSimViewModel { PageCount = count, TotalSims = total, ListSim = GetPageSim(sims) };
+            return new ListItem { PageCount = count, TotalItems = total, Items = GetPageSim(sims.ToList()) };
         }
 
-        private IEnumerable<Object> GetSimsFilter(IQueryable<SIM> data)
+        public ListItem GetSimsFilter(SIMFilter filter)
         {
-            foreach (var sim in data)
-            {
-                yield return new SIMViewModel
-                {
-                    ID = sim.ID,
-                    Number = sim.Number,
-                    Network = context.NetWorks.Find(sim.NetWork_ID),
-                    SimType = context.SimTypes.Find(sim.SimType_ID).Name,
-                    Price = sim.Price,
-                };
-            }
-        }
-        public ListSimViewModel GetSimsFilter(SIMFilter filter)
-        {
-            var data = from sim in context.SIMs
-                       where (filter.nwId == null || sim.NetWork_ID == filter.nwId)
-                       && (filter.stId == null || sim.SimType_ID == filter.stId)
-                       && (filter.price_min == null || sim.Price >= filter.price_min)
-                       && (filter.price_max == null || sim.Price <= filter.price_max)
-                       && (String.IsNullOrEmpty(filter.year) || sim.Number.Substring(sim.Number.Length - 4).Equals(filter.year))
-                       select sim;
-            if (!String.IsNullOrEmpty(filter.searchStr))
-            {
-                if (filter.searchStr.StartsWith("*"))
-                {
-                    data = data.Where(s => s.Number.EndsWith(filter.searchStr.Substring(1)));
-                }
-                else if (filter.searchStr.EndsWith("*"))
-                {
-                    int len = filter.searchStr.IndexOf('*');
-                    data = data.Where(s => s.Number.StartsWith(filter.searchStr.Substring(0, len)));
-                }
-                else if (filter.searchStr.Contains("*"))
-                {
-                    int len = filter.searchStr.IndexOf('*');
-                    data = data.Where(s => s.Number.StartsWith(filter.searchStr.Substring(0, len)) && s.Number.EndsWith(filter.searchStr.Substring(len + 1)));
-                }
-                else
-                {
-                    data = data.Where(s => s.Number.Contains(filter.searchStr));
-                }
-            }
-
+            string orderBy = "";
             switch (filter.orderBy)
             {
-                case SimOrder.Network: data=data.OrderBy(s => s.NetWork_ID); break;
-                case SimOrder.Price: data=data.OrderBy(s => s.Price); break;
-                case SimOrder.Simtype: data=data.OrderBy(s => s.SimType_ID); break;
-                case SimOrder.Network_Des: data=data.OrderByDescending(s => s.NetWork_ID); break;
-                case SimOrder.Price_Des: data=data.OrderByDescending(s => s.NetWork_ID); break;
-                case SimOrder.Simtype_Des: data=data.OrderByDescending(s => s.NetWork_ID); break;
-                default: data=data.OrderBy(s => s.Price); break;
+                case SimOrder.Price: orderBy = "0"; break;
+                case SimOrder.Price_Des: orderBy = "1"; break;
+                case SimOrder.Network: orderBy = "2"; break;
+                case SimOrder.Network_Des: orderBy = "3"; break;
+                case SimOrder.Simtype: orderBy = "4"; break;
+                case SimOrder.Simtype_Des: orderBy = "5"; break;
+                default: orderBy = "0"; break;
             }
 
-            int total = data.Count();
+            int total = context.Database.SqlQuery<int>("GetSimFilterCounter @number,@nwId,@stId,@price_min,@price_max,@orderBy,@numCount",
+                new SqlParameter("@number", filter.searchStr),
+                new SqlParameter("@nwId", filter.nwId),
+                new SqlParameter("@stId", filter.stId),
+                new SqlParameter("@price_min", filter.price_min),
+                new SqlParameter("@price_max", filter.price_max),
+                new SqlParameter("@orderBy", orderBy),
+                new SqlParameter("@numCount", filter.numCount)
+                ).First();
             int count = (int)Math.Ceiling((double)total / (double)filter.pageSize);
-            var sims = data.Skip((filter.pageIndex - 1) * filter.pageSize).Take(filter.pageSize);
-            return new ListSimViewModel { PageCount = count, TotalSims = total, ListSim = GetSimsFilter(sims) };
+            var sims = context.Database.SqlQuery<SIMViewModel>("GetSimFilter @number,@nwId,@stId,@pageIndex,@pageSize,@price_min,@price_max,@orderBy,@numCount",
+                new SqlParameter("@number", filter.searchStr),
+                new SqlParameter("@nwId", filter.nwId),
+                new SqlParameter("@stId", filter.stId),
+                new SqlParameter("@pageIndex", filter.pageIndex),
+                new SqlParameter("@pageSize", filter.pageSize),
+                new SqlParameter("@price_min", filter.price_min),
+                new SqlParameter("@price_max", filter.price_max),
+                new SqlParameter("@orderBy", orderBy),
+                new SqlParameter("@numCount", filter.numCount)
+                ).ToList();
+            return new ListItem { PageCount = count, TotalItems = total, Items = sims };
         }
 
-
-        public SIM GetByNumber(string number)
+        public Object GetByNumber(string number)
         {
-            var sim = from s in context.SIMs
-                      where s.Number == number &&
-                      s.isActive == true &&
-                      s.Status == 1
-                      orderby s.Price
-                      select s;
-            if (sim.Count() > 0)
-                return sim.First();
-            return null;
+            if (number.Length <= 11)
+            {
+                var sim = (from s in context.Sim_Clients
+                           where s.Number == number
+                           orderby s.Price
+                           select s);
+                if (sim.Count() > 0)
+                    return sim.First();
+                return DetectSim(number);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void DuyetPage(int pageIndex, int pageSize, string updateBy, int status, int? included)
+        {
+            var data = ((from sim in context.SIMs where included == null || sim.Status == included select sim)).OrderBy(s => s.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var count = data.Count;
+            for (int i = 0; i < count; i++)
+            {
+                context.Database.ExecuteSqlCommand("Approve_SIM @iID,@iChecked,@mPrice_ncc,@iSupplier_ID,@Number,@NetWork_ID,@SimType_ID",
+                new SqlParameter("@iID", data[i].ID),
+                new SqlParameter("@iChecked", status),
+                new SqlParameter("@mPrice_ncc", data[i].Price_Sup),
+                new SqlParameter("@iSupplier_ID", data[i].Supplier_ID),
+                new SqlParameter("@Number", data[i].Number),
+                new SqlParameter("@NetWork_ID", data[i].NetWork_ID),
+                new SqlParameter("@SimType_ID", data[i].SimType_ID)
+                );
+                context.SaveChanges();
+            }
+        }
+
+        public void Approve_Sim(SIM sim)
+        {
+            context.Database.ExecuteSqlCommand("Approve_SIM @iID,@iChecked,@mPrice_ncc,@iSupplier_ID,@Number,@NetWork_ID,@SimType_ID",
+                new SqlParameter("@iID",sim.ID),
+                new SqlParameter("@iChecked",sim.Status),
+                new SqlParameter("@mPrice_ncc",sim.Price_Sup),
+                new SqlParameter("@iSupplier_ID",sim.Supplier_ID),
+                new SqlParameter("@Number",sim.Number),
+                new SqlParameter("@NetWork_ID",sim.NetWork_ID),
+                new SqlParameter("@SimType_ID",sim.SimType_ID)
+                );
+            context.SaveChanges();
+        }
+
+        private Object DetectSim(string number)
+        {
+            return new
+            {
+                Number = number,
+                NetWork_ID = new NetworkRepo().GetBySimNumber(number).ID,
+                SimType_ID = new SimTypeRepo().SimTypeGetTypeBySim(number),
+                TrangThaiSim = "Sim đã bán hoặc chưa cập nhật lên web",
+                Price = 0,
+                CamKet = "",
+            };
+        }
+
+        public void Dispose()
+        {
+            if (context != null)
+            {
+                context.Dispose();
+                context = null;
+            }
         }
     }
 }

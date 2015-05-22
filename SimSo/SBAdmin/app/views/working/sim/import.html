@@ -10,14 +10,22 @@
             <form role="form" class="form-horizontal" name="createForm">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <input type="file" id="chooseFile" name="excel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                        <input type="file" id="chooseFile" name="excel" accept=".xls,.xlsx,.csv,.tsv,.ods,.sxc,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.oasis.opendocument.spreadsheet" />
+                    </div>
+                </div>
+                <div class="form-group" ng-show="isShow">
+                    <div class="col-sm-offset-2 col-sm-3">
+                        <select class="form-control" ng-model="supID">
+                            <option value="">Chọn kho</option>
+                            <option ng-repeat="item in lstSupplier" value="{{item.ID}}">{{item.Name}}</option>
+                        </select>
                     </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button class="btn btn-primary" ng-click="upload()">Import</button>
-                        <a class="btn btn-default" href="#/sim">Hủy bỏ</a>
+                        <a class="btn btn-default" href="/cms">Hủy bỏ</a>
                     </div>
                 </div>
             </form>

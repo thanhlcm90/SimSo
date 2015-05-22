@@ -10,7 +10,12 @@ namespace SimSo.Models.App
         public int ID { get; set; }
 
         public int? SIM_ID { get; set; }
+
         public string Number { get; set; }
+
+        public Supplier Supplier { get; set; }
+
+        public string Network { get; set; }
 
         public string FullName { get; set; }
 
@@ -20,11 +25,17 @@ namespace SimSo.Models.App
 
         public string Email { get; set; }
 
+        public int OrderCount { get; set; }
+
         public string Description { get; set; }
+
+        public string Note { get; set; }
 
         public decimal Price { get; set; }
 
-        public string UserBussiness { get; set; }
+        public int Status { get; set; }
+
+        public string UserBusiness { get; set; }
 
         public string CreateBy { get; set; }
 

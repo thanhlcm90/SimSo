@@ -12,12 +12,19 @@ namespace SimSo.Models.App
         public int ID { get; set; }
 
         [StringLength(256)]
+        [Required]
         public string UserName { get; set; }
 
+        [Required]
+        [StringLength(100, MinimumLength = 6)]
+        public string Password { get; set; }
+
         [StringLength(50)]
+        [Required]
         public string FullName { get; set; }
 
         [StringLength(5)]
+        [Required]
         public string Gender { get; set; }
 
         public DateTime? BirthDay { get; set; }
@@ -47,5 +54,14 @@ namespace SimSo.Models.App
         public string UpdateBy { get; set; }
 
         public DateTime? LastUpdate { get; set; }
+
+        public bool? WorkingStatus { get; set; }
+
+        public int? STT { get; set; }
+
+        [StringLength(100)]
+        public string Yahoo { get; set; }
+        [StringLength(100)]
+        public string Skype { get; set; }
     }
 }

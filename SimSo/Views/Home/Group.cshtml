@@ -1,0 +1,56 @@
+﻿@model SimSo.Models.App.ViewModels.ListItem
+@{
+    var page = ViewBag.Page;
+    int pageCount = Model.PageCount;
+    var isHidden = pageCount == 0 ? "none" : "";
+}
+<ol class="breadcrumb">
+    <li><a href="/" style="color:#333"><i class="fa fa-home"></i> Trang chủ</a></li>
+    <li>@ViewBag.Title</li>
+</ol>
+<!-- end breadcrumb-->
+<!-- content page-->
+<div class="cat-news">
+    @foreach (var data in Model.Items)
+    {
+        dynamic item = data;
+        var link = String.Format("/tin-tuc/{0}/{1}/{2}", ViewBag.UTitle, item.ID, SimSo.Helper.StringHelper.UnicodeParse(item.Title));
+        <div class="post_thumb">
+            <div class="post-thumbnail">
+                <a href="@link" title="Permalink to Post With Featured Image" rel="bookmark">
+                    <img src="@item.image" alt="Post With Featured Image" title="Post With Featured Image" class="attachment-tie-small">
+                </a>
+            </div>
+            <h3>
+                <a style="color:#333" href="@link" title="Post With Featured Image">@item.Title</a>
+            </h3>
+            <span class="date">
+                <span>@item.CreateDate</span>
+            </span>
+            <div class="entry">
+                @item.ShortDes
+                <a href="@link" class="more-link">Xem tiếp »</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    }
+</div>
+
+<!-- pagination-->
+<div class="pagination" style="display:@isHidden;min-width:50%">
+    @Html.RouteLink("« Đầu tiên ", "menu", new { title = @ViewBag.UTitle, page = 1, })
+    @Html.ActionLink("« Trước ", "menu", new { title = @ViewBag.UTitle, page = page - 1 > 0 ? page - 1 : 1 })
+    @for (int i = page > 2 ? (page >= pageCount - 2 ? (pageCount > 4 ? pageCount - 4 : 1) : page - 2) : 1; i <= (page > 2 ? page + 2 : 5) && i <= pageCount; i++)
+    {
+        if (page == i)
+        {
+            @Html.ActionLink(i.ToString(), "menu", new { title = @ViewBag.UTitle, page = i }, new { @class = "active" })
+        }
+        else
+        {
+            @Html.ActionLink(i.ToString(), "menu", new { title = @ViewBag.UTitle, page = i })
+        }
+    }
+    @Html.ActionLink("Tiếp  » ", "menu", new { title = @ViewBag.UTitle, page = page + 1 > pageCount ? page : page + 1 })
+    @Html.ActionLink("Cuối cùng  » ", "menu", new { title = @ViewBag.UTitle, page = pageCount })
+</div>

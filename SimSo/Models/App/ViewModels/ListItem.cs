@@ -5,10 +5,10 @@ using System.Web;
 
 namespace SimSo.Models.App.ViewModels
 {
-    public class ListSimViewModel
+    public class ListItem
     {
-        public IEnumerable<Object> ListSim { get; set; }
+        public IEnumerable<Object> Items { get; set; }
         public int PageCount { get; set; }
-        public int TotalSims { get; set; }
+        public int TotalItems { get; set; }
     }
 }

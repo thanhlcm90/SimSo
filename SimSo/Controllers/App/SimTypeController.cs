@@ -19,6 +19,7 @@ namespace SimSo.Controllers.App
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Get(int id)
         {
             var data = context.Get(id);

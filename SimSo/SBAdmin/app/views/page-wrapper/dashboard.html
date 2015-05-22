@@ -118,59 +118,11 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn A vừa bán đơn hàng với giá trị 20,000,000
+                    <div class="list-group" ng-controller="dashboardCtrl">
+                        <a href="#" class="list-group-item" ng-repeat="item in lstNewOrder">
+                            <i class="fa fa-money fa-fw"></i> {{item.UserBusiness}} vừa bán đơn hàng với giá trị {{item.Price|number:0}}
                             <span class="pull-right text-muted small">
-                                <em>4 minutes ago</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Đại lý 1 vừa nhập hàng với giá trị 50,000,000
-                            <span class="pull-right text-muted small">
-                                <em>12 minutes ago</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 2,500,000
-                            <span class="pull-right text-muted small">
-                                <em>27 minutes ago</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Đại lý 2 vừa nhập hàng với giá trị 80,000,000
-                            <span class="pull-right text-muted small">
-                                <em>43 minutes ago</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 500,000
-                            <span class="pull-right text-muted small">
-                                <em>11:32 AM</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 500,000
-                            <span class="pull-right text-muted small">
-                                <em>11:13 AM</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 500,000
-                            <span class="pull-right text-muted small">
-                                <em>10:57 AM</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 500,000
-                            <span class="pull-right text-muted small">
-                                <em>9:49 AM</em>
-                            </span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Nguyễn Văn B vừa bán đơn hàng với giá trị 500,000
-                            <span class="pull-right text-muted small">
-                                <em>Yesterday</em>
+                                <em>{{item.LastUpdate|date:"HH:mm dd/MM/yyyy"}}</em>
                             </span>
                         </a>
                     </div>

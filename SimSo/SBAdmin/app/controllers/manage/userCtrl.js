@@ -1,37 +1,27 @@
 ﻿angular.module("sbAdmin")
 .controller("manageUserCtrl", function ($scope, $location, crudService, Authentication, $http, $routeParams) {
     // init
-    if (Authentication.signedIn == "False") {
-        window.location = "";
-    }
+    Authentication.authorize('QuanLy');
     $scope.lstEmp = [];
     // crud
     $scope.create = function (user) {
         $("#myModal").modal("show");
-        // insert to AspNetUser
         var data = {};
         data.Email = user.Email;
         data.UserName = user.UserName;
         data.Password = user.Password;
         data.ConfirmPassword = user.ConfirmPassword;
-        crudService.create("/Account/CreateUser", { model: data, role: "NhanVien" })
-            .success(function (result) {
-            })
-            .error(function (error) {
-                console.log(error);
-            });
 
-        // insert to employee
         var emp = {};
         angular.copy(user, emp);
         emp.CreateBy = Authentication.currentUser().Name;
         emp.isActive = true;
         emp.isDeleted = false;
-        delete emp.Password;
         delete emp.ConfirmPassword;
+
         var files = $("#chooseFile").get(0).files;
         if (!files[0]) {
-            crudService.create("/Employee/Create", emp)
+            crudService.create("/Employee/Create", { model: emp, regModel: data })
                  .success(function (result) {
                      $("#myModal").modal("hide");
                      $location.path('/quan-ly/nhan-vien');
@@ -41,22 +31,22 @@
                      console.log(error);
                  });
         } else {
-        uploadImage()
-           .success(function (result) {
-               emp.image = result;
-               crudService.create("/Employee/Create", emp)
-                    .success(function (result) {
-                        $("#myModal").modal("hide");
-                        $location.path('/quan-ly/nhan-vien');
-                    })
-                    .error(function (error) {
-                        $("#myModal").modal("hide");
-                        console.log(error);
-                    });
-           })
-            .error(function (error) {
-                alert("error");
-            });
+            uploadImage()
+               .success(function (result) {
+                   emp.image = result;
+                   crudService.create("/Employee/Create", { model: emp, regModel: data })
+                        .success(function (result) {
+                            $("#myModal").modal("hide");
+                            $location.path('/quan-ly/nhan-vien');
+                        })
+                        .error(function (error) {
+                            $("#myModal").modal("hide");
+                            console.log(error);
+                        });
+               })
+                .error(function (error) {
+                    alert("error");
+                });
         }
     }
 
@@ -70,6 +60,7 @@
                 data.LastUpdate = parseDate(data.LastUpdate);
                 data.BirthDay = parseDate(data.BirthDay);
                 $scope.user = data;
+                $scope.currentPassword = angular.copy(data.Password, $scope.currentPassword);
                 var isHaveImg = data.image != null;
                 if (isHaveImg) {
                     angular.element("#imageUpload").show();
@@ -86,7 +77,7 @@
         data.UpdateBy = currentUser.Name;
         var files = $("#chooseFile").get(0).files;
         if (!files[0]) {
-            crudService.update("/Employee/Update", data)
+            crudService.update("/Employee/Update", { model: data, currentPassword: $scope.currentPassword })
                 .success(function (data) {
                     $location.path("/quan-ly/nhan-vien/");
                 })
@@ -97,7 +88,7 @@
             uploadImage()
                 .success(function (result) {
                     data.image = result;
-                    crudService.update("/Employee/Update", data)
+                    crudService.update("/Employee/Update", { model: data, currentPassword: $scope.currentPassword })
                         .success(function (result) {
                             $("#myModal").modal("hide");
                             $location.path("/quan-ly/nhan-vien/")

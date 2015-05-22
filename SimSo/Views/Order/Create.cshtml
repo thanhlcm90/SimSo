@@ -1,0 +1,200 @@
+﻿@model SimSo.Models.App.Order
+@{
+    ViewBag.Title = "Đặt mua sim " + ViewBag.Number + " mạng " + ViewBag.NwName;
+    var networks = ViewBag.Networks;
+    var simtypes = ViewBag.SimTypes;
+}
+<ol class="breadcrumb">
+    <li><a href="http://sodepvtc.com"></a><i class="fa fa-home"></i> Trang chủ</li>
+    <li>@ViewBag.Number</li>
+</ol>
+<!-- end breadcrumb-->
+<!-- table content-->
+<div class="page-content">
+    <!-- content page-->
+    <div class="sim-ordered-info">
+        @using (Html.BeginForm("OrderSim", "Order"))
+        {
+            <div class="block-main-40">
+                <h3 class="block-title">Sim đã đặt</h3>
+                <div class="group">
+                    <label class="inline">Sim số:</label>
+                    <div class="order-item inline">
+                        <div class="phone">
+                            <p id="numberInfo">@ViewBag.Number<p />
+                            <input type="hidden" name="Number" id="numberInput" />
+                            <input type="hidden" name="Price" id="priceInput" />
+                            <input type="hidden" name="Price_Sup" id="priceSupInput" />
+                            <input type="hidden" name="Network_ID" id="networkInput" />
+                            <input type="hidden" name="Sup_ID" id="supInput" />
+                            <input type="hidden" name="SimType_ID" id="simtypeInput" />
+
+                        </div>
+
+                    </div>
+                    <div class="group note">
+                        <abbr title="Các kiểm  tra sim còn hay đã bán">
+                            <small><a href="#" class="label-numberinfo">Cách kiểm tra sim còn hay đã bán?</a></small>
+                            <p class="label-guide">Quý khách gọi vào chính số sim <span class="set-number-infor"> </span>. Nếu thấy:<br><span>ĐỔ CHUÔNG - Số Đã bán</span><br><span>HIỆN KHÔNG LIÊN LẠC ĐƯỢC - 80% đã bán</span><br><span>MỌI TÍN HIỆU KHÁC - Số vẫn còn trong kho</span><br></p>
+                        </abbr>
+                    </div>
+                    <div class="group">
+                        <label class="inline">Giá bán:</label>
+                        <div class="order-item price-label inline"><span id="price"></span></div>
+                    </div>
+                    <div class="group">
+                        <label class="inline">Mạng:</label>
+                        <div class="order-item inline"><a href="javascript:void(0)" id="imgNw"></a></div>
+                    </div>
+                    <div class="group">
+                        <label class="inline">Tình trạng: </label>
+                        <div class="order-item inline" id="ttSim"></div>
+                    </div>
+                    <hr>
+                    <div class="content">
+                        <p class="text-justify text-uppercase">Số Đẹp VTC giao sim tận nơi toàn quốc trong 24-48 h</p>
+                        <p class="text-justify"><span class="text-uppercase">Hà Nội</span><br>Phòng 414, CT5 DN3, Khu Đô Thị Mỹ Đình 2, Nam Từ Liêm, Hà Nội</p>
+                        <p>Điện thoại: 19006029  </p><br>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+                <div class="form block-main-60">
+                    <div>
+                        <h3 class="block-title">Thông tin cá nhân </h3>
+                    </div>
+                    <div class="form-group" id="enterNumber">
+                        @Html.TextBoxFor(model => model.Number, new { @class = "form-control", @placeholder = "Nhập số cần mua...", @id = "numberTxt" })
+                        <span id="simIdError" class="text-danger field-validation-error" style="display:none" data-valmsg-for="number" data-valmsg-replace="true">
+                            <span for="number" class="">Số Sim ko hợp lệ.</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Nhập tên của bạn ...", @autofocus = "autofocus" })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Nhập email của bạn ..." })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @placeholder = "Nhập phone của bạn ..." })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Nhập địa chỉ của bạn ..." })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @placeholder = "Nhập ghi chú của bạn ..." })
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group text-center">
+                    <button tyle="submit" class="btn btn-secondary gradient">Gửi đơn hàng</button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+    <!-- end content page-->
+</div>
+@*<script src="~/Scripts/App/moneyFomat.js"></script>*@
+<script>
+    $(document).ready(function () {
+        var reload = function (nwId, stId) {
+            $.ajax({
+                url: "/Network/Get",
+                type: "GET",
+                data: { id: nwId },
+                success: function (data) {
+                    $("#imgNw").children().remove();
+                    var img = "<img src='" + data.image + "' width='30' height='18' />";
+                    $("#imgNw").append(img);
+                }
+            });
+            //$.ajax({
+            //    url: "/SimType/Get",
+            //    type: "GET",
+            //    data: { id: stId },
+            //    success: function (data) {
+            //        $("#simtype").val(data.Name);
+            //    }
+            //});
+        }
+
+        var setData = function (number, editing) {
+            if (number.length > 0 && number[0] == '0') {
+                if (number.length > 9) {
+                    $.ajax({
+                        url: "/SIM/GetByNumber",
+                        type: "GET",
+                        data: { number: number },
+                        success: function (data) {
+                            reload(data.NetWork_ID, data.SimType_ID);
+                            var price = new String(data.Price);
+                            $("#price").html(price != '0' ? price.moneyFormat(',') : "Vui lòng gọi");
+                            $("#priceInput").val(data.Price);
+                            $("#priceSupInput").val(data.Price_Sup);
+                            $("#networkInput").val(data.NetWork_ID);
+                            $("#simtypeInput").val(data.SimType_ID);
+                            $("#supInput").val(data.Supplier_ID);
+
+                            $("#numberInfo").text(data.Number);
+                            $("#numberInput").val(data.Number);
+                            $("#ttSim").text(data.TrangThaiSim == null ? "" : data.TrangThaiSim + data.CamKet == null ? "" : data.CamKet);
+                            $("#simIdError").hide();
+                            if (!editing) {
+                                $("#enterNumber").hide();
+                            }
+                            $("#submit").removeAttr("disabled");
+                        },
+                        error: function () {
+                            //$("#simtype").val("");
+                            //$("#network").val("");
+                            $("#priceInput").val("");
+                            $("#priceSupInput").val("");
+                            $("#networkInput").val("");
+                            $("#simtypeInput").val("");
+                            $("#supInput").val("");
+                            $("#price").html("");
+                            $("#numberInfo").text("");
+                            $("#numberInput").val("");
+                            $("#simIdError").show();
+                            $("#imgNw").children().remove();
+                            $("#submit").attr("disabled", "disabled");
+                        }
+                    });
+                } else {
+                    //$("#simtype").val("");
+                    //$("#network").val("");
+                    $("#priceInput").val("");
+                    $("#priceSupInput").val("");
+                    $("#networkInput").val("");
+                    $("#simtypeInput").val("");
+                    $("#supInput").val("");
+                    $("#price").html("");
+                    if (number.length != 0)
+                        $("#simIdError").show();
+                    else $("#simIdError").hide();
+                    $("#imgNw").children().remove();
+                    $("#submit").attr("disabled", "disabled");
+                }
+            } else {
+                if (number.length != 0)
+                    $("#simIdError").show();
+            }
+        }
+
+        setData("@ViewBag.Number", false);
+
+        $("#numberTxt").blur(function () {
+            var number = $("#numberTxt").val();
+            setData(number, true);
+        })
+    })
+</script>

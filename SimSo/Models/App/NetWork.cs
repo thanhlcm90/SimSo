@@ -39,5 +39,9 @@ namespace SimSo.Models.App
         public string Title { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
+        [StringLength(1000)]
+        public string Tags { get; set; }
+        [StringLength(1000)]
+        public string Keyword { get; set; }
     }
 }

@@ -30,7 +30,14 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-primary" ng-click="update(menuUpdate)">Thêm</button>
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-model="menuUpdate.Show"> Hiển thị top tin trên trang chủ</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-primary" ng-click="update(menuUpdate)">Cập nhật</button>
                         <a class="btn btn-default" href="#/quan-ly/menu">Hủy bỏ</a>
                     </div>
                 </div>

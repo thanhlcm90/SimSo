@@ -1,5 +1,9 @@
-﻿using SimSo.Models.App;
+﻿using Microsoft.AspNet.Identity.Owin;
+using SimSo.Models;
+using SimSo.Models.App;
 using SimSo.Models.App.Repository;
+using SimSo.Repository;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,6 +13,7 @@ namespace SimSo.Controllers.App
     public class EmployeeController : Controller
     {
         GenericRepository<Employee> context = null;
+        EmployeeRepo empRepo = null;
         public EmployeeController()
         {
             context = new GenericRepository<Employee>();
@@ -28,28 +33,35 @@ namespace SimSo.Controllers.App
             }
             return HttpNotFound();
         }
+
         [HttpPost]
-        public ActionResult Create(Employee model)
+        public ActionResult Create(Employee model, RegisterViewModel regModel)
         {
             model.CreateDate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
-                var data = context.Insert(model);
-                context.Save();
-                return Json(data, JsonRequestBehavior.AllowGet);
+                empRepo = new EmployeeRepo(HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(), context);
+                var data = empRepo.Create(model, regModel);
+                if (data != null)
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
         [HttpPost]
-        public ActionResult Update(Employee model)
+        public ActionResult Update(Employee model, string currentPassword)
         {
             model.LastUpdate = System.DateTime.Now;
             if (ModelState.IsValid)
             {
-                context.Update(model);
-                context.Save();
-                return Json(model, JsonRequestBehavior.AllowGet);
+                empRepo = new EmployeeRepo(HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(), context);
+                int? result = empRepo.Update(model, currentPassword);
+                if (result != null)
+                {
+                    return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
@@ -83,6 +95,11 @@ namespace SimSo.Controllers.App
                 {
                     context.Dispose();
                     context = null;
+                }
+                if (empRepo != null)
+                {
+                    empRepo.Dispose();
+                    empRepo = null;
                 }
             }
 

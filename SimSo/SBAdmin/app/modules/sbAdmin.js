@@ -90,6 +90,10 @@
            $routeProvider.when("/giao-dich/cap-nhat/:id", {
                templateUrl: "/SBAdmin/app/views/working/order/update.html"
            });
+           //error
+           $routeProvider.when("/error", {
+               templateUrl: "/SBAdmin/app/views/page-wrapper/error.html"
+           });
            //ban lam viec
            $routeProvider.otherwise({
                templateUrl: "/SBAdmin/app/views/page-wrapper/dashboard.html"
