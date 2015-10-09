@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SimSo.Helper
 {
@@ -35,6 +37,17 @@ namespace SimSo.Helper
                 number = "0" + number;
             }
             return number;
+        }
+        
+        public static void CreateRole(string roleName)
+        {
+            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            if (!roleManager.RoleExists(roleName))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = roleName;
+                roleManager.Create(role);
+            }
         }
     }
 }
